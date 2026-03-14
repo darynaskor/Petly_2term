@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Business/Petly.Business.csproj": {}
+    "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Business/Petly.Business.csproj": {}
   },
   "projects": {
-    "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Business/Petly.Business.csproj": {
+    "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Business/Petly.Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Business/Petly.Business.csproj",
+        "projectUniqueName": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Business/Petly.Business.csproj",
         "projectName": "Petly.Business",
-        "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Business/Petly.Business.csproj",
+        "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Business/Petly.Business.csproj",
         "packagesPath": "/Users/darynaskorobogatykh/.nuget/packages/",
-        "outputPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Business/obj/",
+        "outputPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Business/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/darynaskorobogatykh/.nuget/NuGet/NuGet.Config"
@@ -27,11 +27,11 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.DataAccess/Petly.DataAccess.csproj": {
-                "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.DataAccess/Petly.DataAccess.csproj"
+              "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.DataAccess/Petly.DataAccess.csproj": {
+                "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.DataAccess/Petly.DataAccess.csproj"
               },
-              "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/Petly.Models.csproj": {
-                "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/Petly.Models.csproj"
+              "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj": {
+                "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj"
               }
             }
           }
@@ -345,14 +345,14 @@
         }
       }
     },
-    "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.DataAccess/Petly.DataAccess.csproj": {
+    "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.DataAccess/Petly.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.DataAccess/Petly.DataAccess.csproj",
+        "projectUniqueName": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.DataAccess/Petly.DataAccess.csproj",
         "projectName": "Petly.DataAccess",
-        "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.DataAccess/Petly.DataAccess.csproj",
+        "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.DataAccess/Petly.DataAccess.csproj",
         "packagesPath": "/Users/darynaskorobogatykh/.nuget/packages/",
-        "outputPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.DataAccess/obj/",
+        "outputPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.DataAccess/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/darynaskorobogatykh/.nuget/NuGet/NuGet.Config"
@@ -368,8 +368,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/Petly.Models.csproj": {
-                "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/Petly.Models.csproj"
+              "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj": {
+                "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj"
               }
             }
           }
@@ -689,14 +689,14 @@
         }
       }
     },
-    "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/Petly.Models.csproj": {
+    "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/Petly.Models.csproj",
+        "projectUniqueName": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj",
         "projectName": "Petly.Models",
-        "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/Petly.Models.csproj",
+        "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj",
         "packagesPath": "/Users/darynaskorobogatykh/.nuget/packages/",
-        "outputPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/obj/",
+        "outputPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/darynaskorobogatykh/.nuget/NuGet/NuGet.Config"

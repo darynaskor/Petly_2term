@@ -12,26 +12,29 @@
         <button class="btn btn-filter">Коти</button>
         <button class="btn btn-filter">Прилаштовані</button>
         <div class="input-group ms-auto" style="max-width: 300px;">
-            <input type="text" class="form-control rounded-pill" placeholder="Пошук">
+            <input type="text" class="form-control rounded-pill border-dark" placeholder="Пошук">
         </div>
     </div>
 
     @* Сітка карток *@
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        @foreach (var pet in Model)
+        @foreach (var p in Model)
         {
             <div class="col">
                 <div class="card h-100 pet-card">
-                    <img src="@(string.IsNullOrEmpty(pet.PhotoUrl) ? "/images/no-photo.jpg" : pet.PhotoUrl)" 
-                         class="card-img-top pet-img" alt="@pet.PetName">
+                    @* Перевірка на наявність фото *@
+                    <img src="@(string.IsNullOrEmpty(p.PhotoUrl) ? "/images/no-photo.jpg" : p.PhotoUrl)" 
+                         class="card-img-top pet-img" alt="@p.PetName">
+                    
                     <div class="card-body p-0">
-                        <div class="d-flex border-top border-bottom">
-                            <button class="btn btn-action-blue flex-fill border-end">Більше</button>
-                            <button class="btn btn-action-light flex-fill border-end">Допомога</button>
-                            <button class="btn btn-action-light flex-fill">Адопція</button>
+                        <div class="d-flex border-top border-bottom border-dark">
+                            <button class="btn btn-pet-action border-end border-dark">Більше</button>
+                            <button class="btn btn-pet-action border-end border-dark">Допомога</button>
+                            <button class="btn btn-pet-action">Адопція</button>
                         </div>
-                        <div class="p-3 bg-light-yellow rounded-bottom">
-                            <h5 class="mb-0 fw-bold">@pet.PetName, @pet.Type, @pet.Age роки</h5>
+                        
+                        <div class="p-3 bg-light-yellow text-center">
+                            <h5 class="mb-0 fw-bold">@p.PetName, @p.Type, @p.Age роки</h5>
                         </div>
                     </div>
                 </div>

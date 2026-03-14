@@ -9,3 +9,15 @@
 /Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/obj/Debug/net10.0/refint/Petly.Models.dll
 /Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/obj/Debug/net10.0/Petly.Models.pdb
 /Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/obj/Debug/net10.0/ref/Petly.Models.dll
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/bin/Debug/net10.0/Petly.Models.deps.json
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/bin/Debug/net10.0/Petly.Models.dll
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/bin/Debug/net10.0/Petly.Models.pdb
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/obj/Debug/net10.0/Petly.Models.GeneratedMSBuildEditorConfig.editorconfig
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/obj/Debug/net10.0/Petly.Models.AssemblyInfoInputs.cache
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/obj/Debug/net10.0/Petly.Models.AssemblyInfo.cs
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/obj/Debug/net10.0/Petly.Models.csproj.CoreCompileInputs.cache
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/obj/Debug/net10.0/Petly.Models.sourcelink.json
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/obj/Debug/net10.0/Petly.Models.dll
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/obj/Debug/net10.0/refint/Petly.Models.dll
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/obj/Debug/net10.0/Petly.Models.pdb
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/obj/Debug/net10.0/ref/Petly.Models.dll

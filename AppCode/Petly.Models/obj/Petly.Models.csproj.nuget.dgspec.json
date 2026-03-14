@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/Petly.Models.csproj": {}
+    "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj": {}
   },
   "projects": {
-    "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/Petly.Models.csproj": {
+    "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/Petly.Models.csproj",
+        "projectUniqueName": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj",
         "projectName": "Petly.Models",
-        "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/Petly.Models.csproj",
+        "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj",
         "packagesPath": "/Users/darynaskorobogatykh/.nuget/packages/",
-        "outputPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly.Models/obj/",
+        "outputPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly.Models/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/darynaskorobogatykh/.nuget/NuGet/NuGet.Config"

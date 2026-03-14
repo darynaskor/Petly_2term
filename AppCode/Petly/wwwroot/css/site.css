@@ -1,39 +1,62 @@
-/* Кнопки фільтрів */
+/* --- Кнопки фільтрів (Усі, Собаки, Коти) --- */
 .btn-filter {
-    background-color: #E0E0E0;
+    background-color: #b8b8b8;
+    border: none;
     border-radius: 8px;
     padding: 8px 25px;
     font-weight: 500;
+    color: #333;
+    transition: all 0.3s ease; 
+    cursor: pointer;
 }
-.btn-filter.active {
+
+/* Наведення на кнопки фільтрів */
+.btn-filter:hover {
     background-color: #FFD54F; 
 }
 
-/* Картка тварини */
+/* Активна кнопка (де зараз людина) */
+.btn-filter.active {
+    background-color: #FFD54F !important;
+    font-weight: bold;
+}
+
+/* --- Картка тварини --- */
 .pet-card {
     border: 2px solid #000;
     border-radius: 25px;
     overflow: hidden;
+    transition: transform 0.2s;
 }
+
+.pet-card:hover {
+    transform: translateY(-5px); 
+}
+
 .pet-img {
     height: 250px;
+    width: 100%;
     object-fit: cover;
-    padding: 10px;
+    padding: 12px;
     border-radius: 35px; 
 }
 
-/* Кнопки під фото */
-.btn-action-blue {
-    background-color: #90CAF9;
+/* --- Кнопки під фото тварини --- */
+.btn-pet-action {
+    background-color: #b8b8b8; 
     border: none;
     border-radius: 0;
-    padding: 10px;
+    padding: 12px;
+    flex: 1; 
+    font-size: 0.9rem;
+    color: #555;
+    transition: all 0.3s ease;
 }
-.btn-action-light {
-    background-color: #EEEEEE;
-    border: none;
-    border-radius: 0;
-    padding: 10px;
+
+/* Ефект наведення на кнопки під фото */
+.btn-pet-action:hover {
+    background-color: #71b1e5 !important; 
+    color: #000;
 }
 
 .bg-light-yellow {
