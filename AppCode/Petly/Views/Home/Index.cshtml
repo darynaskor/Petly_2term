@@ -1,0 +1,41 @@
+﻿@model List<Petly.Models.Pet>
+
+@{
+    ViewData["Title"] = "Головна";
+}
+
+<div class="container mt-4">
+    @* Кнопки фільтрації *@
+    <div class="d-flex gap-2 mb-4 align-items-center">
+        <button class="btn btn-filter active">Усі</button>
+        <button class="btn btn-filter">Собаки</button>
+        <button class="btn btn-filter">Коти</button>
+        <button class="btn btn-filter">Прилаштовані</button>
+        <div class="input-group ms-auto" style="max-width: 300px;">
+            <input type="text" class="form-control rounded-pill" placeholder="Пошук">
+        </div>
+    </div>
+
+    @* Сітка карток *@
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var pet in Model)
+        {
+            <div class="col">
+                <div class="card h-100 pet-card">
+                    <img src="@(string.IsNullOrEmpty(pet.PhotoUrl) ? "/images/no-photo.jpg" : pet.PhotoUrl)" 
+                         class="card-img-top pet-img" alt="@pet.PetName">
+                    <div class="card-body p-0">
+                        <div class="d-flex border-top border-bottom">
+                            <button class="btn btn-action-blue flex-fill border-end">Більше</button>
+                            <button class="btn btn-action-light flex-fill border-end">Допомога</button>
+                            <button class="btn btn-action-light flex-fill">Адопція</button>
+                        </div>
+                        <div class="p-3 bg-light-yellow rounded-bottom">
+                            <h5 class="mb-0 fw-bold">@pet.PetName, @pet.Type, @pet.Age роки</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,41 @@
+/* Кнопки фільтрів */
+.btn-filter {
+    background-color: #E0E0E0;
+    border-radius: 8px;
+    padding: 8px 25px;
+    font-weight: 500;
+}
+.btn-filter.active {
+    background-color: #FFD54F; 
+}
+
+/* Картка тварини */
+.pet-card {
+    border: 2px solid #000;
+    border-radius: 25px;
+    overflow: hidden;
+}
+.pet-img {
+    height: 250px;
+    object-fit: cover;
+    padding: 10px;
+    border-radius: 35px; 
+}
+
+/* Кнопки під фото */
+.btn-action-blue {
+    background-color: #90CAF9;
+    border: none;
+    border-radius: 0;
+    padding: 10px;
+}
+.btn-action-light {
+    background-color: #EEEEEE;
+    border: none;
+    border-radius: 0;
+    padding: 10px;
+}
+
+.bg-light-yellow {
+    background-color: #FFF1C1;
+}
