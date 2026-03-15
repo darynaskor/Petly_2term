@@ -56,7 +56,7 @@ CREATE TABLE `adoptionapplication` (
   `adoptId` int NOT NULL AUTO_INCREMENT,
   `userId` int NOT NULL,
   `petId` int NOT NULL,
-  `status` enum('Pending','Approved','Rejected') DEFAULT 'Pending',
+  `status` enum('Pending','Approved','Rejected','Очікує','Схвалено','Відхилено') DEFAULT NULL,
   `submissionDate` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`adoptId`),
   KEY `userId` (`userId`),
@@ -72,7 +72,7 @@ CREATE TABLE `adoptionapplication` (
 
 LOCK TABLES `adoptionapplication` WRITE;
 /*!40000 ALTER TABLE `adoptionapplication` DISABLE KEYS */;
-INSERT INTO `adoptionapplication` VALUES (6,1,21,'Pending','2026-03-14 00:35:17'),(7,2,24,'Approved','2026-03-14 00:35:17'),(8,3,27,'Pending','2026-03-14 00:35:17'),(9,4,23,'Rejected','2026-03-14 00:35:17'),(10,5,28,'Pending','2026-03-14 00:35:17');
+INSERT INTO `adoptionapplication` VALUES (6,1,21,'Очікує','2026-03-14 00:35:17'),(7,2,24,'Схвалено','2026-03-14 00:35:17'),(8,3,27,'Очікує','2026-03-14 00:35:17'),(9,4,23,'Відхилено','2026-03-14 00:35:17'),(10,5,28,'Очікує','2026-03-14 00:35:17');
 /*!40000 ALTER TABLE `adoptionapplication` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,7 +97,7 @@ CREATE TABLE `infopage` (
 
 LOCK TABLES `infopage` WRITE;
 /*!40000 ALTER TABLE `infopage` DISABLE KEYS */;
-INSERT INTO `infopage` VALUES (1,'About Petly','Petly is a platform that connects animal shelters with people who want to adopt pets.'),(2,'Adoption Process','Browse animals, choose a pet and submit an adoption application. The shelter reviews the request.'),(3,'How to Help','You can help shelters by adopting pets, donating supplies.'),(4,'Contact','Contact shelters or platform administrator if you want to support animal rescue.');
+INSERT INTO `infopage` VALUES (1,'Про Petly','Petly — це платформа, яка поєднує притулки для тварин з людьми, які хочуть усиновити домашніх улюбленців.'),(2,'Процес усиновлення','Перегляньте тварин, оберіть улюбленця та подайте заявку на усиновлення. Притулок розгляне ваш запит.'),(3,'Як допомогти','Ви можете допомогти притулкам, усиновивши тварину або пожертвувавши корм чи інші необхідні речі.'),(4,'Контакти','Зв’яжіться з притулками або адміністратором платформи, якщо хочете підтримати порятунок тварин.');
 /*!40000 ALTER TABLE `infopage` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,14 +112,14 @@ CREATE TABLE `pet` (
   `petId` int NOT NULL AUTO_INCREMENT,
   `shelterId` int NOT NULL,
   `petName` varchar(100) NOT NULL,
-  `type` enum('Dog','Cat','Other') NOT NULL,
+  `type` enum('Dog','Cat','Собака','Кіт') DEFAULT NULL,
   `breed` varchar(100) DEFAULT NULL,
-  `gender` enum('Male','Female') DEFAULT NULL,
+  `gender` enum('Male','Female','Хлопчик','Дівчинка') DEFAULT NULL,
   `age` int DEFAULT NULL,
-  `size` enum('Small','Medium','Large') DEFAULT NULL,
+  `size` enum('Small','Medium','Large','Маленький','Середній','Великий') DEFAULT NULL,
   `vaccinated` tinyint(1) DEFAULT '0',
   `sterilized` tinyint(1) DEFAULT '0',
-  `status` enum('Available','Pending','Adopted') DEFAULT 'Available',
+  `status` enum('Available','Доступний') DEFAULT NULL,
   `photoUrl` varchar(255) DEFAULT NULL,
   `description` text,
   `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
@@ -135,7 +135,7 @@ CREATE TABLE `pet` (
 
 LOCK TABLES `pet` WRITE;
 /*!40000 ALTER TABLE `pet` DISABLE KEYS */;
-INSERT INTO `pet` VALUES (21,6,'Bella','Dog','Golden Retriever','Female',3,'Large',1,1,'Available','/images/pets/bella.jpg','Very friendly golden retriever','2026-03-14 00:32:08'),(22,6,'Max','Dog','German Shepherd','Male',5,'Large',1,1,'Available','/images/pets/max.jpg','Loyal and protective dog','2026-03-14 00:32:08'),(23,6,'Charlie','Dog','Labrador Retriever','Male',2,'Large',1,0,'Available','/images/pets/charlie.jpg','Energetic and playful','2026-03-14 00:32:08'),(24,7,'Luna','Cat','British Shorthair','Female',1,'Small',1,0,'Available','/images/pets/luna.jpg','Playful kitten','2026-03-14 00:32:08'),(25,7,'Milo','Cat','Maine Coon','Male',2,'Medium',1,1,'Available','/images/pets/milo.jpg','Calm and friendly cat','2026-03-14 00:32:08'),(26,7,'Simba','Cat','Mixed','Male',4,'Medium',1,1,'Available','/images/pets/simba.jpg','Very affectionate cat','2026-03-14 00:32:08'),(27,8,'Rocky','Dog','Mixed','Male',6,'Large',1,1,'Available','/images/pets/rocky.jpg','Rescued stray dog','2026-03-14 00:32:08'),(28,8,'Daisy','Dog','Beagle','Female',3,'Medium',1,1,'Available','/images/pets/daisy.jpg','Gentle and friendly dog','2026-03-14 00:32:08'),(29,9,'Oliver','Cat','Scottish Fold','Male',2,'Small',1,0,'Available','/images/pets/oliver.jpg','Curious cat','2026-03-14 00:32:08'),(30,9,'Lucy','Cat','Persian','Female',5,'Small',1,1,'Available','/images/pets/lucy.jpg','Very calm cat','2026-03-14 00:32:08');
+INSERT INTO `pet` VALUES (21,6,'Белла','Собака','Золотистий ретривер','Дівчинка',3,'Великий',1,1,'Доступний','/images/pets/bella.jpg','Дуже дружній золотистий ретривер','2026-03-14 00:32:08'),(22,6,'Макс','Собака','Німецька вівчарка','Хлопчик',5,'Великий',1,1,'Доступний','/images/pets/max.jpg','Вірний та захисний пес','2026-03-14 00:32:08'),(23,6,'Чарлі','Собака','Лабрадор ретривер','Хлопчик',2,'Великий',1,0,'Доступний','/images/pets/charlie.jpg','Енергійний та грайливий','2026-03-14 00:32:08'),(24,7,'Луна','Кіт','Британська короткошерста','Дівчинка',1,'Маленький',1,0,'Доступний','/images/pets/luna.jpg','Грайливе кошеня','2026-03-14 00:32:08'),(25,7,'Міло','Кіт','Мейн-кун','Хлопчик',2,'Середній',1,1,'Доступний','/images/pets/milo.jpg','Спокійний та дружній кіт','2026-03-14 00:32:08'),(26,7,'Сімба','Кіт','Метис','Хлопчик',4,'Середній',1,1,'Доступний','/images/pets/simba.jpg','Дуже лагідний кіт','2026-03-14 00:32:08'),(27,8,'Роккі','Собака','Метис','Хлопчик',6,'Великий',1,1,'Доступний','/images/pets/rocky.jpg','Врятований безпритульний пес','2026-03-14 00:32:08'),(28,8,'Дейзі','Собака','Бігль','Дівчинка',3,'Середній',1,1,'Доступний','/images/pets/daisy.jpg','Ніжний та дружній пес','2026-03-14 00:32:08'),(29,9,'Олівер','Кіт','Шотландська висловуха','Хлопчик',2,'Маленький',1,0,'Доступний','/images/pets/oliver.jpg','Допитливий кіт','2026-03-14 00:32:08'),(30,9,'Люсі','Кіт','Персидська кішка','Дівчинка',5,'Маленький',1,1,'Доступний','/images/pets/lucy.jpg','Дуже спокійний кіт','2026-03-14 00:32:08');
 /*!40000 ALTER TABLE `pet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +162,7 @@ CREATE TABLE `shelter` (
 
 LOCK TABLES `shelter` WRITE;
 /*!40000 ALTER TABLE `shelter` DISABLE KEYS */;
-INSERT INTO `shelter` VALUES (6,'Happy Paws Shelter','Lviv','Oksana Melnyk'),(7,'Domivka Shelter','Lviv','Iryna Koval'),(8,'Animal Rescue Ukraine','Kyiv','Serhii Bondarenko'),(9,'Pets Home Kyiv','Kyiv','Kateryna Hrytsenko');
+INSERT INTO `shelter` VALUES (6,'Притулок Щасливі Лапи','Львів','Оксана Мельник'),(7,'Притулок Домівка','Львів','Ірина Коваль'),(8,'Порятунок Тварин Україна','Київ','Сергій Бондаренко'),(9,'Дім для Тварин Київ','Київ','Катерина Гриценко');
 /*!40000 ALTER TABLE `shelter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,7 +190,7 @@ CREATE TABLE `shelterneed` (
 
 LOCK TABLES `shelterneed` WRITE;
 /*!40000 ALTER TABLE `shelterneed` DISABLE KEYS */;
-INSERT INTO `shelterneed` VALUES (1,6,'Dry food and blankets needed for dogs','Bank transfer available'),(2,7,'Cat food and litter supplies needed','Donation box available at shelter'),(3,8,'Medical supplies needed for rescued animals','Veterinary support needed'),(4,9,'Funds needed for shelter renovation','Online donation available');
+INSERT INTO `shelterneed` VALUES (1,6,'Потрібні сухий корм та ковдри для собак','Можливий банківський переказ'),(2,7,'Потрібні корм для котів та наповнювач','У притулку є скринька для пожертв'),(3,8,'Потрібні медичні препарати для врятованих тварин','Потрібна ветеринарна допомога'),(4,9,'Потрібні кошти на ремонт притулку','Доступна онлайн-пожертва');
 /*!40000 ALTER TABLE `shelterneed` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +205,7 @@ CREATE TABLE `user` (
   `accountId` int NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `surname` varchar(100) DEFAULT NULL,
-  `status` enum('Pending','Active','Rejected') DEFAULT 'Pending',
+  `status` enum('Active','Активний') DEFAULT NULL,
   PRIMARY KEY (`accountId`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`accountId`) REFERENCES `account` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -217,7 +217,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Marta','Karpyak','Active'),(2,'Pavlo','Zakutynskyi','Active'),(3,'Nataliia','Ivanko','Active'),(4,'Daryna','Skorobagatykh','Active'),(5,'Diana','Mahotska','Active');
+INSERT INTO `user` VALUES (1,'Marta','Karpyak','Активний'),(2,'Pavlo','Zakutynskyi','Активний'),(3,'Nataliia','Ivanko','Активний'),(4,'Daryna','Skorobagatykh','Активний'),(5,'Diana','Mahotska','Активний');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -230,4 +230,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-14  0:46:40
+-- Dump completed on 2026-03-15 18:44:05

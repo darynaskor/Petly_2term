@@ -18,7 +18,7 @@ public class Pet
     public string PetName { get; set; } = string.Empty;
 
     [Column("type")]
-    public string Type { get; set; } = string.Empty; // enum ('Dog','Cat','Other')
+    public string? Type { get; set; }
 
     [Column("breed")]
     public string? Breed { get; set; }
@@ -28,6 +28,14 @@ public class Pet
 
     [Column("age")]
     public int? Age { get; set; }
+    
+    [NotMapped]
+    public string AgeText => Age switch
+    {
+        1 => "рік",
+        2 or 3 or 4 => "роки",
+        _ => "років"
+    };
 
     [Column("size")]
     public string? Size { get; set; }
