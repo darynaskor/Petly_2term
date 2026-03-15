@@ -13,17 +13,27 @@ public class PetService
         _context = context;
     }
 
-    // Метод для отримання всіх тварин
+    // Отримання всіх тварин
     public async Task<List<Pet>> GetAllPetsAsync()
     {
         return await _context.Pets.ToListAsync();
     }
 
-    // Метод для фільтрації за типом (Кіт/Собака)
-    public async Task<List<Pet>> GetPetsByTypeAsync(string type)
+    // Фільтрація та пошук за PetName і Type
+    public async Task<List<Pet>> GetPetsAsync(string typeFilter = null, string searchTerm = null)
     {
-        return await _context.Pets
-            .Where(p => p.Type == type)
-            .ToListAsync();
+        var pets = _context.Pets.AsQueryable();
+
+        if (!string.IsNullOrEmpty(typeFilter) && typeFilter != "Усі")
+        {
+            pets = pets.Where(p => p.Type == typeFilter);
+        }
+
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            pets = pets.Where(p => p.PetName.Contains(searchTerm));
+        }
+
+        return await pets.ToListAsync();
     }
 }
