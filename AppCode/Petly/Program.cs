@@ -4,7 +4,7 @@ using Petly.Business.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Налаштування MySQL
+// 1. Підключення MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
@@ -12,11 +12,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // 2. Реєстрація сервісів
 builder.Services.AddScoped<PetService>();
 
+// 3. Додавання контролерів з Views
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build(); 
+var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -24,13 +25,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles(); // для wwwroot
+
 app.UseRouting();
 app.UseAuthorization();
-app.MapStaticAssets();
 
+// Маршрути
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

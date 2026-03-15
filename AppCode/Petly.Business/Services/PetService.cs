@@ -13,13 +13,11 @@ public class PetService
         _context = context;
     }
 
-    // Метод для отримання всіх тварин
     public async Task<List<Pet>> GetAllPetsAsync()
     {
         return await _context.Pets.ToListAsync();
     }
 
-    // Метод для фільтрації за типом (Кіт/Собака)
     public async Task<List<Pet>> GetPetsByTypeAsync(string type)
     {
         return await _context.Pets

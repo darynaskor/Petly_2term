@@ -8,5 +8,5 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     public DbSet<Pet> Pets { get; set; }
-    // Тут потім додати DbSet для Account, Shelter ітд 
+    // Можна додати DbSet<Account>, DbSet<Shelter> і т.д.
 }
