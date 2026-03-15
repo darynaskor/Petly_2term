@@ -62,3 +62,28 @@
 .bg-light-yellow {
     background-color: #FFF1C1;
 }
+
+
+.btn-search {
+    border: 2px solid #b8b8b8; /* тут колір рамки */
+    background-color: #FFD54F; /* фон кнопки */
+    color: #fff; /* колір тексту/іконки */
+    transition: all 0.3s ease;
+}
+
+.btn-search:hover {
+    background-color: #FFD54F;
+    color: #000;
+}
+
+.menu-link {
+    font-size: 1.2rem; /* трохи більший шрифт */
+    font-weight: bold; /* жирний */
+    color: #333;
+    margin: 0 15px;
+    transition: color 0.3s;
+}
+
+.menu-link:hover {
+    color: #FFD54F; /* колір при наведенні */
+}
