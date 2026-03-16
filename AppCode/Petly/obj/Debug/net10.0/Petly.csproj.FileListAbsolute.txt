@@ -331,4 +331,4 @@ C:/Users/Діана/Petly_2term/AppCode/Petly/obj/Debug/net10.0/ref/Petly.dll
 C:/Users/Діана/Petly_2term/AppCode/Petly/obj/Debug/net10.0/compressed/c1n046kt25-{0}-ivilwyeipw-ivilwyeipw.gz
 C:/Users/Діана/Petly_2term/AppCode/Petly/bin/Debug/net10.0/stylecop.json
 /Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly/bin/Debug/net10.0/stylecop.json
-/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly/obj/Debug/net10.0/compressed/c1n046kt25-{0}-alkjrx6plq-alkjrx6plq.gz
+/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly/obj/Debug/net10.0/compressed/c1n046kt25-{0}-d0yeyhh5ug-d0yeyhh5ug.gz

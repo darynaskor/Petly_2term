@@ -10,33 +10,74 @@
     <link rel="stylesheet" href="~/Petly.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Petly</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav mx-auto"> <!-- mx-auto по центру -->
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="Index">Тварини</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="About">Про Нас</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="Needs">Потреби</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="Adoption">Адопція</a>
-                        </li>
-                    </ul>
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpCtx
+    @{
+        var controllerName = ViewContext?.ActionDescriptor?.RouteValues?["controller"];
+        var isAccountPage = string.Equals(controllerName, "Account", System.StringComparison.OrdinalIgnoreCase);
+    }
+
+    @if (!isAccountPage)
+    {
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><span class="logo-text">Petly</span></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav mx-auto"> <!-- mx-auto по центру -->
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="Index">Тварини</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="About">Про Нас</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="Needs">Потреби</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="Adoption">Адопція</a>
+                            </li>
+                        </ul>
+                        @{
+                            var userName = HttpCtx.HttpContext?.Session.GetString("UserName");
+                            var role = HttpCtx.HttpContext?.Session.GetString("Role");
+                        }
+                        <ul class="navbar-nav ms-auto align-items-center gap-2">
+                            @if (role == "system_admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" asp-area="" asp-controller="Account" asp-action="Users">Користувачі</a>
+                                </li>
+                            }
+                            @if (!string.IsNullOrEmpty(userName))
+                            {
+                                <li class="nav-item">
+                                    <span class="nav-link menu-link">Привіт, @userName</span>
+                                </li>
+                                <li class="nav-item">
+                                    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-dark btn-sm">Вийти</button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" asp-area="" asp-controller="Account" asp-action="Login">Увійти</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" asp-area="" asp-controller="Account" asp-action="Register">Реєстрація</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+            </nav>
+        </header>
+    }
 
     <div class="container">
         <main role="main" class="pb-3">

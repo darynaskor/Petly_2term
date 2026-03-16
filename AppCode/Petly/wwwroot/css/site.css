@@ -1,4 +1,107 @@
 /* --- Кнопки фільтрів (Усі, Собаки, Коти) --- */
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap');
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #fdfdfd;
+    color: #2d2d2d;
+}
+
+.logo-text {
+    font-family: 'Chewy', cursive;
+    color: #f57c00;
+    font-size: 2.4rem;
+}
+
+.auth-shell {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+}
+
+.auth-logo-row {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.auth-card {
+    border: 2px solid #cfcfcf;
+    border-radius: 10px;
+    padding: 32px 36px;
+    background: #fff;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.06);
+}
+
+.auth-title {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.auth-form .form-control {
+    border: 2px solid #cfcfcf;
+    border-radius: 6px;
+    box-shadow: none;
+}
+
+.auth-form .form-control:focus {
+    border-color: #f4b000;
+    box-shadow: 0 0 0 3px rgba(244, 176, 0, 0.2);
+}
+
+.btn-auth-primary {
+    display: inline-block;
+    width: 100%;
+    background: #f4b000;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-weight: 700;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn-auth-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 0 #000;
+    color: #000;
+}
+
+.btn-auth-secondary {
+    background: #fff;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.btn-auth-secondary:hover {
+    background: #f4b000;
+    color: #000;
+}
+
+.auth-switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    font-weight: 600;
+}
+
+.user-table th {
+    background: #fff8dc;
+    border-bottom: 2px solid #000;
+}
+
+.user-table td, .user-table th {
+    border-color: #d0d0d0;
+}
+
 .btn-filter {
     background-color: #b8b8b8;
     border: none;
