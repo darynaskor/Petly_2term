@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "R9o+GaxFvXk=",
+  "dgSpecHash": "zIhIjMSoCXM=",
   "success": true,
   "projectFilePath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/AppCode/Petly/Petly.csproj",
   "expectedPackageFiles": [
@@ -9,7 +9,9 @@
     "/Users/darynaskorobogatykh/.nuget/packages/microsoft.entityframeworkcore.analyzers/9.0.0/microsoft.entityframeworkcore.analyzers.9.0.0.nupkg.sha512",
     "/Users/darynaskorobogatykh/.nuget/packages/microsoft.entityframeworkcore.relational/9.0.0/microsoft.entityframeworkcore.relational.9.0.0.nupkg.sha512",
     "/Users/darynaskorobogatykh/.nuget/packages/mysqlconnector/2.4.0/mysqlconnector.2.4.0.nupkg.sha512",
-    "/Users/darynaskorobogatykh/.nuget/packages/pomelo.entityframeworkcore.mysql/9.0.0/pomelo.entityframeworkcore.mysql.9.0.0.nupkg.sha512"
+    "/Users/darynaskorobogatykh/.nuget/packages/pomelo.entityframeworkcore.mysql/9.0.0/pomelo.entityframeworkcore.mysql.9.0.0.nupkg.sha512",
+    "/Users/darynaskorobogatykh/.nuget/packages/roslynator.analyzers/4.15.0/roslynator.analyzers.4.15.0.nupkg.sha512",
+    "/Users/darynaskorobogatykh/.nuget/packages/stylecop.analyzers/1.1.118/stylecop.analyzers.1.1.118.nupkg.sha512"
   ],
   "logs": []
 }

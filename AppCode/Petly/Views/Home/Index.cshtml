@@ -5,34 +5,37 @@
 }
 
 <div class="container mt-4">
-    @* Кнопки фільтрації *@
-    <div class="d-flex gap-2 mb-4 align-items-center">
-        <button class="btn btn-filter active">Усі</button>
-        <button class="btn btn-filter">Собаки</button>
-        <button class="btn btn-filter">Коти</button>
-        <button class="btn btn-filter">Прилаштовані</button>
-        <div class="input-group ms-auto" style="max-width: 300px;">
-            <input type="text" class="form-control rounded-pill border-dark" placeholder="Пошук">
-        </div>
-    </div>
+    <form method="get" asp-controller="Home" asp-action="Index" class="d-flex gap-2 mb-4 align-items-center">
+        <button type="submit" name="typeFilter" value="Усі" 
+        class="btn btn-filter @(ViewBag.TypeFilter=="Усі"?"active":"")"
+        onclick="document.querySelector('input[name=searchTerm]').value=''">
+    Усі
+</button>
+        <button type="submit" name="typeFilter" value="Собака" class="btn btn-filter @(ViewBag.TypeFilter=="Собака"?"active":"")">Собаки</button>
+        <button type="submit" name="typeFilter" value="Кіт" class="btn btn-filter @(ViewBag.TypeFilter=="Кіт"?"active":"")">Коти</button>
+        <button type="submit" name="typeFilter" value="Прилаштовані" class="btn btn-filter @(ViewBag.TypeFilter=="Прилаштовані"?"active":"")">Прилаштовані</button>
 
-    @* Сітка карток *@
+        <div class="input-group ms-auto" style="max-width: 300px;">
+            <input type="text" name="searchTerm" class="form-control rounded-pill border-dark" placeholder="Пошук" value="@ViewBag.SearchTerm">
+            <button type="submit" class="btn btn-search rounded-pill ms-2">🔍</button>
+        </div>
+    </form>
+
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         @foreach (var p in Model)
         {
             <div class="col">
                 <div class="card h-100 pet-card">
-                    @* Перевірка на наявність фото *@
                     <img src="@(string.IsNullOrEmpty(p.PhotoUrl) ? "/images/no-photo.jpg" : p.PhotoUrl)" 
                          class="card-img-top pet-img" alt="@p.PetName">
-                    
+
                     <div class="card-body p-0">
                         <div class="d-flex border-top border-bottom border-dark">
                             <button class="btn btn-pet-action border-end border-dark">Більше</button>
                             <button class="btn btn-pet-action border-end border-dark">Допомога</button>
                             <button class="btn btn-pet-action">Адопція</button>
                         </div>
-                        
+
                         <div class="p-3 bg-light-yellow text-center">
                             <h5 class="mb-0 fw-bold">@p.PetName, @p.Type, @p.Age @p.AgeText</h5>
                         </div>
