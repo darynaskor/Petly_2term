@@ -190,3 +190,313 @@ body {
 .menu-link:hover {
     color: #FFD54F; /* колір при наведенні */
 }
+
+.need-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px;
+    align-items: stretch;
+    margin: 20px 0 28px;
+    padding: 32px;
+    border-radius: 28px;
+    background:
+        radial-gradient(circle at top left, rgba(255, 213, 79, 0.85), transparent 35%),
+        linear-gradient(135deg, #fff7da 0%, #ffe4bd 100%);
+    border: 2px solid #1f1f1f;
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.08);
+}
+
+.need-hero__content {
+    max-width: 700px;
+}
+
+.need-hero__eyebrow,
+.need-form-panel__eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.need-hero__title,
+.need-form-panel__title,
+.need-delete-card__title {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(2.4rem, 4vw, 4rem);
+    line-height: 0.95;
+    margin-bottom: 14px;
+}
+
+.need-hero__text,
+.need-form-panel__text,
+.need-delete-card__text {
+    font-size: 1.05rem;
+    max-width: 58ch;
+    margin-bottom: 0;
+}
+
+.need-hero__actions,
+.need-form__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.need-hero__badge {
+    min-width: 180px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 20px;
+    border-radius: 24px;
+    background: #fff;
+    border: 2px solid #1f1f1f;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.08);
+}
+
+.need-hero__badge span {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.need-hero__badge small {
+    text-align: center;
+    font-weight: 700;
+    color: #6a5b3d;
+}
+
+.btn-need-primary,
+.btn-need-secondary,
+.btn-need-inline,
+.btn-need-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 800;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+}
+
+.btn-need-primary {
+    background: #f4b000;
+    color: #111;
+    border: 2px solid #111;
+    box-shadow: 0 4px 0 #111;
+}
+
+.btn-need-primary:hover,
+.btn-need-secondary:hover,
+.btn-need-inline:hover,
+.btn-need-danger:hover {
+    transform: translateY(-2px);
+}
+
+.btn-need-primary:hover {
+    color: #111;
+}
+
+.btn-need-secondary {
+    background: #fff;
+    color: #111;
+    border: 2px solid #d5d5d5;
+}
+
+.btn-need-secondary:hover {
+    color: #111;
+    border-color: #111;
+}
+
+.btn-need-inline {
+    background: #fff7dc;
+    color: #111;
+    border: 2px solid #f4b000;
+}
+
+.btn-need-inline:hover {
+    color: #111;
+    background: #ffe7a1;
+}
+
+.btn-need-inline--danger,
+.btn-need-danger {
+    background: #fff1ef;
+    color: #8f2721;
+    border: 2px solid #d65a4d;
+}
+
+.btn-need-inline--danger:hover,
+.btn-need-danger:hover {
+    color: #8f2721;
+    background: #ffd8d2;
+}
+
+.need-alert {
+    border-radius: 16px;
+    border: 2px solid #7eb67e;
+    background: #effbea;
+    color: #1d5a1d;
+    font-weight: 700;
+}
+
+.need-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+    margin-bottom: 36px;
+}
+
+.need-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px;
+    border-radius: 26px;
+    border: 2px solid #1f1f1f;
+    background: linear-gradient(180deg, #fff 0%, #fffaf0 100%);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.06);
+}
+
+.need-card__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.need-card__label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #85714b;
+}
+
+.need-card__title {
+    margin: 0;
+    font-size: 1.45rem;
+    font-weight: 800;
+}
+
+.need-card__location {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1px solid #e2d5bc;
+    font-weight: 700;
+}
+
+.need-card__block {
+    padding: 14px 16px;
+    border-radius: 18px;
+    background: rgba(255, 241, 193, 0.45);
+}
+
+.need-card__text,
+.need-card__help,
+.need-delete-card__summary p {
+    margin: 0;
+    white-space: pre-line;
+}
+
+.need-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.need-empty,
+.need-delete-card,
+.need-form-card,
+.need-form-panel {
+    border: 2px solid #1f1f1f;
+    border-radius: 28px;
+    background: #fff;
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.06);
+}
+
+.need-empty {
+    padding: 48px 28px;
+    text-align: center;
+    background: linear-gradient(180deg, #fffdf6 0%, #fff7da 100%);
+}
+
+.need-form-shell {
+    display: grid;
+    grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.need-form-panel {
+    padding: 28px;
+    background: linear-gradient(180deg, #ffe5b8 0%, #ffd57d 100%);
+}
+
+.need-form-card,
+.need-delete-card {
+    padding: 28px;
+}
+
+.need-input,
+.need-textarea {
+    border: 2px solid #d8d1c4;
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: none;
+}
+
+.need-input:focus,
+.need-textarea:focus {
+    border-color: #f4b000;
+    box-shadow: 0 0 0 4px rgba(244, 176, 0, 0.18);
+}
+
+.need-delete-shell {
+    max-width: 820px;
+    margin: 20px auto 0;
+}
+
+.need-delete-card__summary {
+    display: grid;
+    gap: 16px;
+    margin: 24px 0;
+    padding: 18px;
+    border-radius: 18px;
+    background: #fff8e7;
+}
+
+@media (max-width: 768px) {
+    .need-hero,
+    .need-form-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .need-hero {
+        padding: 24px;
+    }
+
+    .need-card__top {
+        flex-direction: column;
+    }
+
+    .need-hero__badge {
+        min-width: 0;
+    }
+}

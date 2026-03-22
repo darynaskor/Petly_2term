@@ -27,7 +27,7 @@ public class HomeController : Controller
 
 public IActionResult Needs()
 {
-    return View(); // поки порожня
+    return RedirectToAction("Index", "Needs");
 }
 
 public IActionResult Adoption()

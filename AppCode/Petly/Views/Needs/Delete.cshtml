@@ -1,0 +1,36 @@
+@model Petly.Models.ShelterNeed
+
+@{
+    ViewData["Title"] = "Видалити потребу";
+}
+
+<section class="need-delete-shell">
+    <div class="need-delete-card">
+        <p class="need-form-panel__eyebrow">Delete Need</p>
+        <h1 class="need-delete-card__title">Видалити цю потребу?</h1>
+        <p class="need-delete-card__text">
+            Після видалення запис зникне зі списку потреб. Перевір, чи він справді вже неактуальний.
+        </p>
+
+        <div class="need-delete-card__summary">
+            <div>
+                <span class="need-card__label">Притулок</span>
+                <strong>@(Model.Shelter?.ShelterName ?? $"Притулок #{Model.ShelterId}")</strong>
+            </div>
+            <div>
+                <span class="need-card__label">Що потрібно</span>
+                <p>@Model.Description</p>
+            </div>
+            <div>
+                <span class="need-card__label">Як допомогти</span>
+                <p>@Model.PaymentDetails</p>
+            </div>
+        </div>
+
+        <form asp-action="Delete" method="post" class="need-form__actions">
+            <input type="hidden" name="id" value="@Model.NeedId" />
+            <button type="submit" class="btn-need-danger">Так, видалити</button>
+            <a asp-action="Index" class="btn-need-secondary">Скасувати</a>
+        </form>
+    </div>
+</section>

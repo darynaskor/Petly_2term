@@ -1,0 +1,74 @@
+@model List<Petly.Models.ShelterNeedCardViewModel>
+
+@{
+    ViewData["Title"] = "Потреби";
+    var canCreate = (bool?)ViewBag.CanCreate == true;
+}
+
+<section class="need-hero">
+    <div class="need-hero__content">
+        <h1 class="need-hero__title">Допоможи притулкам точково і швидко</h1>
+        <p class="need-hero__text">
+            Тут зібрані актуальні потреби притулків: корм, ліки, інвентар і все, що реально покращує життя тварин вже сьогодні.
+        </p>
+        <div class="need-hero__actions">
+            @if (canCreate)
+            {
+                <a asp-action="Create" class="btn-need-primary">Додати потребу</a>
+            }
+            <a asp-controller="Home" asp-action="Adoption" class="btn-need-secondary">Перейти до адопції</a>
+        </div>
+    </div>
+    <div class="need-hero__badge">
+        <span>@Model.Count</span>
+        <small>актуальних записів</small>
+    </div>
+</section>
+
+@if (TempData["Success"] is string message)
+{
+    <div class="alert alert-success need-alert mt-4">@message</div>
+}
+
+@if (Model.Count == 0)
+{
+    <section class="need-empty">
+        <h2>Поки що потреб немає</h2>
+        <p>Коли притулки додадуть нові запити, вони з’являться тут.</p>
+    </section>
+}
+else
+{
+    <section class="need-grid">
+        @foreach (var need in Model)
+        {
+            <article class="need-card">
+                <div class="need-card__top">
+                    <div>
+                        <p class="need-card__label">Притулок</p>
+                        <h2 class="need-card__title">@need.ShelterName</h2>
+                    </div>
+                    <span class="need-card__location">@need.Location</span>
+                </div>
+
+                <div class="need-card__block">
+                    <p class="need-card__label">Що потрібно</p>
+                    <p class="need-card__text">@need.Description</p>
+                </div>
+
+                <div class="need-card__block">
+                    <p class="need-card__label">Як допомогти</p>
+                    <p class="need-card__help">@need.PaymentDetails</p>
+                </div>
+
+                @if (need.CanManage)
+                {
+                    <div class="need-card__actions">
+                        <a asp-action="Edit" asp-route-id="@need.NeedId" class="btn-need-inline">Редагувати</a>
+                        <a asp-action="Delete" asp-route-id="@need.NeedId" class="btn-need-inline btn-need-inline--danger">Видалити</a>
+                    </div>
+                }
+            </article>
+        }
+    </section>
+}

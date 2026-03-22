@@ -10,6 +10,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<Pet> Pets { get; set; }
     public DbSet<Account> Accounts { get; set; }
     public DbSet<UserProfile> Users { get; set; }
+    public DbSet<Shelter> Shelters { get; set; }
+    public DbSet<ShelterNeed> ShelterNeeds { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,5 +25,10 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Account>()
             .Property(a => a.Role)
             .HasDefaultValue("user");
+
+        modelBuilder.Entity<ShelterNeed>()
+            .HasOne(sn => sn.Shelter)
+            .WithMany()
+            .HasForeignKey(sn => sn.ShelterId);
     }
 }
