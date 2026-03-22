@@ -41,7 +41,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'karpiakmarta23@gmail.com','pass123','2026-03-14 00:15:32','user'),(2,'pzakutynskyi@gmail.com','pass123','2026-03-14 00:15:32','user'),(3,'haroqub@gmail.com','pass123','2026-03-14 00:15:32','user'),(4,'skorobogatuh.dara@gmail.com','pass123','2026-03-14 00:15:32','user'),(5,'diana.magotska@petly.com','pass123','2026-03-14 00:15:32','user'),(6,'happy.paws.lviv@gmail.com','pass123','2026-03-14 00:15:32','shelter_admin'),(7,'domivka.lviv@gmail.com','pass123','2026-03-14 00:15:32','shelter_admin'),(8,'animal.rescue.ua@gmail.com','pass123','2026-03-14 00:15:32','shelter_admin'),(9,'pets.home.kyiv@gmail.com','pass123','2026-03-14 00:15:32','shelter_admin'),(10,'admin@petly.com','admin123','2026-03-14 00:15:32','system_admin');
+INSERT INTO `account` VALUES (1,'karpiakmarta23@gmail.com','pass123','2026-03-14 00:15:32','user'),(2,'pzakutynskyi@gmail.com','pass123','2026-03-14 00:15:32','user'),(3,'haroqub@gmail.com','pass123','2026-03-14 00:15:32','user'),(4,'skorobogatuh.dara@gmail.com','pass123','2026-03-14 00:15:32','user'),(5,'diana.magotska@petly.com','powershell Compress-Archive -Path Petly_2term -DestinationPath Petly_2term.zip','2026-03-14 00:15:32','user'),(6,'happy.paws.lviv@gmail.com','pass123','2026-03-14 00:15:32','shelter_admin'),(7,'domivka.lviv@gmail.com','pass123','2026-03-14 00:15:32','shelter_admin'),(8,'animal.rescue.ua@gmail.com','pass123','2026-03-14 00:15:32','shelter_admin'),(9,'pets.home.kyiv@gmail.com','pass123','2026-03-14 00:15:32','shelter_admin'),(10,'admin@petly.com','admin123','2026-03-14 00:15:32','system_admin');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 

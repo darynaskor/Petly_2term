@@ -1,0 +1,88 @@
+@model Petly.Models.Pet
+
+@{
+    ViewData["Title"] = "Редагувати тварину";
+}
+
+<h2>Редагувати тварину</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="PetId" />
+
+    <div class="form-group">
+        <label asp-for="PetName"></label>
+        <input asp-for="PetName" class="form-control" />
+        <span asp-validation-for="PetName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Type"></label>
+        <select asp-for="Type" class="form-control">
+            <option value="">Обрати</option>
+            @foreach (var type in new[] { "Dog", "Cat", "Собака", "Кіт" })
+            {
+                <option value="@type" selected="@(Model.Type == type ? "selected" : null)">@type</option>
+            }
+        </select>
+        <span asp-validation-for="Type" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Breed"></label>
+        <input asp-for="Breed" class="form-control" />
+        <span asp-validation-for="Breed" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Gender"></label>
+        <select asp-for="Gender" class="form-control">
+            <option value="">Обрати</option>
+            @foreach (var gender in new[] { "Male", "Female", "Хлопчик", "Дівчинка" })
+            {
+                <option value="@gender" selected="@(Model.Gender == gender ? "selected" : null)">@gender</option>
+            }
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Age"></label>
+        <input asp-for="Age" type="number" class="form-control" min="0" />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Size"></label>
+        <select asp-for="Size" class="form-control">
+            <option value="">Обрати</option>
+            @foreach (var size in new[] { "Small", "Medium", "Large", "Маленький", "Середній", "Великий" })
+            {
+                <option value="@size" selected="@(Model.Size == size ? "selected" : null)">@size</option>
+            }
+        </select>
+        <span asp-validation-for="Size" class="text-danger"></span>
+    </div>
+
+    <div class="form-check">
+        <input asp-for="Vaccinated" class="form-check-input" />
+        <label asp-for="Vaccinated" class="form-check-label">Вакцинована</label>
+    </div>
+
+    <div class="form-check">
+        <input asp-for="Sterilized" class="form-check-input" />
+        <label asp-for="Sterilized" class="form-check-label">Стерилізована</label>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-warning">Зберегти</button>
+    <a asp-action="Index" class="btn btn-secondary">Назад</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

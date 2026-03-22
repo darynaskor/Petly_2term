@@ -27,9 +27,9 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav mx-auto"> <!-- mx-auto по центру -->
+                        <ul class="navbar-nav mx-auto">
                             <li class="nav-item">
-                                <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="Index">Тварини</a>
+                                <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="Index">Головна</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="About">Про Нас</a>
@@ -40,18 +40,32 @@
                             <li class="nav-item">
                                 <a class="nav-link menu-link" asp-area="" asp-controller="Home" asp-action="Adoption">Адопція</a>
                             </li>
+
+                            @* Додано вкладку CRUD для тварин *@
+                            @{
+                                var role = HttpCtx.HttpContext?.Session.GetString("Role");
+                            }
+                            @if (role == "shelter_admin" || role == "system_admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" asp-area="" asp-controller="Pets" asp-action="Index">Тварини</a>
+                                </li>
+                            }
                         </ul>
-                        @{
-                            var userName = HttpCtx.HttpContext?.Session.GetString("UserName");
-                            var role = HttpCtx.HttpContext?.Session.GetString("Role");
-                        }
+
                         <ul class="navbar-nav ms-auto align-items-center gap-2">
+                            @{
+                                var userName = HttpCtx.HttpContext?.Session.GetString("UserName");
+                            }
+
+                            @* CRUD для користувачів доступний лише system_admin *@
                             @if (role == "system_admin")
                             {
                                 <li class="nav-item">
                                     <a class="nav-link menu-link" asp-area="" asp-controller="Account" asp-action="Users">Користувачі</a>
                                 </li>
                             }
+
                             @if (!string.IsNullOrEmpty(userName))
                             {
                                 <li class="nav-item">

@@ -27,7 +27,6 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -35,8 +34,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // для wwwroot
-
+app.UseStaticFiles(); 
 app.UseRouting();
 app.UseSession();
 

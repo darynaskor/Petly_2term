@@ -8,5 +8,20 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     public DbSet<Pet> Pets { get; set; }
-    // Можна додати DbSet<Account>, DbSet<Shelter> і т.д.
+    public DbSet<Account> Accounts { get; set; }
+    public DbSet<UserProfile> Users { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<UserProfile>()
+            .HasOne(up => up.Account)
+            .WithOne(a => a.UserProfile)
+            .HasForeignKey<UserProfile>(up => up.AccountId);
+
+        modelBuilder.Entity<Account>()
+            .Property(a => a.Role)
+            .HasDefaultValue("user");
+    }
 }

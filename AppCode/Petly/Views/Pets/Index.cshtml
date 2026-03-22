@@ -1,0 +1,64 @@
+@model List<Petly.Models.Pet>
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Тварини";
+    var role = HttpContextAccessor.HttpContext.Session.GetString("Role");
+    var accountId = HttpContextAccessor.HttpContext.Session.GetInt32("AccountId");
+}
+
+<h2>Тварини</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (role == "shelter_admin")
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Додати тварину</a>
+    </p>
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ім'я</th>
+            <th>Тип</th>
+            <th>Порода</th>
+            <th>Вік</th>
+            <th>Стать</th>
+            <th>Розмір</th>
+            <th>Вакцинована</th>
+            <th>Стерилізована</th>
+            <th>Статус</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var pet in Model)
+    {
+        <tr>
+            <td>@pet.PetName</td>
+            <td>@pet.Type</td>
+            <td>@pet.Breed</td>
+            <td>@pet.AgeText</td>
+            <td>@pet.Gender</td>
+            <td>@pet.Size</td>
+            <td>@(pet.Vaccinated ? "Так" : "Ні")</td>
+            <td>@(pet.Sterilized ? "Так" : "Ні")</td>
+            <td>@pet.Status</td>
+            <td>
+                <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@pet.PetId">Переглянути</a>
+
+                @if (role == "shelter_admin" && pet.ShelterId == accountId)
+                {
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@pet.PetId">Редагувати</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@pet.PetId">Видалити</a>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -13,14 +13,22 @@ public class PetService
         _context = context;
     }
 
-    // Отримання всіх тварин
+    // Отримати всі тварини (для system_admin)
     public async Task<List<Pet>> GetAllPetsAsync()
     {
         return await _context.Pets.ToListAsync();
     }
 
-    // Фільтрація та пошук за PetName і Type
-    public async Task<List<Pet>> GetPetsAsync(string typeFilter = null, string searchTerm = null)
+    // Отримати тварин конкретного притулку
+    public async Task<List<Pet>> GetPetsByShelterAsync(int shelterId)
+    {
+        return await _context.Pets
+            .Where(p => p.ShelterId == shelterId)
+            .ToListAsync();
+    }
+
+    // Пошук та фільтрація за типом і ім'ям
+    public async Task<List<Pet>> GetPetsAsync(string? typeFilter = null, string? searchTerm = null)
     {
         var pets = _context.Pets.AsQueryable();
 
@@ -35,5 +43,40 @@ public class PetService
         }
 
         return await pets.ToListAsync();
+    }
+
+    public async Task<Pet?> GetPetAsync(int petId)
+    {
+        return await _context.Pets.FirstOrDefaultAsync(p => p.PetId == petId);
+    }
+
+    public async Task AddPetAsync(Pet pet)
+    {
+        _context.Pets.Add(pet);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdatePetAsync(Pet pet)
+    {
+        _context.Pets.Update(pet);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeletePetAsync(int petId)
+    {
+        var pet = await GetPetAsync(petId);
+        if (pet != null)
+        {
+            _context.Pets.Remove(pet);
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    // Для звичайних користувачів — лише доступні тварини
+    public async Task<List<Pet>> GetAvailablePetsAsync()
+    {
+        return await _context.Pets
+            .Where(p => p.Status == "Available")
+            .ToListAsync();
     }
 }

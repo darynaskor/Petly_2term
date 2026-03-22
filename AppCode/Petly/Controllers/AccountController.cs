@@ -132,11 +132,16 @@ public class AccountController : Controller
     }
 
     private void SetSession(Account account)
-    {
-        HttpContext.Session.SetInt32("AccountId", account.Id);
-        HttpContext.Session.SetString("UserName", account.UserProfile?.Name ?? account.Email);
-        HttpContext.Session.SetString("Role", account.Role);
-    }
+{
+    HttpContext.Session.SetInt32("AccountId", account.Id);
+    HttpContext.Session.SetString("UserName", account.UserProfile?.Name ?? account.Email);
+    HttpContext.Session.SetString("Role", account.Role);
+
+    
+    HttpContext.Session.SetString("UserEmail", account.Email);
+}
 
     private bool IsAdmin() => HttpContext.Session.GetString("Role") == "system_admin";
+
+    private bool IsShelterAdmin() => HttpContext.Session.GetString("Role") == "shelter_admin";
 }
