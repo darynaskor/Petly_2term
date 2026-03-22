@@ -1,4 +1,4 @@
-@model List<Petly.Models.UserProfile>
+@model List<Petly.Models.AdminUserViewModel>
 @{
     ViewData["Title"] = "Користувачі";
 }
@@ -25,7 +25,7 @@
             <tr>
                 <th>#</th>
                 <th>Ім'я</th>
-                <th>Прізвище</th>
+                <th>Прізвище / Притулок</th>
                 <th>Email</th>
                 <th>Роль</th>
                 <th>Статус</th>
@@ -38,12 +38,21 @@
             {
                 <tr>
                     <td>@u.AccountId</td>
-                    <td>@u.Name</td>
-                    <td>@u.Surname</td>
-                    <td>@u.Account?.Email</td>
-                    <td>@u.Account?.Role</td>
+                    <td>@(string.IsNullOrWhiteSpace(u.Name) ? "—" : u.Name)</td>
+                    <td>
+                        @if (u.Role == "shelter_admin")
+                        {
+                            @(u.ShelterName ?? "—")
+                        }
+                        else
+                        {
+                            @(string.IsNullOrWhiteSpace(u.Surname) ? "—" : u.Surname)
+                        }
+                    </td>
+                    <td>@u.Email</td>
+                    <td>@u.Role</td>
                     <td>@u.Status</td>
-                    <td>@u.Account?.RegistrationDate.ToString("yyyy-MM-dd")</td>
+                    <td>@u.RegistrationDate.ToString("yyyy-MM-dd")</td>
                     <td class="text-end">
                         <a asp-action="Edit" asp-route-id="@u.AccountId" class="btn btn-sm btn-outline-primary me-2">Редагувати</a>
                         <form asp-action="Delete" asp-route-id="@u.AccountId" method="post" class="d-inline">

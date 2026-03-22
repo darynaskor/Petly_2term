@@ -1,5 +1,4 @@
-/* --- Кнопки фільтрів (Усі, Собаки, Коти) --- */
-@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chewy&family=Space+Grotesk:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap');
 
 body {
     font-family: 'Nunito', sans-serif;
@@ -33,7 +32,7 @@ body {
 }
 
 .auth-title {
-    font-family: 'Caveat', cursive;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 2rem;
     font-weight: 700;
     text-align: center;
@@ -113,7 +112,6 @@ body {
     cursor: pointer;
 }
 
-/* Наведення на кнопки фільтрів */
 .btn-filter:hover {
     background-color: #FFD54F; 
 }
@@ -124,7 +122,6 @@ body {
     font-weight: bold;
 }
 
-/* --- Картка тварини --- */
 .pet-card {
     border: 2px solid #000;
     border-radius: 25px;
@@ -144,7 +141,6 @@ body {
     border-radius: 35px; 
 }
 
-/* --- Кнопки під фото тварини --- */
 .btn-pet-action {
     background-color: #b8b8b8; 
     border: none;
@@ -156,7 +152,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Ефект наведення на кнопки під фото */
 .btn-pet-action:hover {
     background-color: #71b1e5 !important; 
     color: #000;
@@ -168,9 +163,9 @@ body {
 
 
 .btn-search {
-    border: 2px solid #b8b8b8; /* тут колір рамки */
-    background-color: #FFD54F; /* фон кнопки */
-    color: #fff; /* колір тексту/іконки */
+    border: 2px solid #b8b8b8; 
+    background-color: #FFD54F; 
+    color: #fff; 
     transition: all 0.3s ease;
 }
 
@@ -180,15 +175,15 @@ body {
 }
 
 .menu-link {
-    font-size: 1.2rem; /* трохи більший шрифт */
-    font-weight: bold; /* жирний */
+    font-size: 1.2rem; 
+    font-weight: bold; 
     color: #333;
     margin: 0 15px;
     transition: color 0.3s;
 }
 
 .menu-link:hover {
-    color: #FFD54F; /* колір при наведенні */
+    color: #FFD54F;
 }
 
 .need-hero {
@@ -201,7 +196,7 @@ body {
     border-radius: 28px;
     background:
         radial-gradient(circle at top left, rgba(255, 213, 79, 0.85), transparent 35%),
-        linear-gradient(135deg, #fff7da 0%, #ffe4bd 100%);
+        linear-gradient(135deg, #ffe893 0%, #ffe4bd 100%);
     border: 2px solid #1f1f1f;
     box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.08);
 }
@@ -227,7 +222,7 @@ body {
 .need-hero__title,
 .need-form-panel__title,
 .need-delete-card__title {
-    font-family: 'Caveat', cursive;
+    font-family: 'Space Grotesk', sans-serif;
     font-size: clamp(2.4rem, 4vw, 4rem);
     line-height: 0.95;
     margin-bottom: 14px;

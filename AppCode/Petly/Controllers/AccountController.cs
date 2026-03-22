@@ -77,21 +77,10 @@ public class AccountController : Controller
     {
         if (!IsAdmin()) return Forbid();
         var profile = await _accountService.GetUserAsync(id);
-        if (profile == null || profile.Account == null)
+        if (profile == null)
             return NotFound();
 
-        var model = new UserEditViewModel
-        {
-            AccountId = profile.AccountId,
-            Name = profile.Name ?? string.Empty,
-            Surname = profile.Surname ?? string.Empty,
-            Email = profile.Account.Email,
-            Role = profile.Account.Role,
-            Status = profile.Status ?? "Активний",
-            Password = string.Empty
-        };
-
-        return View(model);
+        return View(profile);
     }
 
     [HttpPost]
