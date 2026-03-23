@@ -28,7 +28,8 @@
                 <p><strong>Стерилізація:</strong> @(Model.Sterilized ? "Так" : "Ні")</p>
                 <p><strong>Опис:</strong> @Model.Description</p>
 
-                <a asp-action="Index" class="btn btn-secondary">Назад</a>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Назад</a>
+                <a asp-action="Adopt" asp-route-id="@Model.PetId" class="btn btn-warning"> Адопція</a>
 
                 @if (role == "shelter_admin" && Model.ShelterId == accountId)
                 {

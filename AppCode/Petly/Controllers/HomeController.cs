@@ -32,6 +32,9 @@ public IActionResult Needs()
 
 public IActionResult Adoption()
 {
-    return View(); // поки порожня
+    
+    return RedirectToAction("Index", "Adoption");
 }
+
+
 }

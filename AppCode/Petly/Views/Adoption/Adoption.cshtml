@@ -1,0 +1,92 @@
+@model List<Petly.Models.AdoptionApplication>
+
+@{
+    ViewData["Title"] = "Мої заявки";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4" style="color: #333;">Мої заявки на адопцію</h2>
+
+    
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+    <tr>
+        <th>Тварина</th>
+        <th>Дата подачі</th>
+        <th>Статус</th>
+        <th>Дії</th>
+    </tr>
+</thead>
+                <tbody>
+                    @foreach (var app in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="Pets" asp-action="Details" asp-route-id="@app.PetId" 
+                                   style="text-decoration: none; font-weight: bold; color: #d4a373;">
+                                    @(app.Pet != null ? app.Pet.PetName : "Невідома тварина")
+                                </a>
+                            </td>
+                            <td>@app.SubmissionDate.ToShortDateString()</td>
+                            <td>
+                                @if (app.Status == "Очікує")
+                                {
+                                    <span class="badge bg-warning text-dark">Очікує</span>
+                                }
+                                else if (app.Status == "Схвалено")
+                                {
+                                    <span class="badge bg-success">Схвалено</span>
+                                }
+                                else if (app.Status == "Відхилено")
+                                {
+                                    <span class="badge bg-danger">Відхилено</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">@app.Status</span>
+                                }
+                            </td>
+                            <td>
+    @if (ViewBag.IsAdmin == true)
+    {
+
+        @if (app.Status == "Очікує")
+        {
+            <form asp-controller="Adoption" asp-action="Approve" asp-route-adoptId="@app.AdoptId" method="post" style="display:inline-block; margin-right: 5px;">
+                <button type="submit" class="btn btn-sm btn-success">Схвалити</button>
+            </form>
+            <form asp-controller="Adoption" asp-action="Reject" asp-route-adoptId="@app.AdoptId" method="post" style="display:inline-block;">
+                <button type="submit" class="btn btn-sm btn-danger">Відхилити</button>
+            </form>
+        }
+    }
+    else
+    {
+
+        @if (app.Status == "Очікує")
+        {
+            <form asp-controller="Adoption" asp-action="Delete" asp-route-adoptId="@app.AdoptId" method="post" style="display:inline-block;" 
+                  onsubmit="return confirm('Ви впевнені, що хочете скасувати цю заявку?');">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Скасувати заявку</button>
+            </form>
+        }
+    }
+</td>
+                        </tr>
+                        
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" style="background-color: #fff3c4; border-color: #ffd966; color: #333;" role="alert">
+            У вас ще немає поданих заявок на адопцію. 
+            <a asp-controller="Home" asp-action="Index" style="font-weight: bold; color: #d4a373;">Переглянути тваринок, які шукають дім</a>.
+        </div>
+    }
+</div>

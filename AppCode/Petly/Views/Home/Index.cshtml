@@ -31,9 +31,17 @@
 
                     <div class="card-body p-0">
                         <div class="d-flex border-top border-bottom border-dark">
-                            <button class="btn btn-pet-action border-end border-dark">Більше</button>
-                            <button class="btn btn-pet-action border-end border-dark">Допомога</button>
-                            <button class="btn btn-pet-action">Адопція</button>
+                            <a href="/Pets/Details/@p.PetId" class="btn btn-pet-action border-end border-dark">
+    Більше
+</a>
+
+<a href="/Needs/Index?shelterId=@p.ShelterId" class="btn btn-pet-action border-end border-dark">
+    Допомога
+</a>
+
+<a href="/Pets/Adopt/@p.PetId" class="btn btn-pet-action">
+    Адопція
+</a>
                         </div>
 
                         <div class="p-3 bg-light-yellow text-center">

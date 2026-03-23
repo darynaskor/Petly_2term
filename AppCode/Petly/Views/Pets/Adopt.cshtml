@@ -1,0 +1,56 @@
+@model Petly.Models.Pet
+
+@{
+    ViewData["Title"] = "Підтвердження адопції";
+}
+
+<div style="display: flex; justify-content: center; align-items: center; min-height: 70vh; margin-top: 20px;">
+    
+    <div style="width: 400px; background: #fff3c4; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        
+
+        <a asp-controller="Pets" asp-action="Details" asp-route-id="@Model.PetId" 
+           style="display:inline-block; margin-bottom: 15px; text-decoration:none; color:#555; font-size: 0.9em;">
+            ← Назад до опису
+        </a>
+
+        <h2 style="margin-bottom: 20px; color: #333;">Підтвердження адопції</h2>
+
+        <p style="margin-bottom: 15px; font-size: 1.1em;">Ви хочете подати заявку на:</p>
+
+
+        <div style="background: #ffd966; padding: 20px; border-radius: 15px; margin-bottom: 25px; border: 1px solid #f1c40f;">
+            <b style="font-size: 1.3em; display: block; margin-bottom: 5px;">@Model.PetName</b>
+            <span style="color: #444;">@Model.Type, @Model.Age @Model.AgeText</span>
+        </div>
+
+
+        <form asp-controller="Adoption" asp-action="Adopt" method="post">
+            @Html.AntiForgeryToken()
+
+
+            <input type="hidden" name="petId" value="@Model.PetId" /> 
+
+            <button type="submit" 
+                style="
+                    background-color: #ffcc00;
+                    border: none; 
+                    padding: 15px 35px;
+                    border-radius: 12px;
+                    font-weight: bold; 
+                    font-size: 1.1em;
+                    cursor: pointer; [cite: 10]
+                    transition: background 0.3s ease;
+                    width: 100%;
+                "
+                onmouseover="this.style.backgroundColor='#e6b800'" 
+                onmouseout="this.style.backgroundColor='#ffcc00'">
+                Подати заявку
+            </button>
+        </form>
+
+        <p style="margin-top: 20px; font-size: 0.85em; color: #777;">
+            Після натискання ваші дані будуть надіслані притулку для розгляду.
+        </p>
+    </div>
+</div>

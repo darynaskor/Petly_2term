@@ -146,4 +146,14 @@ public class PetsController : Controller
         TempData["Success"] = "Тварину видалено!";
         return RedirectToAction(nameof(Index));
     }
+
+
+// GET: /Pets/Adopt/5
+public async Task<IActionResult> Adopt(int id)
+{
+    var pet = await _petService.GetPetAsync(id);
+    if (pet == null) return NotFound();
+
+    return View(pet);
+}
 }

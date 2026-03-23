@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<PetService>();
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<NeedService>();
+builder.Services.AddScoped<AdoptionService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(options =>
 {
