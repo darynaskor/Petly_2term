@@ -317,43 +317,36 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HP\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/darynaskorobogatykh/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\HP\\Petly_2term\\Petly_2term\\AppCode\\Petly\\Petly.csproj",
+      "projectUniqueName": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly/Petly.csproj",
       "projectName": "Petly",
-      "projectPath": "C:\\Users\\HP\\Petly_2term\\Petly_2term\\AppCode\\Petly\\Petly.csproj",
-      "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\HP\\Petly_2term\\Petly_2term\\AppCode\\Petly\\obj\\",
+      "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly/Petly.csproj",
+      "packagesPath": "/Users/darynaskorobogatykh/.nuget/packages/",
+      "outputPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/darynaskorobogatykh/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
+        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\HP\\Petly_2term\\Petly_2term\\AppCode\\Petly.Business\\Petly.Business.csproj": {
-              "projectPath": "C:\\Users\\HP\\Petly_2term\\Petly_2term\\AppCode\\Petly.Business\\Petly.Business.csproj"
+            "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/Petly.Business.csproj": {
+              "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/Petly.Business.csproj"
             },
-            "C:\\Users\\HP\\Petly_2term\\Petly_2term\\AppCode\\Petly.Models\\Petly.Models.csproj": {
-              "projectPath": "C:\\Users\\HP\\Petly_2term\\Petly_2term\\AppCode\\Petly.Models\\Petly.Models.csproj"
+            "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj": {
+              "projectPath": "/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Models/Petly.Models.csproj"
             }
           }
         }
@@ -368,7 +361,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.200"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net10.0": {
@@ -406,7 +399,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.102/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

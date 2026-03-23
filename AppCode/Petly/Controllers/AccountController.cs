@@ -30,7 +30,7 @@ public class AccountController : Controller
         var account = await _accountService.GetByCredentialsAsync(model.Email, model.Password);
         if (account == null)
         {
-            ModelState.AddModelError(string.Empty, "Невірний email або пароль");
+            ModelState.AddModelError(string.Empty, "Неправильний email або пароль");
             return View(model);
         }
 

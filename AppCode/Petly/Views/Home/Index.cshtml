@@ -26,7 +26,11 @@
         {
             <div class="col">
                 <div class="card h-100 pet-card">
-                    <img src="@(string.IsNullOrEmpty(p.PhotoUrl) ? "/images/no-photo.jpg" : p.PhotoUrl)" 
+                    <img src="@(string.IsNullOrEmpty(p.PhotoUrl) 
+                        ? "/images/pets/no-photo.svg" 
+                        : p.PhotoUrl.StartsWith("http", System.StringComparison.OrdinalIgnoreCase) 
+                            ? p.PhotoUrl 
+                            : "/" + p.PhotoUrl.TrimStart('/'))" 
                          class="card-img-top pet-img" alt="@p.PetName">
 
                     <div class="card-body p-0">

@@ -11,12 +11,14 @@
 
 <div class="card mb-3" style="max-width: 600px;">
     <div class="row g-0">
-        @if (!string.IsNullOrEmpty(Model.PhotoUrl))
-        {
-            <div class="col-md-4">
-                <img src="@Model.PhotoUrl" class="img-fluid rounded-start" alt="@Model.PetName" />
-            </div>
-        }
+        <div class="col-md-4">
+            <img src="@(string.IsNullOrEmpty(Model.PhotoUrl) 
+                ? "/images/pets/no-photo.svg" 
+                : Model.PhotoUrl.StartsWith("http", System.StringComparison.OrdinalIgnoreCase) 
+                    ? Model.PhotoUrl 
+                    : "/" + Model.PhotoUrl.TrimStart('/'))" 
+                 class="img-fluid rounded-start" alt="@Model.PetName" />
+        </div>
         <div class="col-md-8">
             <div class="card-body">
                 <p><strong>Тип:</strong> @Model.Type</p>

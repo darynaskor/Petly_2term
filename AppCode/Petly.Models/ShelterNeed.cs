@@ -13,11 +13,11 @@ public class ShelterNeed
     [Column("shelterId")]
     public int ShelterId { get; set; }
 
-    [Required(ErrorMessage = "Опиши, що саме потрібно")]
+    [Required(ErrorMessage = "Додайте опис потреби")]
     [Column("description")]
     public string Description { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Додай спосіб допомоги або оплати")]
+    [Required(ErrorMessage = "Додайте спосіб допомоги або оплати")]
     [Column("paymentDetails")]
     [StringLength(255)]
     public string PaymentDetails { get; set; } = string.Empty;

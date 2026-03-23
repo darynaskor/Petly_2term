@@ -42,22 +42,31 @@ public class UserEditViewModel
 {
     public int AccountId { get; set; }
 
-    [Required(ErrorMessage = "Введіть ім'я")]
     public string Name { get; set; } = string.Empty;
 
-    [Required(ErrorMessage = "Введіть прізвище")]
     public string Surname { get; set; } = string.Empty;
 
     [Required]
     [EmailAddress]
     public string Email { get; set; } = string.Empty;
 
-    [Required]
     public string Role { get; set; } = "user";
 
-    [Required]
     public string Status { get; set; } = "Активний";
 
     [DataType(DataType.Password)]
     public string Password { get; set; } = string.Empty;
+}
+
+// Використовується системним адміністратором для списку всіх акаунтів
+public class AdminUserViewModel
+{
+    public int AccountId { get; set; }
+    public string? Name { get; set; }
+    public string? Surname { get; set; }
+    public string Email { get; set; } = string.Empty;
+    public string Role { get; set; } = "user";
+    public string Status { get; set; } = "Активний";
+    public DateTime RegistrationDate { get; set; }
+    public string? ShelterName { get; set; }
 }

@@ -8,6 +8,7 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     public DbSet<Pet> Pets { get; set; }
+    public DbSet<AdoptionApplication> AdoptionApplications { get; set; }
     public DbSet<Account> Accounts { get; set; }
     public DbSet<UserProfile> Users { get; set; }
     public DbSet<Shelter> Shelters { get; set; }

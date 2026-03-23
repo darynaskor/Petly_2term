@@ -51,21 +51,75 @@ C:/Users/Діана/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.B
 C:/Users/Діана/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/refint/Petly.Business.dll
 C:/Users/Діана/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.pdb
 C:/Users/Діана/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/ref/Petly.Business.dll
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\bin\Debug\net10.0\Petly.Business.deps.json
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\bin\Debug\net10.0\Petly.Business.dll
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\bin\Debug\net10.0\Petly.Business.pdb
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\bin\Debug\net10.0\Petly.DataAccess.dll
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\bin\Debug\net10.0\Petly.Models.dll
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\bin\Debug\net10.0\Petly.DataAccess.pdb
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\bin\Debug\net10.0\Petly.Models.pdb
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Business.csproj.AssemblyReference.cache
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Business.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Business.AssemblyInfoInputs.cache
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Business.AssemblyInfo.cs
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Business.csproj.CoreCompileInputs.cache
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Business.sourcelink.json
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Bu.9D0928F6.Up2Date
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Business.dll
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\obj\Debug\net10.0\refint\Petly.Business.dll
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Business.pdb
-C:\Users\Діана\Desktop\Програмна інженерія\Petly_2term\Petly_2term\AppCode\Petly.Business\obj\Debug\net10.0\ref\Petly.Business.dll
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.deps.json
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.dll
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.pdb
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.DataAccess.dll
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Models.dll
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.DataAccess.pdb
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Models.pdb
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.csproj.AssemblyReference.cache
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.AssemblyInfoInputs.cache
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.AssemblyInfo.cs
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.csproj.CoreCompileInputs.cache
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.sourcelink.json
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Bu.9D0928F6.Up2Date
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.dll
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/refint/Petly.Business.dll
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.pdb
+C:/Users/Діана/Desktop/Програмна інженерія/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/ref/Petly.Business.dll
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.deps.json
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.dll
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.pdb
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.DataAccess.dll
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Models.dll
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.DataAccess.pdb
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Models.pdb
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.csproj.AssemblyReference.cache
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.AssemblyInfoInputs.cache
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.AssemblyInfo.cs
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.csproj.CoreCompileInputs.cache
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.sourcelink.json
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Bu.9D0928F6.Up2Date
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.dll
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/refint/Petly.Business.dll
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.pdb
+C:/Users/HP/Downloads/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/ref/Petly.Business.dll
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.deps.json
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.dll
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.pdb
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.DataAccess.dll
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Models.dll
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.DataAccess.pdb
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Models.pdb
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.csproj.AssemblyReference.cache
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.AssemblyInfoInputs.cache
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.AssemblyInfo.cs
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.csproj.CoreCompileInputs.cache
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.sourcelink.json
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Bu.9D0928F6.Up2Date
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.dll
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/refint/Petly.Business.dll
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.pdb
+C:/Users/HP/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/ref/Petly.Business.dll
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.deps.json
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.dll
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Business.pdb
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.DataAccess.dll
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Models.dll
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.DataAccess.pdb
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/bin/Debug/net10.0/Petly.Models.pdb
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.csproj.AssemblyReference.cache
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.GeneratedMSBuildEditorConfig.editorconfig
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.AssemblyInfoInputs.cache
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.AssemblyInfo.cs
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.csproj.CoreCompileInputs.cache
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.sourcelink.json
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Bu.9D0928F6.Up2Date
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.dll
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/refint/Petly.Business.dll
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/Petly.Business.pdb
+/Users/darynaskorobogatykh/Desktop/Petly_2term/Petly_2term/AppCode/Petly.Business/obj/Debug/net10.0/ref/Petly.Business.dll
