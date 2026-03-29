@@ -16,7 +16,6 @@ public class AdoptionController : Controller
         _petService = petService;
     }
 
-    // GET: /Adoption
     public async Task<IActionResult> Index()
     {
         string? role = HttpContext.Session.GetString("Role");
@@ -42,7 +41,6 @@ public class AdoptionController : Controller
         }
     }
 
-    // GET: /Adoption/Create/5
     public async Task<IActionResult> Create(int petId)
     {
         var pet = await _petService.GetPetAsync(petId);
@@ -51,7 +49,6 @@ public class AdoptionController : Controller
         return View("Adopt", pet);
     }
 
-    // POST: /Adoption/Adopt
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Adopt(int petId)
@@ -67,7 +64,6 @@ public class AdoptionController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    // POST: /Adoption/Approve/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Approve(int adoptId)
@@ -79,7 +75,6 @@ public class AdoptionController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    // POST: /Adoption/Reject/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Reject(int adoptId)
