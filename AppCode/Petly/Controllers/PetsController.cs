@@ -15,7 +15,6 @@ public class PetsController : Controller
         _petService = petService;
     }
 
-    // GET: /Pets
     public async Task<IActionResult> Index()
     {
         string? role = HttpContext.Session.GetString("Role");
@@ -38,7 +37,6 @@ public class PetsController : Controller
         }
     }
 
-    // GET: /Pets/Details/5
     public async Task<IActionResult> Details(int id)
     {
         var pet = await _petService.GetPetAsync(id);
@@ -46,14 +44,12 @@ public class PetsController : Controller
         return View(pet);
     }
 
-    // GET: /Pets/Create
     public IActionResult Create()
     {
         if (HttpContext.Session.GetString("Role") != "shelter_admin") return Forbid();
         return View();
     }
 
-    // POST: /Pets/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Pet pet)
@@ -67,7 +63,6 @@ public class PetsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    // GET: /Pets/Edit/5
     public async Task<IActionResult> Edit(int id)
     {
         var pet = await _petService.GetPetAsync(id);
@@ -82,7 +77,6 @@ public class PetsController : Controller
         return View(pet);
     }
 
-    // POST: /Pets/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Pet pet)
@@ -113,7 +107,6 @@ public class PetsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    // GET: /Pets/Delete/5
     public async Task<IActionResult> Delete(int id)
     {
         var pet = await _petService.GetPetAsync(id);
@@ -128,7 +121,6 @@ public class PetsController : Controller
         return View(pet);
     }
 
-    // POST: /Pets/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
@@ -148,7 +140,6 @@ public class PetsController : Controller
     }
 
 
-// GET: /Pets/Adopt/5
 public async Task<IActionResult> Adopt(int id)
 {
     var pet = await _petService.GetPetAsync(id);
