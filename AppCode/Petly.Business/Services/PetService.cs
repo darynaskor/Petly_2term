@@ -13,13 +13,11 @@ public class PetService
         _context = context;
     }
 
-    // Отримати всі тварини (для system_admin)
     public async Task<List<Pet>> GetAllPetsAsync()
     {
         return await _context.Pets.ToListAsync();
     }
 
-    // Отримати тварин конкретного притулку
     public async Task<List<Pet>> GetPetsByShelterAsync(int shelterId)
     {
         return await _context.Pets
@@ -27,7 +25,6 @@ public class PetService
             .ToListAsync();
     }
 
-    // Пошук та фільтрація за типом і ім'ям
     public async Task<List<Pet>> GetPetsAsync(string? typeFilter = null, string? searchTerm = null)
     {
         var pets = _context.Pets.AsQueryable();
@@ -72,7 +69,6 @@ public class PetService
         }
     }
 
-    // Для звичайних користувачів — лише доступні тварини
     public async Task<List<Pet>> GetAvailablePetsAsync()
     {
         return await _context.Pets
