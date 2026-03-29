@@ -1,4 +1,4 @@
-@model Petly.Models.Pet
+@model Petly.Models.Pet 
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
@@ -7,37 +7,44 @@
     var accountId = HttpContextAccessor.HttpContext.Session.GetInt32("AccountId");
 }
 
-<h2>@Model.PetName</h2>
+<div class="mb-3">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">&larr; Назад</a>
+</div>
 
-<div class="card mb-3" style="max-width: 600px;">
-    <div class="row g-0">
-        <div class="col-md-4">
+<div class="card mb-4 shadow-lg p-3" style="max-width: 850px; margin: 0 auto; border-radius: 15px;">
+    <div class="row g-0 align-items-center">
+        <div class="col-md-4 text-center">
             <img src="@(string.IsNullOrEmpty(Model.PhotoUrl) 
                 ? "/images/pets/no-photo.svg" 
                 : Model.PhotoUrl.StartsWith("http", System.StringComparison.OrdinalIgnoreCase) 
                     ? Model.PhotoUrl 
                     : "/" + Model.PhotoUrl.TrimStart('/'))" 
-                 class="img-fluid rounded-start" alt="@Model.PetName" />
+                 class="img-fluid rounded mb-2" alt="@Model.PetName" />
+            <h5 class="mt-2">@Model.PetName</h5>
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <p><strong>Тип:</strong> @Model.Type</p>
-                <p><strong>Порода:</strong> @Model.Breed</p>
-                <p><strong>Стать:</strong> @Model.Gender</p>
-                <p><strong>Вік:</strong> @Model.Age @Model.AgeText</p>
-                <p><strong>Розмір:</strong> @Model.Size</p>
-                <p><strong>Вакцинація:</strong> @(Model.Vaccinated ? "Так" : "Ні")</p>
-                <p><strong>Стерилізація:</strong> @(Model.Sterilized ? "Так" : "Ні")</p>
-                <p><strong>Опис:</strong> @Model.Description</p>
+                <ul class="list-unstyled mb-4">
+                    <li><strong>Тип:</strong> @Model.Type</li>
+                    <li><strong>Порода:</strong> @Model.Breed</li>
+                    <li><strong>Стать:</strong> @Model.Gender</li>
+                    <li><strong>Вік:</strong> @Model.Age @Model.AgeText</li>
+                    <li><strong>Розмір:</strong> @Model.Size</li>
+                    <li><strong>Вакцинація:</strong> @(Model.Vaccinated ? "Так" : "Ні")</li>
+                    <li><strong>Стерилізація:</strong> @(Model.Sterilized ? "Так" : "Ні")</li>
+                    <li><strong>Опис:</strong> @Model.Description</li>
+                </ul>
 
-                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Назад</a>
-                <a asp-action="Adopt" asp-route-id="@Model.PetId" class="btn btn-warning"> Адопція</a>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a asp-action="Adopt" asp-route-id="@Model.PetId" class="btn btn-warning">Адопція</a>
+                    <a href="/Needs/Index?shelterId=@Model.ShelterId" class="btn btn-info border-end border-dark">Допомога</a>
 
-                @if (role == "shelter_admin" && Model.ShelterId == accountId)
-                {
-                    <a asp-action="Edit" asp-route-id="@Model.PetId" class="btn btn-warning">Редагувати</a>
-                    <a asp-action="Delete" asp-route-id="@Model.PetId" class="btn btn-danger">Видалити</a>
-                }
+                    @if (role == "shelter_admin" && Model.ShelterId == accountId)
+                    {
+                        <a asp-action="Edit" asp-route-id="@Model.PetId" class="btn btn-warning">Редагувати</a>
+                        <a asp-action="Delete" asp-route-id="@Model.PetId" class="btn btn-danger">Видалити</a>
+                    }
+                </div>
             </div>
         </div>
     </div>
