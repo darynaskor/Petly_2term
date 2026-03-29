@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Petly.DataAccess.Data; // Використовуємо ваш простір імен
+using Petly.DataAccess.Data;
 using Petly.Models;
 
 namespace Petly.Business.Services;
@@ -13,24 +13,22 @@ public class AdoptionService
         _context = context;
     }
 
-    // Отримати всі заявки конкретного користувача з даними про тварину
     public async Task<List<AdoptionApplication>> GetUserApplicationsAsync(int userId)
     {
         return await _context.AdoptionApplications
-            .Include(a => a.Pet) // Щоб працювало @app.Pet?.PetName у View
+            .Include(a => a.Pet)
             .Where(a => a.UserId == userId)
             .OrderByDescending(a => a.SubmissionDate)
             .ToListAsync();
     }
 
-    // Створити нову заявку
     public async Task CreateApplicationAsync(int petId, int userId)
     {
         var application = new AdoptionApplication
         {
             PetId = petId,
             UserId = userId,
-            Status = "Очікує", // Значення за замовчуванням
+            Status = "Очікує",
             SubmissionDate = DateTime.Now
         };
 
@@ -38,7 +36,6 @@ public class AdoptionService
         await _context.SaveChangesAsync();
     }
 
-    // Отримати заявки для притулку (де ShelterId тварини збігається з ID адміна)
 public async Task<List<AdoptionApplication>> GetShelterApplicationsAsync(int shelterAccountId)
 {
     return await _context.AdoptionApplications
@@ -48,7 +45,6 @@ public async Task<List<AdoptionApplication>> GetShelterApplicationsAsync(int she
         .ToListAsync();
 }
 
-// Оновити статус заявки
 public async Task UpdateApplicationStatusAsync(int adoptId, string newStatus)
 {
     var application = await _context.AdoptionApplications.FindAsync(adoptId);
