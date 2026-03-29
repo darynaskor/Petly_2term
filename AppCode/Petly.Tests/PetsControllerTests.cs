@@ -16,19 +16,13 @@ public class PetsControllerTests
     public async Task GetAllPets_AsAdmin()
     {
         await using var db = CreateDbContext();
-
-        db.Pets.AddRange(
-            new Pet { PetId = 1, ShelterId = 10, PetName = "Barsik" },
-            new Pet { PetId = 2, ShelterId = 20, PetName = "Luna" }
-        );
-        await db.SaveChangesAsync();
+        await AddPetsAsync(db, new Pet { PetId = 1, ShelterId = 10, PetName = "Barsik" },
+                               new Pet { PetId = 2, ShelterId = 20, PetName = "Luna" });
 
         var controller = CreateController(db, "system_admin");
 
-        var result = await controller.Index();
+        var model = await GetViewModel<List<Pet>>(controller.Index());
 
-        var view = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsType<List<Pet>>(view.Model);
         Assert.Equal(2, model.Count);
     }
 
@@ -36,19 +30,12 @@ public class PetsControllerTests
     public async Task GetPets_ByShelterAdmin()
     {
         await using var db = CreateDbContext();
-
-        db.Pets.AddRange(
-            new Pet { PetId = 1, ShelterId = 5, PetName = "A" },
-            new Pet { PetId = 2, ShelterId = 6, PetName = "B" }
-        );
-        await db.SaveChangesAsync();
+        await AddPetsAsync(db, new Pet { PetId = 1, ShelterId = 5, PetName = "A" },
+                               new Pet { PetId = 2, ShelterId = 6, PetName = "B" });
 
         var controller = CreateController(db, "shelter_admin", 5);
 
-        var result = await controller.Index();
-
-        var view = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsType<List<Pet>>(view.Model);
+        var model = await GetViewModel<List<Pet>>(controller.Index());
 
         Assert.Single(model);
         Assert.Equal(5, model[0].ShelterId);
@@ -58,16 +45,11 @@ public class PetsControllerTests
     public async Task GetPetDetails()
     {
         await using var db = CreateDbContext();
-
-        db.Pets.Add(new Pet { PetId = 1, PetName = "Rex" });
-        await db.SaveChangesAsync();
+        await AddPetsAsync(db, new Pet { PetId = 1, PetName = "Rex" });
 
         var controller = CreateController(db);
 
-        var result = await controller.Details(1);
-
-        var view = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsType<Pet>(view.Model);
+        var model = await GetViewModel<Pet>(controller.Details(1));
 
         Assert.Equal("Rex", model.PetName);
     }
@@ -105,17 +87,13 @@ public class PetsControllerTests
     public async Task EditPet()
     {
         await using var db = CreateDbContext();
-
-        db.Pets.Add(new Pet { PetId = 1, ShelterId = 5, PetName = "Old" });
-        await db.SaveChangesAsync();
+        await AddPetsAsync(db, new Pet { PetId = 1, ShelterId = 5, PetName = "Old" });
 
         var controller = CreateController(db, "shelter_admin", 5);
-
         var updated = new Pet { PetId = 1, PetName = "New" };
 
         var result = await controller.Edit(updated);
-
-        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.IsType<RedirectToActionResult>(result);
 
         var pet = await db.Pets.FindAsync(1);
         Assert.Equal("New", pet!.PetName);
@@ -125,14 +103,11 @@ public class PetsControllerTests
     public async Task EditPet_Forbidden()
     {
         await using var db = CreateDbContext();
-
-        db.Pets.Add(new Pet { PetId = 1, ShelterId = 10 });
-        await db.SaveChangesAsync();
+        await AddPetsAsync(db, new Pet { PetId = 1, ShelterId = 10 });
 
         var controller = CreateController(db, "shelter_admin", 5);
 
         var result = await controller.Edit(new Pet { PetId = 1 });
-
         Assert.IsType<ForbidResult>(result);
     }
 
@@ -140,15 +115,13 @@ public class PetsControllerTests
     public async Task DeletePet()
     {
         await using var db = CreateDbContext();
-
-        db.Pets.Add(new Pet { PetId = 1, ShelterId = 5 });
-        await db.SaveChangesAsync();
+        await AddPetsAsync(db, new Pet { PetId = 1, ShelterId = 5 });
 
         var controller = CreateController(db, "shelter_admin", 5);
 
         var result = await controller.DeleteConfirmed(1);
 
-        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.IsType<RedirectToActionResult>(result);
         Assert.False(await db.Pets.AnyAsync());
     }
 
@@ -156,51 +129,24 @@ public class PetsControllerTests
     public async Task DeletePet_Forbidden()
     {
         await using var db = CreateDbContext();
-
-        db.Pets.Add(new Pet { PetId = 1, ShelterId = 10 });
-        await db.SaveChangesAsync();
+        await AddPetsAsync(db, new Pet { PetId = 1, ShelterId = 10 });
 
         var controller = CreateController(db, "shelter_admin", 5);
 
         var result = await controller.DeleteConfirmed(1);
-
         Assert.IsType<ForbidResult>(result);
     }
 
-
     [Fact]
-    public async Task GetPetDetails_NotFound()
-    {
-        await using var db = CreateDbContext();
-        var controller = CreateController(db);
-
-        var result = await controller.Details(999);
-
-        Assert.IsType<NotFoundResult>(result);
-    }
-
-    [Fact]
-    public async Task EditPet_NotFound()
+    public async Task NotFoundTests()
     {
         await using var db = CreateDbContext();
         var controller = CreateController(db, "shelter_admin", 5);
 
-        var result = await controller.Edit(new Pet { PetId = 999 });
-
-        Assert.IsType<NotFoundResult>(result);
+        Assert.IsType<NotFoundResult>(await controller.Details(999));
+        Assert.IsType<NotFoundResult>(await controller.Edit(new Pet { PetId = 999 }));
+        Assert.IsType<NotFoundResult>(await controller.DeleteConfirmed(999));
     }
-
-    [Fact]
-    public async Task DeletePet_NotFound()
-    {
-        await using var db = CreateDbContext();
-        var controller = CreateController(db, "shelter_admin", 5);
-
-        var result = await controller.DeleteConfirmed(999);
-
-        Assert.IsType<NotFoundResult>(result);
-    }
-
 
     private static ApplicationDbContext CreateDbContext()
     {
@@ -216,35 +162,35 @@ public class PetsControllerTests
         var service = new PetService(db);
         var controller = new PetsController(service);
 
-        var httpContext = new DefaultHttpContext
-        {
-            Session = new TestSession()
-        };
+        var httpContext = new DefaultHttpContext { Session = new TestSession() };
+        if (!string.IsNullOrEmpty(role)) httpContext.Session.SetString("Role", role);
+        if (accountId.HasValue) httpContext.Session.SetInt32("AccountId", accountId.Value);
 
-        if (!string.IsNullOrEmpty(role))
-            httpContext.Session.SetString("Role", role);
-
-        if (accountId.HasValue)
-            httpContext.Session.SetInt32("AccountId", accountId.Value);
-
-        controller.ControllerContext = new ControllerContext
-        {
-            HttpContext = httpContext
-        };
-
+        controller.ControllerContext = new ControllerContext { HttpContext = httpContext };
         controller.TempData = new TempDataDictionary(httpContext, new TestTempDataProvider());
 
         return controller;
     }
 
+    private static async Task AddPetsAsync(ApplicationDbContext db, params Pet[] pets)
+    {
+        db.Pets.AddRange(pets);
+        await db.SaveChangesAsync();
+    }
+
+    private static async Task<T> GetViewModel<T>(Task<IActionResult> action)
+    {
+        var result = await action;
+        var view = Assert.IsType<ViewResult>(result);
+        return Assert.IsType<T>(view.Model);
+    }
+
     private class TestSession : ISession
     {
         private readonly Dictionary<string, byte[]> _data = new();
-
         public IEnumerable<string> Keys => _data.Keys;
         public string Id => Guid.NewGuid().ToString();
         public bool IsAvailable => true;
-
         public void Clear() => _data.Clear();
         public Task CommitAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
         public Task LoadAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
