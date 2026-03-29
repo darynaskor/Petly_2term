@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,11 +12,14 @@
 <body>
     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpCtx
     @{
-        var controllerName = ViewContext?.ActionDescriptor?.RouteValues?["controller"];
-        var isAccountPage = string.Equals(controllerName, "Account", System.StringComparison.OrdinalIgnoreCase);
+        var controllerName = ViewContext?.ActionDescriptor?.RouteValues?["controller"] ?? "";
+        var actionName = ViewContext?.ActionDescriptor?.RouteValues?["action"] ?? "";
+        var showHeader = !(string.Equals(controllerName, "Account", System.StringComparison.OrdinalIgnoreCase)
+                           && (string.Equals(actionName, "Login", System.StringComparison.OrdinalIgnoreCase)
+                               || string.Equals(actionName, "Register", System.StringComparison.OrdinalIgnoreCase)));
     }
 
-    @if (!isAccountPage)
+    @if (showHeader)
     {
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -99,11 +102,11 @@
         </main>
     </div>
 
-     <!--<footer class="border-top footer text-muted mt-4">
+    <!--<footer class="border-top footer text-muted mt-4">
         <div class="container text-center">
             &copy; 2026 - Petly
         </div>
-    </footer>*-->
+    </footer>-->
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
