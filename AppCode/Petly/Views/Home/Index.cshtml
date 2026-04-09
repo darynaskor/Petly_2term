@@ -1,0 +1,122 @@
+﻿@model List<Petly.Models.Pet>
+
+@{
+    ViewData["Title"] = "Головна";
+    
+    // Створюємо зручну змінну перевірки через Identity
+    bool isAdmin = User.IsInRole("shelter_admin") || User.IsInRole("system_admin");
+
+    string GetPetStatusClass(string? status)
+    {
+        return status switch
+        {
+            "Прилаштований" or "Home" => "status-pill status-pill--home",
+            _ => "status-pill status-pill--available",
+        };
+    }
+}
+
+<section class="page-section home-page-section">
+    <div class="section-header">
+        <div class="section-header__copy">
+            <span class="section-kicker">Petly Main</span>
+            <h1 class="section-title">Знайди свого хвостатого друга</h1>
+            <p class="section-subtitle">Переглядайте доступних улюбленців, фільтруйте за типом і швидко переходьте до адопції чи допомоги притулку.</p>
+        </div>
+    </div>
+
+    <div class="hero-toolbar">
+        <form method="get" asp-controller="Home" asp-action="Index" class="filter-bar">
+            <button type="submit" name="typeFilter" value="Усі" 
+                    class="btn btn-filter @(ViewBag.TypeFilter=="Усі"?"active":"")"
+                    onclick="document.querySelector('input[name=searchTerm]').value=''">
+                Усі
+            </button>
+            <button type="submit" name="typeFilter" value="Собака" class="btn btn-filter @(ViewBag.TypeFilter=="Собака"?"active":"")">Собаки</button>
+            <button type="submit" name="typeFilter" value="Кіт" class="btn btn-filter @(ViewBag.TypeFilter=="Кіт"?"active":"")">Коти</button>
+            <button type="submit" name="typeFilter" value="Прилаштовані" class="btn btn-filter @(ViewBag.TypeFilter=="Прилаштовані"?"active":"")">Прилаштовані</button>
+            <input type="hidden" name="searchTerm" value="@ViewBag.SearchTerm" />
+        </form>
+
+        <form method="get" asp-controller="Home" asp-action="Index" class="search-form">
+            <input type="hidden" name="typeFilter" value="@ViewBag.TypeFilter" />
+            <div class="search-group">
+                <input type="text" name="searchTerm" class="form-control search-input" placeholder="Пошук за ім'ям" value="@ViewBag.SearchTerm">
+                <button type="submit" class="btn btn-search">Знайти</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 pet-grid">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var p in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 pet-card">
+                        <div class="pet-media">
+                            @if (p.Status == "Прилаштований" || p.Status == "Home")
+                            {
+                                <span class="pet-status-badge @GetPetStatusClass(p.Status)">Вже вдома</span>
+                            }
+                            <img src="@(string.IsNullOrEmpty(p.PhotoUrl) 
+                                ? "/images/pets/no-photo.svg" 
+                                : p.PhotoUrl.StartsWith("http", System.StringComparison.OrdinalIgnoreCase) 
+                                    ? p.PhotoUrl 
+                                    : "/" + p.PhotoUrl.TrimStart('/'))" 
+                                 class="card-img-top pet-img" alt="@p.PetName">
+                        </div>
+
+                        <div class="card-body p-0">
+                            <div class="pet-actions @(!isAdmin ? string.Empty : "pet-actions--admin")">
+
+                                <a href="/Pets/Details/@p.PetId" class="btn btn-pet-action btn-pet-action--square">Більше</a>
+
+                                @if (!isAdmin)
+                                {
+                                    <a href="/Needs/Index?shelterId=@p.ShelterId" class="btn btn-pet-action btn-pet-action--square">
+                                        Допомога
+                                    </a>
+
+                                    @if (p.Status == "Прилаштований" || p.Status == "Home")
+                                    {
+                                        <span class="btn btn-pet-action pet-status-home" style="pointer-events: none;">
+                                            Вже вдома 🐾
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Adoption" asp-action="Create" asp-route-petId="@p.PetId" class="btn btn-pet-action btn-pet-action--square">
+                                            Адопція
+                                        </a>
+                                    }
+
+                                    <form asp-controller="Favorites" asp-action="Add" method="post" class="pet-actions__form">
+                                        <input type="hidden" name="petId" value="@p.PetId" />
+                                        <button type="submit" class="btn btn-pet-action btn-pet-action--square text-danger fw-bold">
+                                            ❤️
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+
+                            <div class="pet-card__meta">
+                                <h5 class="pet-card__title">@p.PetName</h5>
+                                <p class="pet-card__details">@p.Type, @p.Age @p.AgeText</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="empty-state">
+                    <h4 class="empty-state__title">Тут поки порожньо</h4>
+                    <p class="empty-state__text">За вашим запитом тваринок не знайдено. Спробуйте змінити фільтр або пошуковий запит.</p>
+                </div>
+            </div>
+        }
+    </div>
+</section>

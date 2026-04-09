@@ -1,0 +1,119 @@
+@model List<Petly.Models.Pet>
+
+@{
+    ViewData["Title"] = "Тварини";
+    var role = ViewBag.Role as string ?? "user";
+    var accountId = ViewBag.AccountId as int?;
+
+    string GetStatusLabel(string? status)
+    {
+        return status switch
+        {
+            "Прилаштований" or "Home" => "Вже вдома",
+            _ => "Шукає дім",
+        };
+    }
+
+    string GetStatusClass(string? status)
+    {
+        return status switch
+        {
+            "Прилаштований" or "Home" => "status-pill status-pill--home",
+            _ => "status-pill status-pill--available",
+        };
+    }
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<section class="page-section pets-page-section">
+    <div class="section-header">
+        <div class="section-header__copy">
+            <span class="section-kicker">Shelter Pets</span>
+            <h1 class="section-title">Тварини</h1>
+            <p class="section-subtitle">Керуйте профілями тварин, оновлюйте інформацію та відстежуйте їхній поточний статус.</p>
+        </div>
+    </div>
+
+    <div class="table-responsive page-card pets-page-card">
+        <table class="table table-hover align-middle data-table">
+            <thead class="table-light">
+                <tr>
+                    <th>Ім'я</th>
+                    <th>Тип</th>
+                    <th>Порода</th>
+                    <th>Вік</th>
+                    <th>Стать</th>
+                    <th>Розмір</th>
+                    <th>Вакцинована</th>
+                    <th>Стерилізована</th>
+                    <th>Статус</th>
+                    <th>Дії</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var pet in Model)
+                {
+                    <tr>
+                        <td>@pet.PetName</td>
+                        <td>@pet.Type</td>
+                        <td>@pet.Breed</td>
+                        <td>@pet.Age @pet.AgeText</td>
+                        <td>@pet.Gender</td>
+                        <td>@pet.Size</td>
+                        <td>@(pet.Vaccinated ? "Так" : "Ні")</td>
+                        <td>@(pet.Sterilized ? "Так" : "Ні")</td>
+                        <td><span class="@GetStatusClass(pet.Status)">@GetStatusLabel(pet.Status)</span></td>
+
+                        <td>
+                            <div class="pet-table-actions">
+                                <a class="btn btn-pets-action"
+                                   asp-action="Details"
+                                   asp-route-id="@pet.PetId">
+                                    Переглянути
+                                </a>
+
+                                @if (role != "shelter_admin" && role != "system_admin")
+                                {
+                                    <form asp-controller="Favorites"
+                                          asp-action="Add"
+                                          method="post">
+                                        <input type="hidden" name="petId" value="@pet.PetId" />
+                                        <button type="submit" class="btn btn-pets-action btn-pets-action--icon">❤️</button>
+                                    </form>
+                                }
+
+                                @if (role == "shelter_admin" && pet.ShelterId == accountId)
+                                {
+                                    <a class="btn btn-pets-action"
+                                       asp-action="Edit"
+                                       asp-route-id="@pet.PetId">
+                                        Редагувати
+                                    </a>
+
+                                    <a class="btn btn-pets-action btn-pets-action--danger"
+                                       asp-action="Delete"
+                                       asp-route-id="@pet.PetId">
+                                        Видалити
+                                    </a>
+                                }
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (role == "shelter_admin")
+    {
+        <p>
+            <a class="btn btn-need-primary" asp-action="Create">Додати тварину</a>
+        </p>
+    }
+</section>
