@@ -1,0 +1,75 @@
+@model List<Petly.Models.Pet>
+
+@{
+    ViewData["Title"] = "Тварини";
+    var role = ViewBag.Role as string ?? "user";
+    var accountId = ViewBag.AccountId as int?;
+}
+
+<section class="page-section pets-page-section">
+
+    <h1>Тварини</h1>
+
+    <input type="text"
+           id="searchInput"
+           class="form-control mb-3"
+           placeholder="Пошук по імені або породі...">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ім'я</th>
+                <th>Порода</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+
+        <tbody id="petsTable">
+            @foreach (var pet in Model)
+            {
+                <tr>
+                    <td class="name">@pet.PetName</td>
+                    <td class="breed">@pet.Breed</td>
+
+                    <td>
+                        @if (User.IsInRole("user"))
+                        {
+                            <form asp-controller="Favorites" asp-action="Add" method="post" class="favorite-form">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="petId" value="@pet.PetId" />
+                                <button type="submit">❤️</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</section>
+
+<script>
+window.onload = function () {
+
+    const input = document.getElementById("searchInput");
+
+    input.oninput = function () {
+
+        const value = input.value.toLowerCase();
+
+        document.querySelectorAll("#petsTable tr").forEach(row => {
+
+            const name = row.querySelector(".name").textContent.toLowerCase();
+            const breed = row.querySelector(".breed").textContent.toLowerCase();
+
+            if (name.includes(value) || breed.includes(value)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+
+        });
+    };
+
+};
+</script>
