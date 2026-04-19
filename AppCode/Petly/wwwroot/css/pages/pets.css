@@ -46,6 +46,242 @@
     padding: 0 1.2rem;
 }
 
+.pets-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+}
+
+.pets-list-title {
+    margin: 0.55rem 0 0.25rem;
+    font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 900;
+    line-height: 1.02;
+}
+
+.pets-list-count {
+    margin: 0;
+    color: var(--petly-text-muted);
+    font-weight: 700;
+}
+
+.pets-list-search {
+    position: relative;
+    margin-bottom: 1.2rem;
+    padding: 0.55rem;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(150, 102, 21, 0.08);
+    box-shadow: var(--petly-shadow-sm);
+}
+
+.pets-list-search__icon {
+    position: absolute;
+    left: 1.45rem;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #9a8768;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.pets-list-search__icon::after {
+    content: "";
+    position: absolute;
+    right: -6px;
+    bottom: -5px;
+    width: 8px;
+    height: 2px;
+    border-radius: 999px;
+    background: #9a8768;
+    transform: rotate(45deg);
+}
+
+.pets-list-search__input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.8rem 1rem 0.8rem 2.9rem;
+    border: 1px solid rgba(150, 102, 21, 0.1);
+    border-radius: 14px;
+    background: #fffdfa;
+    color: var(--petly-text);
+    font-weight: 700;
+    outline: none;
+    transition: border-color var(--petly-transition), box-shadow var(--petly-transition), background-color var(--petly-transition);
+}
+
+.pets-list-search__input::placeholder {
+    color: rgba(46, 36, 18, 0.48);
+    font-weight: 600;
+}
+
+.pets-list-search__input:focus {
+    background: #fff;
+    border-color: rgba(255, 159, 10, 0.38);
+    box-shadow: 0 0 0 4px rgba(255, 159, 10, 0.12);
+}
+
+.pets-list-card {
+    overflow: hidden;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(150, 102, 21, 0.08);
+    box-shadow: var(--petly-shadow-sm);
+}
+
+.pets-list-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.pets-list-table {
+    min-width: 980px;
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.pets-list-table thead th {
+    padding: 1rem 1.05rem;
+    background: #fbf3e4;
+    border: 0;
+    color: #776850;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.pets-list-table tbody td {
+    padding: 1.05rem;
+    border-top: 1px solid rgba(150, 102, 21, 0.08);
+    color: var(--petly-text);
+    vertical-align: middle;
+}
+
+.pets-list-table tbody tr {
+    transition: background-color var(--petly-transition), box-shadow var(--petly-transition);
+}
+
+.pets-list-table tbody tr:hover {
+    background: rgba(255, 250, 240, 0.86);
+}
+
+.pets-list-name {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 900;
+}
+
+.pets-list-kind {
+    display: block;
+    font-weight: 800;
+}
+
+.pets-list-breed {
+    display: block;
+    margin-top: 0.12rem;
+    color: var(--petly-text-muted);
+    font-size: 0.92rem;
+}
+
+.pets-list-age {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.pets-list-check,
+.pets-list-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 28px;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.pets-list-check--yes {
+    background: #edf8ed;
+    color: #2f6b36;
+}
+
+.pets-list-check--no {
+    background: #f3f0ea;
+    color: #7b7162;
+}
+
+.pets-list-status {
+    background: #f7e4ad;
+    color: #6a4b09;
+}
+
+.pets-list-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.pets-list-favorite {
+    margin: 0;
+}
+
+.pets-list-favorite button,
+.pets-list-action-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 34px;
+    border-radius: 8px;
+    background: #fffdfa;
+    border: 1px solid rgba(150, 102, 21, 0.14);
+    color: var(--petly-text);
+    font-weight: 900;
+    line-height: 1;
+    transition: background-color var(--petly-transition), border-color var(--petly-transition), color var(--petly-transition), transform var(--petly-transition);
+}
+
+.pets-list-favorite button:hover,
+.pets-list-action-toggle:hover,
+.pets-list-action-toggle.show {
+    background: #ffb347;
+    border-color: #ffb347;
+    color: #000;
+    transform: translateY(-1px);
+}
+
+.pets-list-dropdown {
+    padding: 0.45rem;
+    border: 1px solid rgba(150, 102, 21, 0.12);
+    border-radius: 12px;
+    box-shadow: var(--petly-shadow-md);
+}
+
+.pets-list-dropdown .dropdown-item {
+    border-radius: 8px;
+    padding: 0.55rem 0.75rem;
+    font-weight: 800;
+}
+
+.pets-list-dropdown__primary {
+    color: #0d6efd;
+}
+
+.pets-list-dropdown__danger {
+    color: #dc3545;
+}
+
 .pet-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

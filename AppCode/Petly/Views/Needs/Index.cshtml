@@ -58,7 +58,7 @@
 
                     <div class="need-card__group">
                         <div class="need-card__group-header">
-                            <p class="need-card__label">Що потрібно</p>
+                            <p class="need-card__section-title">Що потрібно</p>
                             @if (canCreate && shelter.CanManage)
                             {
                                 <a asp-action="Create" asp-route-shelterId="@shelter.ShelterId" class="btn-need-inline">Додати потребу</a>
@@ -71,11 +71,7 @@
                                 <li class="need-list__item">
                                     <div class="need-list__content">
                                         <p class="need-list__description">@need.Description</p>
-
-                                        <div class="need-list__help-block">
-                                            <p class="need-card__label">Як допомогти</p>
-                                            <p class="need-list__help">@need.PaymentDetails</p>
-                                        </div>
+                                        <p class="need-list__help"><span>Як допомогти:</span> @need.PaymentDetails</p>
                                     </div>
 
                                     @if (shelter.CanManage)

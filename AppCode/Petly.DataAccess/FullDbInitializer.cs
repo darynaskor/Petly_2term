@@ -102,10 +102,13 @@ public static class FullDbInitializer
         var admin2 = await userManager.FindByEmailAsync("domivka@petly.com");
         var admin3 = await userManager.FindByEmailAsync("bestfriends@petly.com");
 
+        // ОЧИЩЕННЯ
+        context.ShelterNeeds.RemoveRange(context.ShelterNeeds);
         context.Pets.RemoveRange(context.Pets);
         context.Shelters.RemoveRange(context.Shelters);
         await context.SaveChangesAsync();
 
+        // ПРИТУЛКИ
         var shelter1 = new Shelter
         {
             AccountId = admin1.Id,
@@ -133,6 +136,7 @@ public static class FullDbInitializer
         context.Shelters.AddRange(shelter1, shelter2, shelter3);
         await context.SaveChangesAsync();
 
+        // ТВАРИНИ
         context.Pets.AddRange(
 
             new Pet { ShelterId = shelter1.AccountId, PetName = "Макс", Type = "Собака", Breed = "Лабрадор", Gender = "Чоловіча", Age = 3, Size = "Великий", Vaccinated = true, Sterilized = true, Status = "Доступний", PhotoUrl = "/images/pets/max.jpg", Description = "Дуже добрий та енергійний пес, який обожнює людей і завжди радий новим знайомствам. Макс виріс у сім’ї, але через переїзд господарів опинився в притулку. Любить довгі прогулянки, гру з м’ячиком і чудово ладнає з дітьми. Стане ідеальним другом для активної сім’ї." },
@@ -147,6 +151,40 @@ public static class FullDbInitializer
             new Pet { ShelterId = shelter3.AccountId, PetName = "Олівер", Type = "Кіт", Breed = "Мішаний", Gender = "Чоловіча", Age = 8, Size = "Малий", Vaccinated = true, Sterilized = true, Status = "Доступний", PhotoUrl = "/images/pets/oliver.jpg", Description = "Спокійний і незалежний кіт, який любить спостерігати за всім навколо. Олівер не нав’язливий, але дуже цінує увагу. Добре підійде для людей, які шукають тихого компаньйона." },
             new Pet { ShelterId = shelter3.AccountId, PetName = "Сімба", Type = "Кіт", Breed = "Мішаний", Gender = "Чоловіча", Age = 5, Size = "Середній", Vaccinated = true, Sterilized = true, Status = "Доступний", PhotoUrl = "/images/pets/simba.jpg", Description = "Грайливий і допитливий кіт із яскравим характером. Любить досліджувати нові місця і гратися з іграшками. Потрапив у притулок ще кошеням і виріс тут, тому дуже чекає свій дім." },
             new Pet { ShelterId = shelter3.AccountId, PetName = "Майло", Type = "Кіт", Breed = "Мішаний", Gender = "Чоловіча", Age = 1, Size = "Малий", Vaccinated = true, Sterilized = false, Status = "Доступний", PhotoUrl = "/images/pets/milo.jpg", Description = "Молодий, енергійний і дуже дружелюбний котик. Майло обожнює гратися і швидко прив’язується до людей. Його знайшли зовсім маленьким, і тепер він готовий стати частиною люблячої сім’ї." }
+        );
+
+        // ПОТРЕБИ
+        context.ShelterNeeds.AddRange(
+            new ShelterNeed
+            {
+                ShelterId = shelter1.AccountId,
+                Description = "Потрібен корм для собак",
+                PaymentDetails = "Можливий банківський переказ за реквізитами: 4444 4444 4444 4444"
+            },
+            new ShelterNeed
+            {
+                ShelterId = shelter1.AccountId,
+                Description = "Теплі ковдри та матраци для тварин",
+                PaymentDetails = "Можливий банківський переказ за реквізитами: 4444 4444 4444 4444"
+            },
+            new ShelterNeed
+            {
+                ShelterId = shelter2.AccountId,
+                Description = "Потрібні ліки та вітаміни",
+                PaymentDetails = "Передача напряму або відправка новою поштою"
+            },
+            new ShelterNeed
+            {
+                ShelterId = shelter2.AccountId,
+                Description = "Потрібні засоби для прибирання та дезінфекції",
+                PaymentDetails = "Пожертва через сайт або можна принести у притулок або відправка новою поштою"
+            },
+            new ShelterNeed
+            {
+                ShelterId = shelter3.AccountId,
+                Description = "Потрібен корм для котів",
+                PaymentDetails = "Передача напряму або відправка новою поштою"
+            }
         );
 
         await context.SaveChangesAsync();
