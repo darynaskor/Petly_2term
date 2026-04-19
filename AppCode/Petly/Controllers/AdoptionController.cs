@@ -41,16 +41,19 @@ public class AdoptionController : Controller
         {
             applications = await _adoptionService.GetAllApplicationsAsync();
             ViewBag.IsAdmin = true;
+            ViewBag.CanManageApplications = false;
         }
         else if (isShelterAdmin)
         {
             applications = await _adoptionService.GetShelterApplicationsAsync(accountId.Value);
             ViewBag.IsAdmin = true;
+            ViewBag.CanManageApplications = true;
         }
         else
         {
             applications = await _adoptionService.GetUserApplicationsAsync(accountId.Value);
             ViewBag.IsAdmin = false;
+            ViewBag.CanManageApplications = false;
         }
 
         return View("Adoption", applications);
@@ -133,7 +136,7 @@ public class AdoptionController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "shelter_admin,system_admin")]
+    [Authorize(Roles = "shelter_admin")]
     public async Task<IActionResult> Approve(int adoptId)
     {
         var accountId = GetUserId();
@@ -142,13 +145,17 @@ public class AdoptionController : Controller
             return RedirectToAction("Login", "Account");
         }
 
+        if (!IsShelterAdmin())
+        {
+            return Forbid();
+        }
+
         try
         {
             await _adoptionService.UpdateApplicationStatusAsync(
                 adoptId,
                 AdoptionStatuses.Approved,
-                accountId.Value,
-                User.IsInRole("system_admin"));
+                accountId.Value);
         }
         catch (KeyNotFoundException)
         {
@@ -170,7 +177,7 @@ public class AdoptionController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    [Authorize(Roles = "shelter_admin,system_admin")]
+    [Authorize(Roles = "shelter_admin")]
     public async Task<IActionResult> Reject(int adoptId)
     {
         var accountId = GetUserId();
@@ -179,13 +186,17 @@ public class AdoptionController : Controller
             return RedirectToAction("Login", "Account");
         }
 
+        if (!IsShelterAdmin())
+        {
+            return Forbid();
+        }
+
         try
         {
             await _adoptionService.UpdateApplicationStatusAsync(
                 adoptId,
                 AdoptionStatuses.Rejected,
-                accountId.Value,
-                User.IsInRole("system_admin"));
+                accountId.Value);
         }
         catch (KeyNotFoundException)
         {
@@ -277,5 +288,11 @@ public class AdoptionController : Controller
             ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         return int.TryParse(userId, out var parsedUserId) ? parsedUserId : null;
+    }
+
+    private bool IsShelterAdmin()
+    {
+        return User.IsInRole("shelter_admin")
+            || HttpContext.Session.GetString("Role") == "shelter_admin";
     }
 }

@@ -58,10 +58,23 @@
                     <td>@u.Status</td>
                     <td>@u.RegistrationDate.ToString("yyyy-MM-dd")</td>
                     <td class="text-end">
-                        <a asp-action="Edit" asp-route-id="@u.AccountId" class="btn btn-sm btn-outline-primary me-2">Редагувати</a>
-                        <form asp-action="Delete" asp-route-id="@u.AccountId" method="post" class="d-inline">
-                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Видалити користувача?');">Видалити</button>
-                        </form>
+                        <div class="dropdown">
+                            <button class="pets-list-action-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Дії">
+                                ...
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end pets-list-dropdown">
+                                <li>
+                                    <a asp-action="Edit" asp-route-id="@u.AccountId" class="dropdown-item pets-list-dropdown__primary">Редагувати</a>
+                                </li>
+                                <li>
+                                    <form asp-action="Delete" asp-route-id="@u.AccountId" method="post">
+                                        <button type="submit" class="dropdown-item pets-list-dropdown__danger" onclick="return confirm('Видалити користувача?');">
+                                            Видалити
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
                     </td>
                 </tr>
             }

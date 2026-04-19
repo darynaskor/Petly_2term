@@ -130,6 +130,104 @@ public class AdoptionControllerTests
         Assert.Equal(AdoptionStatuses.Pending, application.Status);
     }
 
+    [Fact]
+    public async Task SystemAdminCannotApproveApplications()
+    {
+        await using var db = CreateDbContext();
+
+        db.Pets.Add(new Pet
+        {
+            PetId = 21,
+            ShelterId = 100,
+            PetName = "Max",
+            Status = "Доступний"
+        });
+
+        db.AdoptionApplications.Add(new AdoptionApplication
+        {
+            AdoptId = 31,
+            UserId = 7,
+            PetId = 21,
+            Status = AdoptionStatuses.Pending
+        });
+
+        await db.SaveChangesAsync();
+
+        var controller = CreateController(db, "system_admin", 1);
+
+        var result = await controller.Approve(31);
+
+        Assert.IsType<ForbidResult>(result);
+        var application = await db.AdoptionApplications.SingleAsync();
+        Assert.Equal(AdoptionStatuses.Pending, application.Status);
+    }
+
+    [Fact]
+    public async Task ShelterAdminCanApproveOwnShelterApplication()
+    {
+        await using var db = CreateDbContext();
+
+        db.Pets.Add(new Pet
+        {
+            PetId = 22,
+            ShelterId = 101,
+            PetName = "Luna",
+            Status = "Доступний"
+        });
+
+        db.AdoptionApplications.Add(new AdoptionApplication
+        {
+            AdoptId = 32,
+            UserId = 8,
+            PetId = 22,
+            Status = AdoptionStatuses.Pending
+        });
+
+        await db.SaveChangesAsync();
+
+        var controller = CreateController(db, "shelter_admin", 101);
+
+        var result = await controller.Approve(32);
+
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("Index", redirect.ActionName);
+
+        var application = await db.AdoptionApplications.SingleAsync();
+        Assert.Equal(AdoptionStatuses.Approved, application.Status);
+    }
+
+    [Fact]
+    public async Task ShelterAdminCannotApproveAnotherShelterApplication()
+    {
+        await using var db = CreateDbContext();
+
+        db.Pets.Add(new Pet
+        {
+            PetId = 23,
+            ShelterId = 102,
+            PetName = "Rocky",
+            Status = "Доступний"
+        });
+
+        db.AdoptionApplications.Add(new AdoptionApplication
+        {
+            AdoptId = 33,
+            UserId = 9,
+            PetId = 23,
+            Status = AdoptionStatuses.Pending
+        });
+
+        await db.SaveChangesAsync();
+
+        var controller = CreateController(db, "shelter_admin", 103);
+
+        var result = await controller.Approve(33);
+
+        Assert.IsType<ForbidResult>(result);
+        var application = await db.AdoptionApplications.SingleAsync();
+        Assert.Equal(AdoptionStatuses.Pending, application.Status);
+    }
+
     private static ApplicationDbContext CreateDbContext()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()

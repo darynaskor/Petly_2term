@@ -142,7 +142,7 @@ public class AdoptionService
         return application;
     }
 
-    public async Task UpdateApplicationStatusAsync(int adoptId, string newStatus, int currentUserId, bool isSystemAdmin = false)
+    public async Task UpdateApplicationStatusAsync(int adoptId, string newStatus, int currentUserId)
     {
         var application = await _context.AdoptionApplications
             .Include(a => a.Pet)
@@ -158,7 +158,7 @@ public class AdoptionService
             throw new InvalidOperationException("Заявка не містить прив'язаної тварини.");
         }
 
-        if (!isSystemAdmin && application.Pet.ShelterId != currentUserId)
+        if (application.Pet.ShelterId != currentUserId)
         {
             throw new UnauthorizedAccessException("Немає доступу до цієї заявки.");
         }

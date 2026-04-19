@@ -138,6 +138,27 @@ public class AccountControllerAdminTests
     }
 
     [Fact]
+    public void AccessDeniedIsAvailableForForbiddenRequests()
+    {
+        MethodInfo method = typeof(AccountController).GetMethod(nameof(AccountController.AccessDenied), new[] { typeof(string) })!;
+        Assert.NotNull(method.GetCustomAttribute<AllowAnonymousAttribute>());
+    }
+
+    [Fact]
+    public void AccessDeniedReturnsForbiddenView()
+    {
+        using ApplicationDbContext db = CreateDbContext();
+        TestIdentityScope scope = CreateIdentityScope(db);
+        AccountController controller = CreateController(scope, "user", userId: 10);
+
+        IActionResult result = controller.AccessDenied("/Account/Users");
+
+        Assert.IsType<ViewResult>(result);
+        Assert.Equal(StatusCodes.Status403Forbidden, controller.Response.StatusCode);
+        Assert.Equal("/Account/Users", controller.ViewBag.ReturnUrl);
+    }
+
+    [Fact]
     public async Task OpenEditPage()
     {
         await using var db = CreateDbContext();

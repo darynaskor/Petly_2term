@@ -32,6 +32,15 @@ public class AccountController : Controller
     [AllowAnonymous]
     public IActionResult Login() => View(new LoginViewModel());
 
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult AccessDenied(string? returnUrl = null)
+    {
+        Response.StatusCode = StatusCodes.Status403Forbidden;
+        ViewBag.ReturnUrl = returnUrl;
+        return View();
+    }
+
     [HttpPost]
     [AllowAnonymous]
     [ValidateAntiForgeryToken]

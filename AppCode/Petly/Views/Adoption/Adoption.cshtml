@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Мої заявки";
     var isAdmin = ViewBag.IsAdmin is true;
+    var canManageApplications = ViewBag.CanManageApplications is true;
 
     string GetStatusLabel(string? status)
     {
@@ -50,7 +51,7 @@
                 
                 <th>Статус</th>
                 
-                @if (isAdmin || User.IsInRole("user"))
+                @if (canManageApplications || User.IsInRole("user"))
                 {
                     <th>Дії</th>
                 }
@@ -86,36 +87,36 @@
                                 <span class="@GetStatusClass(app.Status)">@GetStatusLabel(app.Status)</span>
                             </td>
                             
-                            <td>
-                            @if (isAdmin)
+                            @if (canManageApplications || User.IsInRole("user"))
                             {
-                                @if (GetStatusLabel(app.Status) == Petly.Models.AdoptionStatuses.Pending)
+                                <td>
+                                @if (canManageApplications)
                                 {
-                                    <div class="adoption-action-group">
-                                        <form asp-controller="Adoption" asp-action="Approve" asp-route-adoptId="@app.AdoptId" method="post">
-                                           <button type="submit" class="btn btn-adoption-action btn-adoption-action--approve">Схвалити</button>
-                                        </form>
-                                        <form asp-controller="Adoption" asp-action="Reject" asp-route-adoptId="@app.AdoptId" method="post">
-                                            <button type="submit" class="btn btn-adoption-action btn-adoption-action--reject">Відхилити</button>
-                                        </form>
-                                    </div>
+                                    @if (GetStatusLabel(app.Status) == Petly.Models.AdoptionStatuses.Pending)
+                                    {
+                                        <div class="adoption-action-group">
+                                            <form asp-controller="Adoption" asp-action="Approve" asp-route-adoptId="@app.AdoptId" method="post">
+                                            <button type="submit" class="btn btn-adoption-action btn-adoption-action--approve">Схвалити</button>
+                                            </form>
+                                            <form asp-controller="Adoption" asp-action="Reject" asp-route-adoptId="@app.AdoptId" method="post">
+                                                <button type="submit" class="btn btn-adoption-action btn-adoption-action--reject">Відхилити</button>
+                                            </form>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">Оброблено</span>
+                                    }
                                 }
-                                else
-                                {
-                                    <span class="text-muted small">Оброблено</span>
-                                }
-                            }
-                            else
-                            {
-                                @if (GetStatusLabel(app.Status) == Petly.Models.AdoptionStatuses.Pending && User.IsInRole("user"))
+                                else if (GetStatusLabel(app.Status) == Petly.Models.AdoptionStatuses.Pending && User.IsInRole("user"))
                                 {
                                     <form asp-controller="Adoption" asp-action="Delete" asp-route-adoptId="@app.AdoptId" method="post" style="display:inline-block;" 
                                     onsubmit="return confirm('Ви впевнені, що хочете скасувати цю заявку?');">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">Скасувати заявку</button>
                                     </form>
                                 }
+                                </td>
                             }
-                            </td>
                         </tr>                       
                     }
                 </tbody>
