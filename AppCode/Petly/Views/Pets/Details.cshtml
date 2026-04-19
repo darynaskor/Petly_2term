@@ -19,7 +19,9 @@
     var isShelterAdminOwner = role == "shelter_admin" && Model.ShelterId == accountId;
     var isRegularUser = role != "shelter_admin" && role != "system_admin";
     var healthSummary = $"{(Model.Vaccinated ? "вакцинований" : "потребує вакцинації")} · {(Model.Sterilized ? "стерилізований" : "без стерилізації")}";
-    var statusText = string.Equals(Model.Status, "Home", System.StringComparison.OrdinalIgnoreCase) ? "Вже вдома" : "Шукає дім";
+    var isAdopted = string.Equals(Model.Status, "Прилаштований", System.StringComparison.OrdinalIgnoreCase)
+        || string.Equals(Model.Status, "Home", System.StringComparison.OrdinalIgnoreCase);
+    var statusText = isAdopted ? "Вже вдома" : "Шукає дім";
     ViewData["Title"] = Model.PetName;
 }
 
@@ -29,7 +31,7 @@
 
         <div class="pet-details-hero__content">
             <div class="pet-details-hero__media">
-                <span class="status-pill @(string.Equals(Model.Status, "Home", System.StringComparison.OrdinalIgnoreCase) ? "status-pill--home" : "status-pill--available") pet-details-hero__status">
+                <span class="status-pill @(isAdopted ? "status-pill--home" : "status-pill--available") pet-details-hero__status">
                     @statusText
                 </span>
                 <img src="@photoUrl" alt="@Model.PetName" class="pet-details-hero__image" />
@@ -78,10 +80,16 @@
                 </div>
 
                 <div class="pet-details-hero__actions">
-                    @if (isRegularUser)
+                    @if (isRegularUser && !isAdopted)
                     {
                         <a asp-controller="Adoption" asp-action="Create" asp-route-petId="@Model.PetId" class="btn-auth-primary pet-details-action-primary">Подати заявку на адопцію</a>
                         <a asp-controller="Needs" asp-action="Index" asp-route-shelterId="@Model.ShelterId" class="btn-auth-secondary pet-details-action-secondary">Допомогти притулку</a>
+                    }
+                    else if (isRegularUser)
+                    {
+                        <span class="pet-details-note">
+                            Ця тваринка вже знайшла дім. Ви можете переглянути інших улюбленців на головній сторінці.
+                        </span>
                     }
                     else if (isShelterAdminOwner)
                     {
