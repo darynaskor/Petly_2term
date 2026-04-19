@@ -80,7 +80,7 @@
                 <div class="pet-details-hero__actions">
                     @if (isRegularUser)
                     {
-                        <a asp-controller="Pets" asp-action="Adopt" asp-route-id="@Model.PetId" class="btn-auth-primary pet-details-action-primary">Подати заявку на адопцію</a>
+                        <a asp-controller="Adoption" asp-action="Create" asp-route-petId="@Model.PetId" class="btn-auth-primary pet-details-action-primary">Подати заявку на адопцію</a>
                         <a asp-controller="Needs" asp-action="Index" asp-route-shelterId="@Model.ShelterId" class="btn-auth-secondary pet-details-action-secondary">Допомогти притулку</a>
                     }
                     else if (isShelterAdminOwner)
