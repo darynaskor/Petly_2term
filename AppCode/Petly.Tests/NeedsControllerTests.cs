@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Petly.Business.Services;
@@ -314,34 +316,35 @@ public class NeedsControllerTests
 
     private static TestIdentityScope CreateIdentityScope(ApplicationDbContext db)
     {
-        var userStore = new UserStore<ApplicationUser, IdentityRole<int>, ApplicationDbContext, int>(db);
-        var roleStore = new RoleStore<IdentityRole<int>, ApplicationDbContext, int>(db);
-        var identityOptions = Options.Create(new IdentityOptions());
+        var services = new ServiceCollection();
 
-        var userManager = new UserManager<ApplicationUser>(
-            userStore,
-            identityOptions,
-            new PasswordHasher<ApplicationUser>(),
-            Array.Empty<IUserValidator<ApplicationUser>>(),
-            Array.Empty<IPasswordValidator<ApplicationUser>>(),
-            new UpperInvariantLookupNormalizer(),
-            new IdentityErrorDescriber(),
-            new TestServiceProvider(),
-            NullLogger<UserManager<ApplicationUser>>.Instance);
+        services.AddSingleton(db);
+        services.AddSingleton<IOptions<IdentityOptions>>(Options.Create(new IdentityOptions()));
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddSingleton<IPasswordHasher<ApplicationUser>, PasswordHasher<ApplicationUser>>();
+        services.AddSingleton<ILookupNormalizer, UpperInvariantLookupNormalizer>();
+        services.AddSingleton<IdentityErrorDescriber>();
+        services.AddSingleton<IUserStore<ApplicationUser>, UserStore<ApplicationUser, IdentityRole<int>, ApplicationDbContext, int>>();
+        services.AddSingleton<IRoleStore<IdentityRole<int>>, RoleStore<IdentityRole<int>, ApplicationDbContext, int>>();
+        services.AddSingleton<ILogger<UserManager<ApplicationUser>>>(NullLogger<UserManager<ApplicationUser>>.Instance);
+        services.AddSingleton<ILogger<RoleManager<IdentityRole<int>>>>(NullLogger<RoleManager<IdentityRole<int>>>.Instance);
 
-        var roleManager = new RoleManager<IdentityRole<int>>(
-            roleStore,
-            Array.Empty<IRoleValidator<IdentityRole<int>>>(),
-            new UpperInvariantLookupNormalizer(),
-            new IdentityErrorDescriber(),
-            NullLogger<RoleManager<IdentityRole<int>>>.Instance);
+        services.AddSingleton<UserManager<ApplicationUser>>();
+        services.AddSingleton<RoleManager<IdentityRole<int>>>();
+        services.AddSingleton<NeedService>();
+        services.AddTransient<NeedsController>();
 
-        return new TestIdentityScope(db, userManager, roleManager, new NeedService(db));
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+
+        return new TestIdentityScope(
+            serviceProvider,
+            serviceProvider.GetRequiredService<UserManager<ApplicationUser>>(),
+            serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>());
     }
 
     private static NeedsController CreateController(TestIdentityScope scope, string? role = null, int? userId = null)
     {
-        var controller = new NeedsController(scope.NeedService, scope.UserManager);
+        var controller = scope.ServiceProvider.GetRequiredService<NeedsController>();
         var httpContext = new DefaultHttpContext();
 
         if (userId.HasValue)
@@ -406,15 +409,9 @@ public class NeedsControllerTests
     }
 
     private sealed record TestIdentityScope(
-        ApplicationDbContext Db,
+        ServiceProvider ServiceProvider,
         UserManager<ApplicationUser> UserManager,
-        RoleManager<IdentityRole<int>> RoleManager,
-        NeedService NeedService);
-
-    private sealed class TestServiceProvider : IServiceProvider
-    {
-        public object? GetService(Type serviceType) => null;
-    }
+        RoleManager<IdentityRole<int>> RoleManager);
 
     private sealed class TestTempDataProvider : ITempDataProvider
     {
