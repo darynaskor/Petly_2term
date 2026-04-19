@@ -27,4 +27,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <Target Name="BundleStaticAssets" BeforeTargets="Build">
+    <Exec Command="node tools/bundle-static-assets.mjs" WorkingDirectory="$(MSBuildProjectDirectory)" />
+  </Target>
+
 </Project>

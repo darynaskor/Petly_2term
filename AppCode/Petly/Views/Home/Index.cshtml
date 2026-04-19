@@ -52,14 +52,14 @@
         </div>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 pet-grid" id="petGrid">
+    <div class="pet-grid" id="petGrid">
         @if (Model != null && Model.Any())
         {
             @foreach (var p in Model)
             {
                 bool isFavorite = favoriteIds.Contains(p.PetId);
 
-                <div class="col pet-card-wrapper">
+                <div class="pet-card-wrapper">
                     <div class="card h-100 pet-card">
                         <div class="pet-media">
                             @if (p.Status == "Прилаштований" || p.Status == "Home")

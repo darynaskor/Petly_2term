@@ -1,0 +1,125 @@
+
+@media (max-width: 991.98px) {
+    .hero-toolbar,
+    .pet-details-hero__content,
+    .about-hero__content,
+    .need-delete-card__hero,
+    .need-page .need-hero,
+    .adoption-request-layout,
+    .adoption-user-card__grid,
+    .auth-field-grid--double {
+        grid-template-columns: 1fr;
+    }
+
+    .app-navbar .container-fluid {
+        gap: 1rem;
+    }
+
+    .navbar-collapse {
+        padding-top: 1rem;
+        gap: 1rem;
+    }
+
+    .pet-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .app-shell {
+        padding-top: 0.75rem;
+    }
+
+    .pet-details-highlights,
+    .pet-details-facts,
+    .auth-grid,
+    .profile-grid,
+    .auth-password-field,
+    .search-group {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-inline-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-toolbar {
+        gap: 1.25rem;
+    }
+
+    .profile-header {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .pet-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .need-page .need-card__group-header {
+        align-items: stretch;
+    }
+
+    .pet-table-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pet-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pet-details-panel--wide {
+        grid-column: auto;
+    }
+
+    .btn-pets-action {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .need-list__actions .btn-need-inline,
+    .need-card__group-header .btn-need-inline,
+    .need-form__actions .btn-need-primary,
+    .need-form__actions .btn-need-secondary,
+    .need-form__actions .btn-need-danger {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .app-navbar .container-fluid,
+    .app-shell,
+    .pet-details-page,
+    .about-card,
+    .about-hero,
+    .need-page {
+        width: min(calc(100% - 1.25rem), var(--petly-container));
+    }
+
+    .pet-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .auth-shell {
+        padding-inline: 0.25rem;
+    }
+
+    .pet-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-pet-action {
+        border-right: none;
+        border-bottom: 1px solid rgba(31, 31, 31, 0.08);
+    }
+
+    .pet-actions > *:last-child .btn-pet-action,
+    .pet-actions > *:last-child {
+        border-bottom: none;
+    }
+}
