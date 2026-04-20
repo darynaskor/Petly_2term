@@ -31,7 +31,7 @@ public class HomeControllerTests
             {
                 PetId = 1,
                 ShelterId = 2,
-                PetName = "Лайм",
+                PetName = "Лайма",
                 Type = "Собака",
                 Breed = "Лабрадор",
                 Status = "Доступний",
