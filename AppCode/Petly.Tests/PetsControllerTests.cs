@@ -81,6 +81,21 @@ public class PetsControllerTests
     }
 
     [Fact]
+    public async Task Adopt_RedirectsToAdoptionCreate()
+    {
+        await using var db = CreateDbContext();
+        TestIdentityScope scope = CreateIdentityScope(db);
+        var controller = CreateController(scope, "user", 100);
+
+        var result = controller.Adopt(13);
+
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("Create", redirect.ActionName);
+        Assert.Equal("Adoption", redirect.ControllerName);
+        Assert.Equal(13, redirect.RouteValues!["petId"]);
+    }
+
+    [Fact]
     public async Task GetPetDetails_NotFound()
     {
         await using var db = CreateDbContext();
