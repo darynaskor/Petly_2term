@@ -1,4 +1,4 @@
-name: CI - Petly
+name: CI - Petly_7
 
 on:
   push:
@@ -11,6 +11,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: AppCode
 
     steps:
       - name: Checkout repository
