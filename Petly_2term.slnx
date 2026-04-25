@@ -1,9 +1,0 @@
-<Solution>
-  <Folder Name="/AppCode/">
-    <Project Path="AppCode/Petly.Business/Petly.Business.csproj" />
-    <Project Path="AppCode/Petly.DataAccess/Petly.DataAccess.csproj" />
-    <Project Path="AppCode/Petly.Models/Petly.Models.csproj" />
-    <Project Path="AppCode/Petly.Tests/Petly.Tests.csproj" />
-    <Project Path="AppCode/Petly/Petly.csproj" />
-  </Folder>
-</Solution>

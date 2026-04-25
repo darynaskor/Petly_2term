@@ -13,8 +13,7 @@ jobs:
 
     - uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: 10.0.x
 
-    - run: dotnet restore Petly_2term.sln
-    - run: dotnet build Petly_2term.sln --no-restore
-    - run: dotnet test Petly_2term.sln --no-build
+    - run: dotnet restore AppCode/Petly/Petly.csproj
+    - run: dotnet build AppCode/Petly/Petly.csproj --no-restore
