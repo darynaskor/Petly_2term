@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: Restore dependencies
+        run: dotnet restore Petly_2term.slnx
+
+      - name: Build
+        run: dotnet build Petly_2term.slnx --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test Petly.Tests/Petly.Tests.csproj --configuration Release --no-build --verbosity normal
