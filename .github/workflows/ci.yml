@@ -15,5 +15,6 @@ jobs:
       with:
         dotnet-version: 9.0.x
 
-    - run: dotnet restore
-    - run: dotnet build --no-restore
+    - run: dotnet restore AppCode/Petly_2term.sln
+    - run: dotnet build AppCode/Petly_2term.sln --no-restore
+    - run: dotnet test AppCode/Petly_2term.sln --no-build
