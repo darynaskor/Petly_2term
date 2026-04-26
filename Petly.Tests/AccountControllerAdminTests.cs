@@ -20,7 +20,7 @@ using Petly.Models;
 using Xunit;
 
 namespace Petly.Tests;
-o
+
 public class AccountControllerAdminTests
 {
     [Fact]
