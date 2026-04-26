@@ -2,3 +2,4 @@
 .vscode/
 AppCode/**/bin/
 AppCode/**/obj/
+AppCode/Petly/publish/
