@@ -1,38 +1,38 @@
-name: Build and deploy ASP.Net Core app to Azure Web App - Petly-App
+name: Deploy ASP.NET to Azure
 
 on:
   push:
     branches:
       - petly_7
-  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.x'
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.x'
 
-      - name: Restore
-        run: dotnet restore AppCode/Petly/Petly.csproj
+    - name: Restore
+      run: dotnet restore AppCode/Petly/Petly.csproj
 
-      - name: Build
-        run: dotnet build AppCode/Petly/Petly.csproj --configuration Release --no-restore
+    - name: Build
+      run: dotnet build AppCode/Petly/Petly.csproj --configuration Release --no-restore
 
-      - name: Publish
-        run: dotnet publish AppCode/Petly/Petly.csproj -c Release -o ./publish --no-build
+    - name: Publish
+      run: dotnet publish AppCode/Petly/Petly.csproj -c Release -o ./publish /p:UseAppHost=false
 
-      - name: Check publish content
-        run: ls -la ./publish
+    - name: Check publish content
+      run: ls -la ./publish
 
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'Petly-App'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ./publish
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: 'Petly-App'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ./publish
+        type: zip
