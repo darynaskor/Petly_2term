@@ -61,5 +61,5 @@ jobs:
         with:
           app-name: 'Petly-App'
           slot-name: 'Production'
-          package: ${{ github.workspace }}/.net-app
+          package: .
           
