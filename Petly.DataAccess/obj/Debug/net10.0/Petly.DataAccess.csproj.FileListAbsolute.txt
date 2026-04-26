@@ -15,3 +15,4 @@ C:\Petly_8\AppCode\Petly.DataAccess\obj\Debug\net10.0\refint\Petly.DataAccess.dl
 C:\Petly_8\AppCode\Petly.DataAccess\obj\Debug\net10.0\Petly.DataAccess.pdb
 C:\Petly_8\AppCode\Petly.DataAccess\obj\Debug\net10.0\Petly.DataAccess.genruntimeconfig.cache
 C:\Petly_8\AppCode\Petly.DataAccess\obj\Debug\net10.0\ref\Petly.DataAccess.dll
+C:\Petly_8\AppCode\Petly.DataAccess\obj\Debug\net10.0\Petly.DataAccess.sourcelink.json

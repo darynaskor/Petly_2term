@@ -208,3 +208,4 @@ C:\Petly_8\AppCode\Petly\obj\Debug\net10.0\refint\Petly.dll
 C:\Petly_8\AppCode\Petly\obj\Debug\net10.0\Petly.pdb
 C:\Petly_8\AppCode\Petly\obj\Debug\net10.0\Petly.genruntimeconfig.cache
 C:\Petly_8\AppCode\Petly\obj\Debug\net10.0\ref\Petly.dll
+C:\Petly_8\AppCode\Petly\obj\Debug\net10.0\Petly.sourcelink.json

@@ -15,3 +15,4 @@ C:\Petly_8\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Business.dll
 C:\Petly_8\AppCode\Petly.Business\obj\Debug\net10.0\refint\Petly.Business.dll
 C:\Petly_8\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Business.pdb
 C:\Petly_8\AppCode\Petly.Business\obj\Debug\net10.0\ref\Petly.Business.dll
+C:\Petly_8\AppCode\Petly.Business\obj\Debug\net10.0\Petly.Business.sourcelink.json
