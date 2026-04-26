@@ -29,10 +29,14 @@ jobs:
     - name: Check publish content
       run: ls -la ./publish
 
+    - name: Zip publish folder
+      run: |
+        cd publish
+        zip -r ../app.zip .
+
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v3
       with:
         app-name: 'Petly-App'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: ./publish
-        type: zip
+        package: app.zip
