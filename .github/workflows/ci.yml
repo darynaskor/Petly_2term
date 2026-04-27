@@ -25,7 +25,7 @@ jobs:
       run: dotnet build AppCode/Petly/Petly.csproj --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test AppCode/Petly.Tests/Petly.Tests.csproj --no-build
+      run: dotnet test AppCode/Petly.Tests/Petly.Tests.csproj
 
     - name: Publish
       run: dotnet publish AppCode/Petly/Petly.csproj -c Release -o ./publish --self-contained false

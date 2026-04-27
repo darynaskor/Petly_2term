@@ -56,7 +56,7 @@ public class AdoptionControllerTests
         var result = await controller.Index();
 
         var view = Assert.IsType<ViewResult>(result);
-       // var model = Assert.IsType<List<AdoptionApplication>>(view.Model);
+        var model = Assert.IsType<List<AdoptionApplication>>(view.Model);
 
         Assert.Single(model);
     }
