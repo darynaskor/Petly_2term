@@ -9,6 +9,9 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      SCM_DO_BUILD_DURING_DEPLOYMENT: false 
+
     steps:
     - uses: actions/checkout@v4
 
@@ -24,14 +27,19 @@ jobs:
       run: dotnet build AppCode/Petly/Petly.csproj --configuration Release --no-restore
 
     - name: Publish
-      run: dotnet publish AppCode/Petly/Petly.csproj -c Release -o ./publish /p:UseAppHost=false
+      run: dotnet publish AppCode/Petly/Petly.csproj -c Release -o publish /p:UseAppHost=false
 
     - name: Check publish content
-      run: ls -la ./publish
+      run: ls -la publish
 
-    - name: Deploy to Azure Web App
+    - name: Zip publish
+      run: |
+        cd publish
+        zip -r ../app.zip .
+
+    - name: Deploy
       uses: azure/webapps-deploy@v3
       with:
-        app-name: 'petly-app'
+        app-name: 'Petly-App'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: './publish'
+        package: app.zip
