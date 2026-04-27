@@ -35,7 +35,7 @@ public class SuccessStoryService
         // Припускаємо, що статус усиновленої тваринки - "Adopted"
         // (Якщо у вас інше слово, наприклад "Усиновлений", замініть його тут)
         return await _context.Pets
-            .Where(p => p.Status == "Adopted") 
+            .Where(p => p.Status == "adopted") 
             .ToListAsync();
     }
 }
