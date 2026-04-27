@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Petly.Business")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+659c99ad77cce370c301808b9daf05e92437ffe0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+41f7b69771c36838eda220e51147b19a6514433f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Petly.Business")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Petly.Business")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

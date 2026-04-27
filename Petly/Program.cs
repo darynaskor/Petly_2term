@@ -39,9 +39,11 @@ builder.Services.AddScoped<NeedService>();
 builder.Services.AddScoped<AdoptionService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<SuccessStoryService>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection("Email"));
+
 
 builder.Services.AddSession(options =>
 {
