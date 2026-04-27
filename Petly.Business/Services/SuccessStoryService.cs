@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Petly.DataAccess; // Ваш контекст бази даних
+using Petly.DataAccess.Data;
 using Petly.Models;
 
 namespace Petly.Business.Services;
