@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Petly.Business.Services; // Підключаємо папку з сервісами
 using Petly.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Petly.Controllers;
 
@@ -20,6 +21,7 @@ public class SuccessStoriesController : Controller
         return View(stories);
     }
 
+    [Authorize(Roles = "shelter_admin")]
     public async Task<IActionResult> Create()
     {
         ViewBag.Pets = await _storyService.GetAvailablePetsAsync();
@@ -28,6 +30,7 @@ public class SuccessStoriesController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "shelter_admin")]
     public async Task<IActionResult> Create(SuccessStory story)
     {
         if (ModelState.IsValid)

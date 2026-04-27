@@ -7,7 +7,10 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>🏡 Щасливі історії наших пухнастиків</h1>
-        <a asp-action="Create" class="btn btn-success">Додати нову історію</a>
+        @if (User.IsInRole("shelter_admin"))
+{
+    <a asp-action="Create" class="btn btn-success">Додати нову історію</a>
+}
     </div>
 
     <div class="row">

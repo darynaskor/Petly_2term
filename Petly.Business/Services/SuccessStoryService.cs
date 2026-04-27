@@ -29,9 +29,13 @@ public class SuccessStoryService
         await _context.SaveChangesAsync();
     }
 
-    // Отримати список тваринок для випадаючого списку у формі
+    // Отримуємо тільки тих тварин, які вже усиновлені
     public async Task<List<Pet>> GetAvailablePetsAsync()
     {
-        return await _context.Pets.ToListAsync();
+        // Припускаємо, що статус усиновленої тваринки - "Adopted"
+        // (Якщо у вас інше слово, наприклад "Усиновлений", замініть його тут)
+        return await _context.Pets
+            .Where(p => p.Status == "Adopted") 
+            .ToListAsync();
     }
 }
