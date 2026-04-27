@@ -41,7 +41,7 @@ public class AccountControllerAdminTests
         var model = new LoginViewModel
         {
             Email = "admin@petly.com",
-            Password = "secret123"
+            Password = "secret"
         };
 
         IActionResult result = await controller.Login(model);
