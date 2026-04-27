@@ -93,7 +93,7 @@ public class NeedsControllerTests
     {
         await using var db = CreateDbContext();
         TestIdentityScope scope = CreateIdentityScope(db);
-        //await CreateUserAsync(scope.UserManager, scope.RoleManager, "shelter5@petly.test", "pass123", "shelter_admin", userId: 5);
+        await CreateUserAsync(scope.UserManager, scope.RoleManager, "shelter5@petly.test", "pass123", "shelter_admin", userId: 5);
         NeedsController controller = CreateController(scope, "shelter_admin", userId: 5);
 
         IActionResult result = await controller.Create(5);
