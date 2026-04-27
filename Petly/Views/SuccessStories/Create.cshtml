@@ -17,7 +17,7 @@
 
                         <div class="form-group mb-3">
                             <label asp-for="PetId" class="form-label text-muted fw-bold"></label>
-                            <select asp-for="PetId" class="form-select" asp-items="@(new SelectList(ViewBag.Pets, "Id", "petName"))">
+                            <select asp-for="PetId" class="form-select" asp-items="@(new SelectList(ViewBag.Pets, "PetId", "PetName"))">
                                 <option value="">-- Оберіть пухнастика --</option>
                             </select>
                             <span asp-validation-for="PetId" class="text-danger"></span>
