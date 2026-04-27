@@ -1,4 +1,4 @@
-name: Deploy ASP.NET to Azure
+name: Build and deploy ASP.Net Core app to Azure Web App - Petly-App
 
 on:
   push:
@@ -6,40 +6,44 @@ on:
       - petly_7
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
-    env:
-      SCM_DO_BUILD_DURING_DEPLOYMENT: false 
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Build
+        run: dotnet build --configuration Release
+        working-directory: AppCode/Petly
+
+      - name: Publish
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        working-directory: AppCode/Petly
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: .net-app
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '10.x'
-
-    - name: Restore
-      run: dotnet restore AppCode/Petly/Petly.csproj
-
-    - name: Build
-      run: dotnet build AppCode/Petly/Petly.csproj --configuration Release --no-restore
-
-    - name: Publish
-      run: dotnet publish AppCode/Petly/Petly.csproj -c Release -o publish /p:UseAppHost=false
-
-    - name: Check publish content
-      run: ls -la publish
-
-    - name: Zip publish
-      run: |
-        cd publish
-        zip -r ../app.zip .
-
-    - name: Deploy
-      uses: azure/webapps-deploy@v3
-      with:
-        app-name: 'Petly-App'
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: app.zip
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'Petly-App'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
