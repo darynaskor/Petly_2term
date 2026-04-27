@@ -38,4 +38,6 @@ public class SuccessStoryService
             .Where(p => p.Status == "adopted") 
             .ToListAsync();
     }
+
+    
 }
