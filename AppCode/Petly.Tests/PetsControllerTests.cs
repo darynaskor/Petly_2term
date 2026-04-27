@@ -38,7 +38,9 @@ public class PetsControllerTests
 
         var view = Assert.IsType<ViewResult>(result);
         var model = Assert.IsType<List<Pet>>(view.Model);
-        Assert.Equal(2, model.Count);
+        Assert.Equal(3, model.Count);
+
+
         //Assert.Equal("user", controller.ViewBag.Role);
     }
 
