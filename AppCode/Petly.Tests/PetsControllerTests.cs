@@ -147,7 +147,7 @@ public class PetsControllerTests
         TestIdentityScope scope = CreateIdentityScope(db);
         var admin = await CreateUserAsync(scope.UserManager, scope.RoleManager, "shelter@test.com", "pass123", "shelter_admin");
         
-        var pet = new Pet { PetId = 1, PetName = "Lucky", ShelterId = admin.Id };
+        var pet = new Pet { PetId = 1, PetName = "Luckyyyyy", ShelterId = admin.Id };
         db.Pets.Add(pet);
         await db.SaveChangesAsync();
 
