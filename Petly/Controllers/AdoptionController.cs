@@ -29,7 +29,6 @@ public class AdoptionController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        // 🔥 ФІКС: додаємо Session для тестів
         var sessionRole = HttpContext.Session.GetString("Role");
 
         var isSystemAdmin = User.IsInRole("system_admin") || sessionRole == "system_admin";

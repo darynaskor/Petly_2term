@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema; // Важливо для ForeignKey
+using System.ComponentModel.DataAnnotations.Schema; 
 
 namespace Petly.Models
 {
@@ -9,14 +9,12 @@ namespace Petly.Models
         [Key]
         public int Id { get; set; }
 
-        // --- Ці два рядки обов'язкові для зв'язку! ---
         [Required(ErrorMessage = "Оберіть тваринку")]
         [Display(Name = "Тваринка")]
         public int PetId { get; set; }
 
         [ForeignKey("PetId")]
         public Pet Pet { get; set; } 
-        // ---------------------------------------------
 
         [Required(ErrorMessage = "Додайте заголовок історії")]
         [Display(Name = "Заголовок")]

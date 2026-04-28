@@ -1,37 +1,72 @@
-@model IEnumerable<Petly.Models.SuccessStory>
+@model List<Petly.Models.SuccessStory>
 
 @{
-    ViewData["Title"] = "Історії успіху";
+    ViewData["Title"] = "Щасливі історії";
+    var isShelterAdmin = User.IsInRole("shelter_admin");
 }
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>🏡 Щасливі історії наших пухнастиків</h1>
-        @if (User.IsInRole("shelter_admin"))
-{
-    <a asp-action="Create" class="btn btn-success">Додати нову історію</a>
-}
+<div class="need-page">
+    <div class="section-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+        <div class="section-header__copy mb-0">
+            <span class="section-kicker">Success Stories</span>
+            <h1 class="section-title">Історії щасливих хвостиків</h1>
+            <p class="section-subtitle mb-0">Вони чекали на диво, і воно сталося. Надихаючі історії врятованих життів та їхніх нових родин.</p>
+        </div>
+        
+        <div class="section-header__action">
+            @if (isShelterAdmin)
+            {
+                <a asp-action="Create" class="btn-need-secondary">Додати нову історію</a>
+            }
+
+        </div>
     </div>
 
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+    @if (Model.Count == 0)
+    {
+        <section class="need-empty mt-5">
+            <h2>Поки що історій немає</h2>
+            <p>Але зовсім скоро тут з'являться перші розповіді про врятованих хвостиків.</p>
+        </section>
+    }
+    else
+    {
+        <section class="need-grid mt-4">
+            @foreach (var story in Model)
+            {
+                <article class="need-card need-card--grouped">
+                    @if (!string.IsNullOrEmpty(story.ImageUrl))
                     {
-                        <img src="@item.ImageUrl" class="card-img-top" alt="@item.Pet?.PetName">
+                        <div style="width: 100%; height: 250px; overflow: hidden; border-radius: 12px 12px 0 0; margin-bottom: 15px;">
+                            <img src="@story.ImageUrl" alt="@story.Pet?.PetName" style="width: 100%; height: 100%; object-fit: cover;" />
+                        </div>
                     }
-                    <div class="card-body">
-                        <h5 class="card-title">@item.Title</h5>
-                        <p class="text-muted">Герой: <strong>@item.Pet?.PetName</strong></p>
-                        <p class="card-text">@item.StoryText.Substring(0, Math.Min(item.StoryText.Length, 100))...</p>
+
+                    <div style="padding: 0 20px 20px 20px;">
+                        <div class="need-card__top">
+                            <div>
+                                <p class="need-card__label">Герой історії</p>
+                                <h2 class="need-card__title">@story.Pet?.PetName</h2>
+                            </div>
+                            <span class="need-card__location">@story.CreatedAt.ToShortDateString()</span>
+                        </div>
+
+                        <div class="need-card__group">
+                            <div class="need-card__group-header">
+                                <p class="need-card__section-title" style="font-size: 1.1rem; font-weight: bold;">@story.Title</p>
+                            </div>
+
+                            <ul class="need-list">
+                                <li class="need-list__item" style="border: none; padding: 0;">
+                                    <div class="need-list__content">
+                                        <p class="need-list__description" style="line-height: 1.6;">@story.StoryText</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="card-footer bg-white border-0">
-                        <small class="text-muted">Опубліковано: @item.CreatedAt.ToShortDateString()</small>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+                </article>
+            }
+        </section>
+    }
 </div>

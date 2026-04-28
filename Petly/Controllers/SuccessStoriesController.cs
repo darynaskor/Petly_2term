@@ -1,18 +1,21 @@
-using Microsoft.AspNetCore.Mvc;
-using Petly.Business.Services; // Підключаємо папку з сервісами
-using Petly.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Petly.Business.Services;
+using Petly.Models;
+using Microsoft.AspNetCore.Hosting; // Потрібно для IWebHostEnvironment
 
 namespace Petly.Controllers;
 
 public class SuccessStoriesController : Controller
 {
     private readonly SuccessStoryService _storyService;
+    private readonly IWebHostEnvironment _webHostEnvironment; // Додаємо сюди
 
-    // Підключаємо наш новий сервіс
-    public SuccessStoriesController(SuccessStoryService storyService)
+    // Оновлюємо конструктор
+    public SuccessStoriesController(SuccessStoryService storyService, IWebHostEnvironment webHostEnvironment)
     {
         _storyService = storyService;
+        _webHostEnvironment = webHostEnvironment;
     }
 
     public async Task<IActionResult> Index()
@@ -31,15 +34,40 @@ public class SuccessStoriesController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "shelter_admin")]
-    public async Task<IActionResult> Create(SuccessStory story)
+    public async Task<IActionResult> Create(SuccessStory story, IFormFile? uploadFile)
     {
+        ModelState.Remove("Pet"); 
+
         if (ModelState.IsValid)
         {
+            // ЛОГІКА ЗБЕРЕЖЕННЯ ФАЙЛУ ТЕПЕР ТУТ
+            if (uploadFile != null && uploadFile.Length > 0)
+            {
+                // Отримуємо шлях до wwwroot
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(uploadFile.FileName);
+                string uploadsFolder = Path.Combine(wwwRootPath, "images", "success_stories");
+
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                string filePath = Path.Combine(uploadsFolder, fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await uploadFile.CopyToAsync(fileStream);
+                }
+
+                // Записуємо шлях у властивість моделі
+                story.ImageUrl = "/images/success_stories/" + fileName;
+            }
+
+            // Передаємо готову історію з шляхом до фото в сервіс
             await _storyService.CreateStoryAsync(story);
             return RedirectToAction(nameof(Index));
         }
         
-        // Якщо помилка, знову завантажуємо список тварин
         ViewBag.Pets = await _storyService.GetAvailablePetsAsync();
         return View(story);
     }
