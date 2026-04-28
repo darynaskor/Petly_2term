@@ -4,6 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Petly.Business.Services;
 using Petly.Models;
 using Microsoft.AspNetCore.Hosting; 
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+
 
 namespace Petly.Controllers;
 
