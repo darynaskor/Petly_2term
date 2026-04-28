@@ -2,16 +2,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Petly.Business.Services;
 using Petly.Models;
-using Microsoft.AspNetCore.Hosting; // Потрібно для IWebHostEnvironment
+using Microsoft.AspNetCore.Hosting; 
 
 namespace Petly.Controllers;
 
 public class SuccessStoriesController : Controller
 {
     private readonly SuccessStoryService _storyService;
-    private readonly IWebHostEnvironment _webHostEnvironment; // Додаємо сюди
+    private readonly IWebHostEnvironment _webHostEnvironment; 
 
-    // Оновлюємо конструктор
     public SuccessStoriesController(SuccessStoryService storyService, IWebHostEnvironment webHostEnvironment)
     {
         _storyService = storyService;
@@ -40,10 +39,8 @@ public class SuccessStoriesController : Controller
 
         if (ModelState.IsValid)
         {
-            // ЛОГІКА ЗБЕРЕЖЕННЯ ФАЙЛУ ТЕПЕР ТУТ
             if (uploadFile != null && uploadFile.Length > 0)
             {
-                // Отримуємо шлях до wwwroot
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(uploadFile.FileName);
                 string uploadsFolder = Path.Combine(wwwRootPath, "images", "success_stories");
@@ -59,11 +56,8 @@ public class SuccessStoriesController : Controller
                     await uploadFile.CopyToAsync(fileStream);
                 }
 
-                // Записуємо шлях у властивість моделі
                 story.ImageUrl = "/images/success_stories/" + fileName;
             }
-
-            // Передаємо готову історію з шляхом до фото в сервіс
             await _storyService.CreateStoryAsync(story);
             return RedirectToAction(nameof(Index));
         }

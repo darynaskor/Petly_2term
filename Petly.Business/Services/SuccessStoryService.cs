@@ -21,7 +21,6 @@ public class SuccessStoryService
             .ToListAsync();
     }
 
-    // Залишаємо тільки збереження в базу
     public async Task CreateStoryAsync(SuccessStory story)
     {
         _context.SuccessStories.Add(story);
