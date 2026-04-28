@@ -33,4 +33,17 @@ public class SuccessStoryService
             .Where(p => p.Status == "Прилаштований")
             .ToListAsync();
     }
+
+    public async Task<SuccessStory?> GetStoryByIdAsync(int id)
+    {
+        return await _context.SuccessStories
+            .Include(s => s.Pet)
+            .FirstOrDefaultAsync(s => s.Id == id);
+    }
+
+    public async Task UpdateStoryAsync(SuccessStory story)
+    {
+        _context.SuccessStories.Update(story);
+        await _context.SaveChangesAsync();
+    }
 }

@@ -65,4 +65,50 @@ public class SuccessStoriesController : Controller
         ViewBag.Pets = await _storyService.GetAvailablePetsAsync();
         return View(story);
     }
+
+    [Authorize(Roles = "shelter_admin")]
+public async Task<IActionResult> Edit(int id)
+{
+    var story = await _storyService.GetStoryByIdAsync(id);
+    if (story == null) return NotFound();
+
+    ViewBag.Pets = await _storyService.GetAvailablePetsAsync();
+    return View(story);
+}
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+[Authorize(Roles = "shelter_admin")]
+public async Task<IActionResult> Edit(int id, SuccessStory story, IFormFile? uploadFile)
+{
+    if (id != story.Id) return BadRequest();
+
+    ModelState.Remove("Pet");
+
+    if (ModelState.IsValid)
+    {
+        if (uploadFile != null && uploadFile.Length > 0)
+        {
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(uploadFile.FileName);
+            string uploadsFolder = Path.Combine(wwwRootPath, "images", "success_stories");
+
+            if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
+
+            string filePath = Path.Combine(uploadsFolder, fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await uploadFile.CopyToAsync(fileStream);
+            }
+            
+            story.ImageUrl = "/images/success_stories/" + fileName;
+        }
+
+        await _storyService.UpdateStoryAsync(story);
+        return RedirectToAction(nameof(Index));
+    }
+
+    ViewBag.Pets = await _storyService.GetAvailablePetsAsync();
+    return View(story);
+}
 }
