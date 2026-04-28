@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Petly.Business.Services;
 using Petly.Models;
 using Microsoft.AspNetCore.Hosting; 
@@ -9,12 +10,12 @@ namespace Petly.Controllers;
 public class SuccessStoriesController : Controller
 {
     private readonly SuccessStoryService _storyService;
-    private readonly IWebHostEnvironment _webHostEnvironment; 
+    private readonly IConfiguration _config;
 
-    public SuccessStoriesController(SuccessStoryService storyService, IWebHostEnvironment webHostEnvironment)
+    public SuccessStoriesController(SuccessStoryService storyService, IConfiguration config)
     {
         _storyService = storyService;
-        _webHostEnvironment = webHostEnvironment;
+        _config = config;
     }
 
     public async Task<IActionResult> Index()
@@ -41,22 +42,22 @@ public class SuccessStoriesController : Controller
         {
             if (uploadFile != null && uploadFile.Length > 0)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(uploadFile.FileName);
-                string uploadsFolder = Path.Combine(wwwRootPath, "images", "success_stories");
-
-                if (!Directory.Exists(uploadsFolder))
+                var account = new Account(
+                _config["CloudinarySettings:CloudName"],
+                _config["CloudinarySettings:ApiKey"],
+                _config["CloudinarySettings:ApiSecret"]
+                );
+                var cloudinary = new Cloudinary(account);
+                using (var stream = uploadFile.OpenReadStream())
                 {
-                    Directory.CreateDirectory(uploadsFolder);
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(uploadFile.FileName, stream),
+                        Folder = "petly_success_stories" 
+                    };
+                    var uploadResult = await cloudinary.UploadAsync(uploadParams);
+                    story.ImageUrl = uploadResult.SecureUrl.AbsoluteUri;
                 }
-
-                string filePath = Path.Combine(uploadsFolder, fileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await uploadFile.CopyToAsync(fileStream);
-                }
-
-                story.ImageUrl = "/images/success_stories/" + fileName;
             }
             await _storyService.CreateStoryAsync(story);
             return RedirectToAction(nameof(Index));
@@ -67,48 +68,50 @@ public class SuccessStoriesController : Controller
     }
 
     [Authorize(Roles = "shelter_admin")]
-public async Task<IActionResult> Edit(int id)
-{
-    var story = await _storyService.GetStoryByIdAsync(id);
-    if (story == null) return NotFound();
-
-    ViewBag.Pets = await _storyService.GetAvailablePetsAsync();
-    return View(story);
-}
-
-[HttpPost]
-[ValidateAntiForgeryToken]
-[Authorize(Roles = "shelter_admin")]
-public async Task<IActionResult> Edit(int id, SuccessStory story, IFormFile? uploadFile)
-{
-    if (id != story.Id) return BadRequest();
-
-    ModelState.Remove("Pet");
-
-    if (ModelState.IsValid)
+    public async Task<IActionResult> Edit(int id)
     {
-        if (uploadFile != null && uploadFile.Length > 0)
-        {
-            string wwwRootPath = _webHostEnvironment.WebRootPath;
-            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(uploadFile.FileName);
-            string uploadsFolder = Path.Combine(wwwRootPath, "images", "success_stories");
+        var story = await _storyService.GetStoryByIdAsync(id);
+        if (story == null) return NotFound();
 
-            if (!Directory.Exists(uploadsFolder)) Directory.CreateDirectory(uploadsFolder);
-
-            string filePath = Path.Combine(uploadsFolder, fileName);
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                await uploadFile.CopyToAsync(fileStream);
-            }
-            
-            story.ImageUrl = "/images/success_stories/" + fileName;
-        }
-
-        await _storyService.UpdateStoryAsync(story);
-        return RedirectToAction(nameof(Index));
+        ViewBag.Pets = await _storyService.GetAvailablePetsAsync();
+        return View(story);
     }
 
-    ViewBag.Pets = await _storyService.GetAvailablePetsAsync();
-    return View(story);
-}
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "shelter_admin")]
+    public async Task<IActionResult> Edit(int id, SuccessStory story, IFormFile? uploadFile)
+    {
+        if (id != story.Id) return BadRequest();
+
+        ModelState.Remove("Pet");
+
+        if (ModelState.IsValid)
+        {
+            if (uploadFile != null && uploadFile.Length > 0)
+            {
+                var account = new Account(
+                _config["CloudinarySettings:CloudName"],
+                _config["CloudinarySettings:ApiKey"],
+                _config["CloudinarySettings:ApiSecret"]
+                );
+                var cloudinary = new Cloudinary(account);
+                using (var stream = uploadFile.OpenReadStream())
+                {
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(uploadFile.FileName, stream),
+                        Folder = "petly_success_stories" 
+                    };
+                    var uploadResult = await cloudinary.UploadAsync(uploadParams);
+                    story.ImageUrl = uploadResult.SecureUrl.AbsoluteUri;
+                }
+            }
+
+            await _storyService.UpdateStoryAsync(story);
+            return RedirectToAction(nameof(Index));
+        }
+        ViewBag.Pets = await _storyService.GetAvailablePetsAsync();
+        return View(story);
+    }
 }
