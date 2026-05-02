@@ -38,6 +38,7 @@
 .notification-table tbody td {
     padding: 14px;
     border: none;
+    vertical-align: middle; 
 }
 
 .row-unread {
@@ -64,6 +65,7 @@
 .actions-cell {
     display: flex;
     gap: 8px;
+    align-items: center;
 }
 
 .btn-icon {
@@ -71,16 +73,19 @@
     border-radius: 8px;
     padding: 6px 10px;
     cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+    line-height: 1;
 }
 
-.btn-check {
-    background: #e6f7ed;
-    color: green;
-}
 
 .btn-delete {
     background: #ffe5e5;
-    color: red;
+    color: #c62828;
 }
 
 .empty-state {
@@ -91,7 +96,7 @@
 
 .mark-all-as-read {
     background: #fff0b8;
-    border-color: #ffd666;
+    border: 1px solid #ffd666;
     color: #855700;
 }
 
