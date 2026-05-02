@@ -226,4 +226,17 @@ public class AdoptionService
             .Include(a => a.UserProfile)
             .FirstOrDefaultAsync(a => a.AdoptId == adoptId);
     }
+
+    public async Task<int> GetApplicantUserIdAsync(int adoptId)
+{
+    var application = await _context.AdoptionApplications
+        .FirstOrDefaultAsync(a => a.AdoptId == adoptId);
+
+    if (application == null)
+    {
+        throw new KeyNotFoundException("Заявку не знайдено.");
+    }
+
+    return application.UserId;
+}
 }

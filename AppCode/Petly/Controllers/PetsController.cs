@@ -14,12 +14,18 @@ public class PetsController : Controller
     private readonly PetService _petService;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ApplicationDbContext _context;
+    private readonly NotificationService _notificationService;
 
-    public PetsController(PetService petService, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
+    public PetsController(
+        PetService petService,
+        UserManager<ApplicationUser> userManager,
+        ApplicationDbContext context,
+        NotificationService notificationService)
     {
         _petService = petService;
         _userManager = userManager;
         _context = context;
+        _notificationService = notificationService;
     }
 
     private async Task<ApplicationUser?> GetCurrentUserAsync()
@@ -83,6 +89,16 @@ public class PetsController : Controller
         if (!ModelState.IsValid) return View(pet);
 
         await _petService.AddPetAsync(pet);
+        var users = await _userManager.Users.ToListAsync();
+
+        foreach (var user in users)
+        {
+            await _notificationService.CreateAsync(
+                user.Id,
+                $"Нова тварина",
+                $"🐾 Нова тварина: {pet.PetName} тепер доступна для адопції"
+                );
+        }
         TempData["Success"] = "Тварину додано";
         return RedirectToAction(nameof(Index));
     }

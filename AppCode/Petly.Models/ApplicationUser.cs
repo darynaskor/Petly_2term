@@ -17,4 +17,6 @@ public class ApplicationUser : IdentityUser<int>
 
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
     public string? ImagePath { get; set; }
+
+    public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }

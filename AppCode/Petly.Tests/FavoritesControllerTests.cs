@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Petly.Controllers;
+using Petly.Business.Services;
 using Petly.DataAccess.Data;
 using Petly.Models;
 using Xunit;
@@ -83,7 +84,8 @@ public class FavoritesControllerTests
         services.AddSingleton<ILogger<RoleManager<IdentityRole<int>>>>(NullLogger<RoleManager<IdentityRole<int>>>.Instance);
         services.AddSingleton<UserManager<ApplicationUser>>();
         services.AddSingleton<RoleManager<IdentityRole<int>>>();
-        services.AddTransient<FavoritesController>();
+        services.AddScoped<FavoritesController>();
+        services.AddScoped<NotificationService>();
 
         ServiceProvider serviceProvider = services.BuildServiceProvider();
 

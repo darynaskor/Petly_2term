@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Petly.DataAccess.Data;
+using Petly.Business.Services;
 using Petly.Models;
+using Petly.DataAccess.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Petly.Controllers;
 
@@ -12,11 +13,13 @@ public class FavoritesController : Controller
 {
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly NotificationService _notificationService;
 
-    public FavoritesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+    public FavoritesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, NotificationService notificationService)
     {
         _context = context;
         _userManager = userManager;
+        _notificationService = notificationService;
     }
 
     private async Task<ApplicationUser?> GetCurrentUserAsync()
@@ -24,28 +27,39 @@ public class FavoritesController : Controller
         return await _userManager.GetUserAsync(User);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Add(int petId)
+[HttpPost]
+public async Task<IActionResult> Add(int petId)
+{
+    var user = await GetCurrentUserAsync();
+    if (user == null) return RedirectToAction("Login", "Account");
+
+    var pet = await _context.Pets
+        .FirstOrDefaultAsync(p => p.PetId == petId);
+
+    if (pet == null) return NotFound();
+
+    var exists = await _context.Favorites
+        .AnyAsync(f => f.UserId == user.Id && f.PetId == petId);
+
+    if (!exists)
     {
-        var user = await GetCurrentUserAsync();
-        if (user == null) return RedirectToAction("Login", "Account");
-
-        var exists = await _context.Favorites
-            .AnyAsync(f => f.UserId == user.Id && f.PetId == petId);
-
-        if (!exists)
+        _context.Favorites.Add(new Favorite
         {
-            _context.Favorites.Add(new Favorite
-            {
-                UserId = user.Id,
-                PetId = petId
-            });
+            UserId = user.Id,
+            PetId = petId
+        });
 
-            await _context.SaveChangesAsync();
-        }
+        await _context.SaveChangesAsync();
 
-        return RedirectToAction("Index");
+        await _notificationService.CreateAsync(
+            user.Id,
+            $"Обране: {pet.PetName}",
+            $"Ви додали в обране {pet.PetName}"
+        );
     }
+
+    return RedirectToAction("Index");
+}
 
     public async Task<IActionResult> Index()
     {
@@ -68,15 +82,28 @@ public class FavoritesController : Controller
     }
 
     public async Task<IActionResult> Remove(int id)
+{
+    var user = await GetCurrentUserAsync();
+    if (user == null) return RedirectToAction("Login", "Account");
+
+    var fav = await _context.Favorites
+        .Include(f => f.Pet)
+        .FirstOrDefaultAsync(f => f.Id == id && f.UserId == user.Id);
+
+    if (fav != null)
     {
-        var fav = await _context.Favorites.FindAsync(id);
+        var petName = fav.Pet?.PetName;
 
-        if (fav != null)
-        {
-            _context.Favorites.Remove(fav);
-            await _context.SaveChangesAsync();
-        }
+        _context.Favorites.Remove(fav);
+        await _context.SaveChangesAsync();
 
-        return RedirectToAction("Index");
+        await _notificationService.CreateAsync(
+            user.Id,
+            $"Обране: {petName}",
+            $"Ви видалили з обраного {petName}"
+        );
     }
+
+    return RedirectToAction("Index");
+}
 }
