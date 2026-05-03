@@ -14,7 +14,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     public DbSet<Shelter> Shelters { get; set; }
     public DbSet<ShelterNeed> ShelterNeeds { get; set; }
 
-    public DbSet<Favorite> Favorites { get; set; }   
+    public DbSet<Favorite> Favorites { get; set; }  
+    public DbSet<ViewedPet> ViewedPets { get; set; } 
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

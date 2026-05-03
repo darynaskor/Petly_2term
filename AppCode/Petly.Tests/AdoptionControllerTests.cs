@@ -58,7 +58,7 @@ public class AdoptionControllerTests
         var view = Assert.IsType<ViewResult>(result);
         var model = Assert.IsType<List<AdoptionApplication>>(view.Model);
 
-        Assert.Single(2, model Count);
+        Assert.Single(model);
     }
 
     [Fact]

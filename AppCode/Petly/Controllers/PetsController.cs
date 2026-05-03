@@ -58,7 +58,30 @@ public class PetsController : Controller
     {
         var pet = await _petService.GetPetAsync(id);
         if (pet == null) return NotFound();
-        return View(pet);
+        if (User.Identity.IsAuthenticated)
+{
+    var userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value);
+
+    var existing = await _context.ViewedPets
+        .FirstOrDefaultAsync(v => v.UserId == userId && v.PetId == id);
+
+    if (existing != null)
+    {
+        existing.ViewedAt = DateTime.Now;
+    }
+    else
+    {
+        _context.ViewedPets.Add(new ViewedPet
+        {
+            UserId = userId,
+            PetId = id,
+            ViewedAt = DateTime.Now
+        });
+    }
+
+    await _context.SaveChangesAsync();
+}
+return View(pet);
     }
 
     [Authorize(Roles = "shelter_admin")]
