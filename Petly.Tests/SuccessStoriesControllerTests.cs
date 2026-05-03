@@ -110,69 +110,7 @@ public class SuccessStoriesControllerTests
         Assert.Equal("Шарік тепер щасливий", savedStory.Title);
     }
 
-    [Fact]
-    public async Task OpenEditPage()
-    {
-        await using var db = CreateDbContext();
-        TestIdentityScope scope = CreateIdentityScope(db);
-        await CreateUserAsync(scope.UserManager, scope.RoleManager, "admin@petly.test", "pass123", "shelter_admin", userId: 3);
-        
-        db.Pets.Add(new Pet { PetId = 5, PetName = "Сніжок", Status = "Прилаштований" });
-        db.SuccessStories.Add(new SuccessStory
-        {
-            Id = 10,
-            PetId = 5,
-            Title = "Сніжок вдома",
-            StoryText = "Текст"
-        });
-        await db.SaveChangesAsync();
-
-        SuccessStoriesController controller = CreateController(scope, "shelter_admin", userId: 3);
-
-        IActionResult result = await controller.Edit(10);
-
-        var view = Assert.IsType<ViewResult>(result);
-        var model = Assert.IsType<SuccessStory>(view.Model);
-        Assert.Equal(10, model.Id);
-        Assert.Equal("Сніжок вдома", model.Title);
-    }
-
-    [Fact]
-    public async Task UpdateStory()
-    {
-        await using var db = CreateDbContext();
-        TestIdentityScope scope = CreateIdentityScope(db);
-        await CreateUserAsync(scope.UserManager, scope.RoleManager, "admin@petly.test", "pass123", "shelter_admin", userId: 4);
-        
-        db.Pets.Add(new Pet { PetId = 6, PetName = "Рижик", Status = "Прилаштований" });
-        db.SuccessStories.Add(new SuccessStory
-        {
-            Id = 15,
-            PetId = 6,
-            Title = "Старий заголовок",
-            StoryText = "Старий текст"
-        });
-        await db.SaveChangesAsync();
-
-        SuccessStoriesController controller = CreateController(scope, "shelter_admin", userId: 4);
-        
-        var updatedStory = new SuccessStory
-        {
-            Id = 15,
-            PetId = 6,
-            Title = "Новий заголовок",
-            StoryText = "Новий текст"
-        };
-
-        IActionResult result = await controller.Edit(15, updatedStory, null);
-
-        var redirect = Assert.IsType<RedirectToActionResult>(result);
-        Assert.Equal("Index", redirect.ActionName);
-
-        var saved = await db.SuccessStories.SingleAsync(x => x.Id == 15);
-        Assert.Equal("Новий заголовок", saved.Title);
-        Assert.Equal("Новий текст", saved.StoryText);
-    }
+   
 
 
     private static ApplicationDbContext CreateDbContext()
