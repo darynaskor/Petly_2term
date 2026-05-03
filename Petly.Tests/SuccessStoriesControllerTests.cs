@@ -110,9 +110,6 @@ public class SuccessStoriesControllerTests
         Assert.Equal("Шарік тепер щасливий", savedStory.Title);
     }
 
-   
-
-
     private static ApplicationDbContext CreateDbContext()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
