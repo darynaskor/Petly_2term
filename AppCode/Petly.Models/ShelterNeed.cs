@@ -22,6 +22,12 @@ public class ShelterNeed
     [StringLength(255)]
     public string PaymentDetails { get; set; } = string.Empty;
 
+    [Column("isFulfilled")]
+    public bool IsFulfilled { get; set; }
+
+    [Column("fulfilledAt")]
+    public DateTime? FulfilledAt { get; set; }
+
     [ForeignKey(nameof(ShelterId))]
     public Shelter? Shelter { get; set; }
 }

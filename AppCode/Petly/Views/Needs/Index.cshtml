@@ -55,6 +55,10 @@
                         </div>
                         <span class="need-card__location">@shelter.Location</span>
                     </div>
+                    <div class="need-card__stats" aria-label="Статистика потреб притулку">
+                        <span>@shelter.ActiveNeedsCount активні</span>
+                        <span>@shelter.FulfilledNeedsCount виконані</span>
+                    </div>
 
                     <div class="need-card__group">
                         <div class="need-card__group-header">
@@ -70,13 +74,37 @@
                             {
                                 <li class="need-list__item">
                                     <div class="need-list__content">
-                                        <p class="need-list__description">@need.Description</p>
+                                        <div class="need-list__heading">
+                                            <p class="need-list__description">@need.Description</p>
+                                            @if (need.IsFulfilled)
+                                            {
+                                                <span class="need-status need-status--fulfilled">Виконана</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="need-status need-status--active">Активна</span>
+                                            }
+                                        </div>
                                         <p class="need-list__help"><span>Як допомогти:</span> @need.PaymentDetails</p>
                                     </div>
 
                                     @if (shelter.CanManage)
                                     {
                                         <div class="need-list__actions">
+                                            @if (need.IsFulfilled)
+                                            {
+                                                <form asp-action="MarkActive" asp-route-id="@need.NeedId" method="post" class="need-list__action-form">
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="btn-need-inline">Повернути в активні</button>
+                                                </form>
+                                            }
+                                            else
+                                            {
+                                                <form asp-action="MarkFulfilled" asp-route-id="@need.NeedId" method="post" class="need-list__action-form">
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="btn-need-inline btn-need-inline--success">Закрити потребу</button>
+                                                </form>
+                                            }
                                             <a asp-action="Edit" asp-route-id="@need.NeedId" class="btn-need-inline">Редагувати</a>
                                             <a asp-action="Delete" asp-route-id="@need.NeedId" class="btn-need-inline btn-need-inline--danger">Видалити</a>
                                         </div>

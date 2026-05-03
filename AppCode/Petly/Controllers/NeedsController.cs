@@ -70,7 +70,8 @@ public class NeedsController : Controller
         {
             ShelterId = model.ShelterId,
             Description = model.Description.Trim(),
-            PaymentDetails = model.PaymentDetails.Trim()
+            PaymentDetails = model.PaymentDetails.Trim(),
+            IsFulfilled = false
         };
 
         await _needService.AddNeedAsync(need);
@@ -148,6 +149,20 @@ public class NeedsController : Controller
         return View(need);
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> MarkFulfilled(int id)
+    {
+        return await ChangeFulfillmentStatusAsync(id, true, "Потребу позначено як виконану.");
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> MarkActive(int id)
+    {
+        return await ChangeFulfillmentStatusAsync(id, false, "Потребу повернено в активні.");
+    }
+
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
@@ -165,6 +180,24 @@ public class NeedsController : Controller
 
         await _needService.DeleteNeedAsync(id);
         TempData["Success"] = "Потребу видалено.";
+        return RedirectToAction(nameof(Index));
+    }
+
+    private async Task<IActionResult> ChangeFulfillmentStatusAsync(int id, bool isFulfilled, string message)
+    {
+        var need = await _needService.GetNeedAsync(id);
+        if (need == null)
+        {
+            return NotFound();
+        }
+
+        if (!await CanManageNeedAsync(need))
+        {
+            return Forbid();
+        }
+
+        await _needService.SetNeedFulfillmentAsync(need, isFulfilled);
+        TempData["Success"] = message;
         return RedirectToAction(nameof(Index));
     }
 
