@@ -76,9 +76,9 @@ public class SuccessStoriesControllerTests
         IActionResult result = await controller.Create();
 
         var view = Assert.IsType<ViewResult>(result);
-        var petsList = Assert.IsType<List<Pet>>(controller.ViewBag.Pets);
-        Assert.Single(petsList);
-        Assert.Equal("Мурка", petsList.First().PetName);
+        var petsList = Assert.IsType<List<Pet>>((object)controller.ViewBag.Pets);
+        var pet = Assert.Single(petsList);
+        Assert.Equal("Мурка", pet.PetName);
     }
 
     [Fact]
