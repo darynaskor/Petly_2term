@@ -39,18 +39,12 @@ builder.Services.AddScoped<NeedService>();
 builder.Services.AddScoped<AdoptionService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<AccountService>();
-<<<<<<< HEAD
 builder.Services.AddScoped<SuccessStoryService>();
-=======
->>>>>>> 807a4043194dd3437a51710000b53eb18e902cbb
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection("Email"));
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 807a4043194dd3437a51710000b53eb18e902cbb
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromHours(2);
@@ -95,11 +89,7 @@ using (var scope = app.Services.CreateScope())
     var dbContext = services.GetRequiredService<ApplicationDbContext>();
     await dbContext.Database.MigrateAsync();
     await EnsureAdoptionApplicationColumnsAsync(dbContext);
-<<<<<<< HEAD
     //await FullDbInitializer.SeedAsync(services);
-=======
-    await FullDbInitializer.SeedAsync(services);
->>>>>>> 807a4043194dd3437a51710000b53eb18e902cbb
 }
 
 app.Run();
