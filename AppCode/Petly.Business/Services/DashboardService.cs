@@ -15,8 +15,19 @@ public class DashboardService
         _context = context;
     }
 
-    public async Task<AdminDashboardViewModel> GetAnalyticsAsync(int periodDays, int? shelterId = null)
+    public async Task<AdminDashboardViewModel> GetAnalyticsAsync(int periodDays, int? shelterId = null, int adminId = 0)
     {
+        // Логувати доступ до аналітики
+        var accessLog = new AnalyticsAccessLog
+        {
+            AdminId = adminId,
+            PeriodDays = periodDays,
+            ShelterId = shelterId,
+            AccessTime = DateTime.Now
+        };
+        _context.AnalyticsAccessLogs.Add(accessLog);
+        await _context.SaveChangesAsync();
+
         int normalizedPeriod = AllowedPeriods.Contains(periodDays) ? periodDays : 30;
         DateTime periodStart = DateTime.Today.AddDays(-(normalizedPeriod - 1));
         DateTime nextDay = DateTime.Today.AddDays(1);
