@@ -274,6 +274,7 @@ public class SuccessStoriesControllerTests
             StoryText = "Старий текст"
         });
         await db.SaveChangesAsync();
+        db.ChangeTracker.Clear();
 
         SuccessStoriesController controller = CreateController(scope, "shelter_admin", userId: 4);
         

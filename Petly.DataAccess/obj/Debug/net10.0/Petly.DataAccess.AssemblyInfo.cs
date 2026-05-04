@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Petly.DataAccess")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+992e922b546f9ccba0c0cbfc2a6652dfca2c4f05")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+56115e0df8f99b3a7c78ea13db953dbe60082642")]
 [assembly: System.Reflection.AssemblyProductAttribute("Petly.DataAccess")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Petly.DataAccess")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
