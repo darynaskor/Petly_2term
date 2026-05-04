@@ -97,11 +97,16 @@ public class PetsControllerTests
     {
         await using var db = CreateDbContext();
         TestIdentityScope scope = CreateIdentityScope(db);
-        var controller = CreateController(scope, "shelter_admin", 1);
+        var admin = await CreateUserAsync(scope.UserManager, scope.RoleManager, "shelter-create@test.com", "pass123", "shelter_admin");
+        db.Shelters.Add(new Shelter { AccountId = admin.Id, ShelterName = "Shelter One" });
+        await db.SaveChangesAsync();
 
-        var result = controller.Create();
+        var controller = CreateController(scope, "shelter_admin", admin.Id);
 
-        Assert.IsType<ViewResult>(result);
+        var result = await controller.Create();
+
+        var view = Assert.IsType<ViewResult>(result);
+        Assert.Equal("Shelter One", controller.ViewBag.ShelterName);
     }
 
     [Fact]
@@ -110,9 +115,24 @@ public class PetsControllerTests
         await using var db = CreateDbContext();
         TestIdentityScope scope = CreateIdentityScope(db);
         var admin = await CreateUserAsync(scope.UserManager, scope.RoleManager, "shelter@test.com", "pass123", "shelter_admin");
+        db.Shelters.Add(new Shelter { AccountId = admin.Id, ShelterName = "My Shelter" });
+        await db.SaveChangesAsync();
         
         var controller = CreateController(scope, "shelter_admin", admin.Id);
-        var newPet = new Pet { PetName = "New Dog", Type = "Dog" };
+        var newPet = new Pet
+        {
+            PetName = " New Dog ",
+            Type = "Собака",
+            Breed = " Лабрадор ",
+            Gender = "Чоловіча",
+            Age = 3,
+            Size = "Середній",
+            Vaccinated = true,
+            Sterilized = false,
+            Status = "Доступний",
+            PhotoUrl = " /images/pets/new-dog.jpg ",
+            Description = " Дружній пес "
+        };
 
         var result = await controller.Create(newPet);
 
@@ -123,6 +143,25 @@ public class PetsControllerTests
         var savedPet = await db.Pets.FirstOrDefaultAsync(p => p.PetName == "New Dog");
         Assert.NotNull(savedPet);
         Assert.Equal(admin.Id, savedPet.ShelterId);
+        Assert.Equal("Лабрадор", savedPet.Breed);
+        Assert.Equal("/images/pets/new-dog.jpg", savedPet.PhotoUrl);
+        Assert.Equal("Дружній пес", savedPet.Description);
+        Assert.Equal("Доступний", savedPet.Status);
+    }
+
+    [Fact]
+    public async Task CreatePost_WithoutShelterRecord_ReturnsForbid()
+    {
+        await using var db = CreateDbContext();
+        TestIdentityScope scope = CreateIdentityScope(db);
+        var admin = await CreateUserAsync(scope.UserManager, scope.RoleManager, "noshelter@test.com", "pass123", "shelter_admin");
+
+        var controller = CreateController(scope, "shelter_admin", admin.Id);
+
+        var result = await controller.Create(new Pet { PetName = "No Shelter Pet" });
+
+        Assert.IsType<ForbidResult>(result);
+        Assert.False(await db.Pets.AnyAsync());
     }
 
     [Fact]

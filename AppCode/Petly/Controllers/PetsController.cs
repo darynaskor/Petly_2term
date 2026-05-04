@@ -27,6 +27,17 @@ public class PetsController : Controller
         return await _userManager.GetUserAsync(User);
     }
 
+    private async Task<Shelter?> GetCurrentShelterAsync()
+    {
+        var currentUser = await GetCurrentUserAsync();
+        if (currentUser == null)
+        {
+            return null;
+        }
+
+        return await _context.Shelters.FirstOrDefaultAsync(s => s.AccountId == currentUser.Id);
+    }
+
     public async Task<IActionResult> Index()
     {
         var currentUser = await GetCurrentUserAsync();
@@ -62,8 +73,15 @@ public class PetsController : Controller
     }
 
     [Authorize(Roles = "shelter_admin")]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
+        var shelter = await GetCurrentShelterAsync();
+        if (shelter == null)
+        {
+            return Forbid();
+        }
+
+        ViewBag.ShelterName = shelter.ShelterName;
         return View();
     }
 
@@ -78,9 +96,27 @@ public class PetsController : Controller
             return Forbid();
         }
 
-        pet.ShelterId = currentUser.Id;
+        var shelter = await _context.Shelters.FirstOrDefaultAsync(s => s.AccountId == currentUser.Id);
+        if (shelter == null)
+        {
+            return Forbid();
+        }
 
-        if (!ModelState.IsValid) return View(pet);
+        pet.ShelterId = currentUser.Id;
+        pet.PetName = pet.PetName?.Trim() ?? string.Empty;
+        pet.Type = string.IsNullOrWhiteSpace(pet.Type) ? null : pet.Type.Trim();
+        pet.Breed = string.IsNullOrWhiteSpace(pet.Breed) ? null : pet.Breed.Trim();
+        pet.Gender = string.IsNullOrWhiteSpace(pet.Gender) ? null : pet.Gender.Trim();
+        pet.Size = string.IsNullOrWhiteSpace(pet.Size) ? null : pet.Size.Trim();
+        pet.PhotoUrl = string.IsNullOrWhiteSpace(pet.PhotoUrl) ? null : pet.PhotoUrl.Trim();
+        pet.Description = string.IsNullOrWhiteSpace(pet.Description) ? null : pet.Description.Trim();
+        pet.Status = string.IsNullOrWhiteSpace(pet.Status) ? "Доступний" : pet.Status.Trim();
+
+        if (!ModelState.IsValid)
+        {
+            ViewBag.ShelterName = shelter.ShelterName;
+            return View(pet);
+        }
 
         await _petService.AddPetAsync(pet);
         TempData["Success"] = "Тварину додано";
