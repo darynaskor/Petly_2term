@@ -10,6 +10,11 @@ jobs:
     name: Build and test
     runs-on: ubuntu-latest
 
+    # Вказуємо GitHub Actions запускати всі команди всередині папки AppCode
+    defaults:
+      run:
+        working-directory: ./AppCode
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
