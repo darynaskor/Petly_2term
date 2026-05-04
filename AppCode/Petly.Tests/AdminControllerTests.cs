@@ -1,7 +1,9 @@
 using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using Petly.Business.Services;
 using Petly.Controllers;
 using Petly.DataAccess.Data;
@@ -27,8 +29,8 @@ public class AdminControllerTests
         await using ApplicationDbContext db = CreateDbContext();
 
         db.Roles.AddRange(
-            new Microsoft.AspNetCore.Identity.IdentityRole<int> { Id = 1, Name = "user", NormalizedName = "USER" },
-            new Microsoft.AspNetCore.Identity.IdentityRole<int> { Id = 2, Name = "shelter_admin", NormalizedName = "SHELTER_ADMIN" });
+            new IdentityRole<int> { Id = 1, Name = "user", NormalizedName = "USER" },
+            new IdentityRole<int> { Id = 2, Name = "shelter_admin", NormalizedName = "SHELTER_ADMIN" });
 
         db.Users.AddRange(
             new ApplicationUser
@@ -51,8 +53,8 @@ public class AdminControllerTests
             });
 
         db.UserRoles.AddRange(
-            new Microsoft.AspNetCore.Identity.IdentityUserRole<int> { UserId = 10, RoleId = 1 },
-            new Microsoft.AspNetCore.Identity.IdentityUserRole<int> { UserId = 20, RoleId = 2 });
+            new IdentityUserRole<int> { UserId = 10, RoleId = 1 },
+            new IdentityUserRole<int> { UserId = 20, RoleId = 2 });
 
         db.Shelters.Add(new Shelter
         {
@@ -103,7 +105,14 @@ public class AdminControllerTests
         await db.SaveChangesAsync();
 
         DashboardService service = new(db);
-        AdminController controller = new(service);
+
+        // --- СТВОРЕННЯ ЗАГЛУШКИ ДЛЯ USERMANAGER ---
+        var userStoreMock = new Mock<IUserStore<ApplicationUser>>();
+        var userManagerMock = new Mock<UserManager<ApplicationUser>>(
+            userStoreMock.Object, null, null, null, null, null, null, null, null);
+
+        // Передаємо обидва сервіси у контролер
+        AdminController controller = new(service, userManagerMock.Object);
 
         IActionResult result = await controller.Analytics(7);
 
