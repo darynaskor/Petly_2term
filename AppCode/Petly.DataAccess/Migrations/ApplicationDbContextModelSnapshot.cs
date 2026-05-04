@@ -586,7 +586,6 @@ namespace Petly.DataAccess.Migrations
                 {
                     b.HasOne("Petly.Models.Shelter", "Shelter")
                         .WithMany("Needs")
-                        .WithMany("Needs")
                         .HasForeignKey("ShelterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
