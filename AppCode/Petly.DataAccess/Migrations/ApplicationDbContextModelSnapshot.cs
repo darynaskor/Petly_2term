@@ -439,6 +439,7 @@ namespace Petly.DataAccess.Migrations
                     b.ToTable("shelterneed");
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("Petly.Models.SuccessStory", b =>
                 {
                     b.Property<int>("Id")
@@ -471,6 +472,8 @@ namespace Petly.DataAccess.Migrations
                     b.ToTable("SuccessStories");
                 });
 
+=======
+>>>>>>> 807a4043194dd3437a51710000b53eb18e902cbb
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
@@ -555,13 +558,18 @@ namespace Petly.DataAccess.Migrations
             modelBuilder.Entity("Petly.Models.ShelterNeed", b =>
                 {
                     b.HasOne("Petly.Models.Shelter", "Shelter")
+<<<<<<< HEAD
                         .WithMany("Needs")
+=======
+                        .WithMany()
+>>>>>>> 807a4043194dd3437a51710000b53eb18e902cbb
                         .HasForeignKey("ShelterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Shelter");
                 });
+<<<<<<< HEAD
 
             modelBuilder.Entity("Petly.Models.SuccessStory", b =>
                 {
@@ -578,6 +586,8 @@ namespace Petly.DataAccess.Migrations
                 {
                     b.Navigation("Needs");
                 });
+=======
+>>>>>>> 807a4043194dd3437a51710000b53eb18e902cbb
 #pragma warning restore 612, 618
         }
     }
