@@ -15,11 +15,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     public DbSet<ShelterNeed> ShelterNeeds { get; set; }
 
     public DbSet<Favorite> Favorites { get; set; }   
-<<<<<<< HEAD
-    public DbSet<SuccessStory> SuccessStories { get; set; }
 
-=======
->>>>>>> 807a4043194dd3437a51710000b53eb18e902cbb
+    public DbSet<SuccessStory> SuccessStories { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
