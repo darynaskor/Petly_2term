@@ -19,157 +19,161 @@ build_property.TargetFrameworkIdentifier = .NETCoreApp
 build_property.TargetFrameworkVersion = v10.0
 build_property.RootNamespace = Petly
 build_property.RootNamespace = Petly
-build_property.ProjectDir = C:\Petly_8\AppCode\Petly\
+build_property.ProjectDir = /Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Petly_8\AppCode\Petly
+build_property.MSBuildProjectDirectory = /Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Petly_8/AppCode/Petly/Views/Account/AccessDenied.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Account/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9BY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Account/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxFZGl0LmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Account/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9FZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Account/ForgotPassword.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Account/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Gb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Account/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Account/Profile.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQcm9maWxlLmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Account/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Qcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Account/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Account/ResetPassword.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Account/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Account/Users.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxVc2Vycy5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Account/Users.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Vc2Vycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Account/VerifyResetCode.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxWZXJpZnlSZXNldENvZGUuY3NodG1s
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Account/VerifyResetCode.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9WZXJpZnlSZXNldENvZGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Adoption/Adopt.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRvcHRpb25cQWRvcHQuY3NodG1s
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Admin/Analytics.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRtaW4vQW5hbHl0aWNzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Adoption/Adoption.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRvcHRpb25cQWRvcHRpb24uY3NodG1s
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Adoption/Adopt.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRvcHRpb24vQWRvcHQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Adoption/UserDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRvcHRpb25cVXNlckRldGFpbHMuY3NodG1s
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Adoption/Adoption.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRvcHRpb24vQWRvcHRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Favorites/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRmF2b3JpdGVzXEluZGV4LmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Adoption/UserDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWRvcHRpb24vVXNlckRldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Home/About.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Favorites/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRmF2b3JpdGVzL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Home/Adoption.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZG9wdGlvbi5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Home/About.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BYm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Home/EditAbout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0QWJvdXQuY3NodG1s
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Home/Adoption.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9BZG9wdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Home/EditAbout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9FZGl0QWJvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Home/Needs.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxOZWVkcy5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Home/Needs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9OZWVkcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Needs/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmVlZHNcQ3JlYXRlLmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Needs/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmVlZHNcRGVsZXRlLmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Needs/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTmVlZHMvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Needs/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmVlZHNcRWRpdC5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Needs/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTmVlZHMvRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Needs/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmVlZHNcSW5kZXguY3NodG1s
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Needs/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTmVlZHMvRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Pets/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0c1xDcmVhdGUuY3NodG1s
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Needs/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTmVlZHMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Pets/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0c1xEZWxldGUuY3NodG1s
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Pets/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGV0cy9DcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Pets/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0c1xEZXRhaWxzLmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Pets/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGV0cy9EZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Pets/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0c1xFZGl0LmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Pets/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGV0cy9EZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Pets/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGV0c1xJbmRleC5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Pets/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGV0cy9FZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Shared/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Pets/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUGV0cy9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Shared/_ValidationScriptsPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/SuccessStories/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VjY2Vzc1N0b3JpZXNcQ3JlYXRlLmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/SuccessStories/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VjY2Vzc1N0b3JpZXNcRWRpdC5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/SuccessStories/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VjY2Vzc1N0b3JpZXMvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/SuccessStories/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VjY2Vzc1N0b3JpZXNcSW5kZXguY3NodG1s
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/SuccessStories/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VjY2Vzc1N0b3JpZXMvRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/_ViewImports.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/SuccessStories/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3VjY2Vzc1N0b3JpZXMvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/_ViewStart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Petly_8/AppCode/Petly/Views/Shared/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-tel1dz9th0
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/darynaskorobogatykh/Downloads/Petly_2term-feature-updated/AppCode/Petly/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-s0fx3d468m
