@@ -243,12 +243,14 @@
     border: 1px solid rgba(255, 174, 0, 0.2);
     font-weight: 800;
     padding: 0.85rem 1.2rem;
+    text-decoration: none;
 }
 
 .btn-auth-primary:hover {
     background: #ffb347;
     box-shadow: 0 10px 20px rgba(150, 102, 21, 0.12);
     color: #000;
+    text-decoration: none;
 }
 
 .btn-auth-secondary {

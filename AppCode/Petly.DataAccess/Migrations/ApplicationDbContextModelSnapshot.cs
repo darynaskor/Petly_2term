@@ -208,6 +208,36 @@ namespace Petly.DataAccess.Migrations
                     b.ToTable("adoptionapplication");
                 });
 
+            modelBuilder.Entity("Petly.Models.AnalyticsAccessLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AccessTime")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("accessTime");
+
+                    b.Property<int>("AdminId")
+                        .HasColumnType("int")
+                        .HasColumnName("adminId");
+
+                    b.Property<int>("PeriodDays")
+                        .HasColumnType("int")
+                        .HasColumnName("periodDays");
+
+                    b.Property<int?>("ShelterId")
+                        .HasColumnType("int")
+                        .HasColumnName("shelterId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("analytics_access_log");
+                });
+
             modelBuilder.Entity("Petly.Models.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
@@ -439,6 +469,38 @@ namespace Petly.DataAccess.Migrations
                     b.ToTable("shelterneed");
                 });
 
+            modelBuilder.Entity("Petly.Models.SuccessStory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("PetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StoryText")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PetId");
+
+                    b.ToTable("SuccessStories");
+                });
+
             modelBuilder.Entity("Petly.Models.ViewedPet", b =>
                 {
                     b.Property<int>("Id")
@@ -555,6 +617,17 @@ namespace Petly.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Shelter");
+                });
+
+            modelBuilder.Entity("Petly.Models.SuccessStory", b =>
+                {
+                    b.HasOne("Petly.Models.Pet", "Pet")
+                        .WithMany()
+                        .HasForeignKey("PetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pet");
                 });
 
             modelBuilder.Entity("Petly.Models.ViewedPet", b =>

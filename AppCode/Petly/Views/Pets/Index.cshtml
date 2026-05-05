@@ -10,10 +10,19 @@
 
     <div class="pets-list-header">
         <div>
-            <p class="section-kicker">Каталог</p>
+
+            <p class="section-kicker">Pets</p>
+
             <h1 class="pets-list-title">Тварини</h1>
             <p class="pets-list-count">Всього тварин: @Model.Count</p>
         </div>
+
+        @if (canManagePets)
+        {
+            <div class="pets-list-header__actions">
+                <a asp-action="Create" class="btn-auth-primary">Додати тварину</a>
+            </div>
+        }
     </div>
 
     <div class="pets-list-search">

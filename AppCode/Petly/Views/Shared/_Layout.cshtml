@@ -53,6 +53,12 @@
                                 <a class="nav-link menu-link" asp-area="" asp-controller="Adoption" asp-action="Index">Адопція</a>
                             </li>
 
+                            <li class="nav-item">
+    <a class="nav-link menu-link" asp-area="" asp-controller="SuccessStories" asp-action="Index">Щасливі історії</a>
+</li>
+
+
+
                             @if (User.Identity.IsAuthenticated && User.IsInRole("user"))
                             {
                                 <li class="nav-item">
@@ -80,6 +86,9 @@
                         <ul class="navbar-nav ms-auto align-items-center gap-2">
                             @if (User.IsInRole("system_admin"))
                             {
+                                <li class="nav-item">
+                                    <a class="nav-link menu-link" asp-area="" asp-controller="Admin" asp-action="Analytics">Аналітика</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link menu-link" asp-area="" asp-controller="Account" asp-action="Users">Користувачі</a>
                                 </li>
