@@ -3,7 +3,7 @@ name: .NET CI + Deploy
 on:
   push:
     branches:
-      - petly_9
+      - "*"
 
 jobs:
   build-and-deploy:
