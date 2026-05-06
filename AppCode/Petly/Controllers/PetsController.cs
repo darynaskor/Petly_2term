@@ -95,6 +95,12 @@ public class PetsController : Controller
 return View(pet);
     }
 
+    [Authorize(Roles = "user")]
+    public IActionResult Adopt(int id)
+    {
+        return RedirectToAction("Create", "Adoption", new { petId = id });
+    }
+
     [Authorize(Roles = "shelter_admin")]
     public async Task<IActionResult> Create()
     {
