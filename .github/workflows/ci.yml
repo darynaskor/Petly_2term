@@ -1,4 +1,5 @@
 name: Continuous Integration
+# Deploy workflow is triggered from petly_pavlo after Azure secrets are configured.
 
 on:
   push:
