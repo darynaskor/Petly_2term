@@ -452,6 +452,14 @@ namespace Petly.DataAccess.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("description");
 
+                    b.Property<DateTime?>("FulfilledAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("fulfilledAt");
+
+                    b.Property<bool>("IsFulfilled")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("isFulfilled");
+
                     b.Property<string>("PaymentDetails")
                         .IsRequired()
                         .HasMaxLength(255)

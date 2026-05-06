@@ -305,6 +305,108 @@ public class NeedsControllerTests
         Assert.False(await db.ShelterNeeds.AnyAsync(x => x.NeedId == 13));
     }
 
+    [Fact]
+    public async Task ShelterAdminCanMarkOwnNeedFulfilled()
+    {
+        await using var db = CreateDbContext();
+        TestIdentityScope scope = CreateIdentityScope(db);
+        await CreateUserAsync(scope.UserManager, scope.RoleManager, "shelter21@petly.test", "pass123", "shelter_admin", userId: 21);
+        db.Shelters.Add(new Shelter
+        {
+            AccountId = 21,
+            ShelterName = "Shelter Own",
+            Location = "Kyiv",
+            AdminName = "Nadia"
+        });
+        db.ShelterNeeds.Add(new ShelterNeed
+        {
+            NeedId = 21,
+            ShelterId = 21,
+            Description = "Потрібні ліки",
+            PaymentDetails = "Передати в притулок"
+        });
+        await db.SaveChangesAsync();
+
+        NeedsController controller = CreateController(scope, "shelter_admin", userId: 21);
+
+        IActionResult result = await controller.MarkFulfilled(21);
+
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("Index", redirect.ActionName);
+        Assert.Equal("Потребу позначено як виконану.", controller.TempData["Success"]);
+
+        var updated = await db.ShelterNeeds.SingleAsync(x => x.NeedId == 21);
+        Assert.True(updated.IsFulfilled);
+        Assert.NotNull(updated.FulfilledAt);
+    }
+
+    [Fact]
+    public async Task ShelterAdminCannotMarkAnotherShelterNeedFulfilled()
+    {
+        await using var db = CreateDbContext();
+        TestIdentityScope scope = CreateIdentityScope(db);
+        await CreateUserAsync(scope.UserManager, scope.RoleManager, "shelter22@petly.test", "pass123", "shelter_admin", userId: 22);
+        db.Shelters.Add(new Shelter
+        {
+            AccountId = 23,
+            ShelterName = "Shelter Other",
+            Location = "Lviv",
+            AdminName = "Ihor"
+        });
+        db.ShelterNeeds.Add(new ShelterNeed
+        {
+            NeedId = 23,
+            ShelterId = 23,
+            Description = "Потрібні ковдри",
+            PaymentDetails = "Переказ на рахунок"
+        });
+        await db.SaveChangesAsync();
+
+        NeedsController controller = CreateController(scope, "shelter_admin", userId: 22);
+
+        IActionResult result = await controller.MarkFulfilled(23);
+
+        Assert.IsType<ForbidResult>(result);
+        Assert.False((await db.ShelterNeeds.SingleAsync(x => x.NeedId == 23)).IsFulfilled);
+    }
+
+    [Fact]
+    public async Task SystemAdminCanReturnFulfilledNeedToActive()
+    {
+        await using var db = CreateDbContext();
+        TestIdentityScope scope = CreateIdentityScope(db);
+        await CreateUserAsync(scope.UserManager, scope.RoleManager, "admin24@petly.test", "pass123", "system_admin", userId: 24);
+        db.Shelters.Add(new Shelter
+        {
+            AccountId = 25,
+            ShelterName = "Shelter Active",
+            Location = "Odesa",
+            AdminName = "Olena"
+        });
+        db.ShelterNeeds.Add(new ShelterNeed
+        {
+            NeedId = 25,
+            ShelterId = 25,
+            Description = "Потрібні переноски",
+            PaymentDetails = "Можна надіслати поштою",
+            IsFulfilled = true,
+            FulfilledAt = DateTime.UtcNow
+        });
+        await db.SaveChangesAsync();
+
+        NeedsController controller = CreateController(scope, "system_admin", userId: 24);
+
+        IActionResult result = await controller.MarkActive(25);
+
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("Index", redirect.ActionName);
+        Assert.Equal("Потребу повернено в активні.", controller.TempData["Success"]);
+
+        var updated = await db.ShelterNeeds.SingleAsync(x => x.NeedId == 25);
+        Assert.False(updated.IsFulfilled);
+        Assert.Null(updated.FulfilledAt);
+    }
+
     private static ApplicationDbContext CreateDbContext()
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()

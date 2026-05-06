@@ -12,6 +12,10 @@ public class ShelterNeedGroupViewModel
 
     public bool CanManage { get; set; }
 
+    public int ActiveNeedsCount => Needs.Count(need => !need.IsFulfilled);
+
+    public int FulfilledNeedsCount => Needs.Count(need => need.IsFulfilled);
+
     public List<ShelterNeedListItemViewModel> Needs { get; set; } = new();
 }
 
@@ -22,6 +26,10 @@ public class ShelterNeedListItemViewModel
     public string Description { get; set; } = string.Empty;
 
     public string PaymentDetails { get; set; } = string.Empty;
+
+    public bool IsFulfilled { get; set; }
+
+    public DateTime? FulfilledAt { get; set; }
 }
 
 public class ShelterNeedFormViewModel

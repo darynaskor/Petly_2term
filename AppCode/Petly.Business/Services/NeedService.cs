@@ -43,11 +43,15 @@ public class NeedService
                 Location = group.Key.Location,
                 CanManage = role == "system_admin" || group.Any(need => role == "shelter_admin" && currentUserId == need.ShelterId),
                 Needs = group
+                    .OrderBy(need => need.IsFulfilled)
+                    .ThenBy(need => need.NeedId)
                     .Select(need => new ShelterNeedListItemViewModel
                     {
                         NeedId = need.NeedId,
                         Description = LocalizeDescription(need.Description),
                         PaymentDetails = LocalizePaymentDetails(need.PaymentDetails),
+                        IsFulfilled = need.IsFulfilled,
+                        FulfilledAt = need.FulfilledAt,
                     })
                     .ToList(),
             })
@@ -85,6 +89,15 @@ public class NeedService
 
     public async Task UpdateNeedAsync(ShelterNeed need)
     {
+        _context.ShelterNeeds.Update(need);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task SetNeedFulfillmentAsync(ShelterNeed need, bool isFulfilled)
+    {
+        need.IsFulfilled = isFulfilled;
+        need.FulfilledAt = isFulfilled ? DateTime.UtcNow : null;
+
         _context.ShelterNeeds.Update(need);
         await _context.SaveChangesAsync();
     }
