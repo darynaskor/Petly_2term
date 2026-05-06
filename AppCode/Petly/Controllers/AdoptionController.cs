@@ -296,3 +296,4 @@ public class AdoptionController : Controller
             || HttpContext.Session.GetString("Role") == "shelter_admin";
     }
 }
+// --- IGNORE ---
