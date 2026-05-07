@@ -37,16 +37,15 @@ public class AdoptionControllerTests
     {
         using var provider = BuildServiceProvider();
         var db = provider.GetRequiredService<ApplicationDbContext>();
-        var userManager = provider.GetRequiredService<UserManager<ApplicationUser>>();
-        var roleManager = provider.GetRequiredService<RoleManager<IdentityRole<int>>>();
 
-        var user = await CreateUserAsync(userManager, roleManager, "user@test.com", "pass123", "user");
-        var otherUser = await CreateUserAsync(userManager, roleManager, "other@test.com", "pass123", "user");
-        db.Pets.Add(new Pet { PetId = 1, ShelterId = 10, PetName = "Barsik" });
+        var user = await CreateTestUser(provider, "user@test.com", "user");
+        var other = await CreateTestUser(provider, "other@test.com", "user");
+
+        db.Pets.Add(new Pet { PetId = 1, PetName = "Barsik", ShelterId = 10 });
 
         db.AdoptionApplications.AddRange(
             new AdoptionApplication { AdoptId = 1, UserId = user.Id, PetId = 1 },
-            new AdoptionApplication { AdoptId = 2, UserId = otherUser.Id, PetId = 1 }
+            new AdoptionApplication { AdoptId = 2, UserId = other.Id, PetId = 1 }
         );
 
         await db.SaveChangesAsync();
@@ -66,11 +65,15 @@ public class AdoptionControllerTests
     {
         using var provider = BuildServiceProvider();
         var db = provider.GetRequiredService<ApplicationDbContext>();
-        var userManager = provider.GetRequiredService<UserManager<ApplicationUser>>();
-        var roleManager = provider.GetRequiredService<RoleManager<IdentityRole<int>>>();
 
-        var user = await CreateUserAsync(userManager, roleManager, "test@test.com", "pass123", "user");
-        db.Pets.Add(new Pet { PetId = 2, ShelterId = 20, PetName = "Simba" });
+        var user = await CreateTestUser(provider, "test@test.com", "user");
+
+        db.Pets.Add(new Pet
+        {
+            PetId = 2,
+            PetName = "Simba",
+            ShelterId = 20
+        });
 
         await db.SaveChangesAsync();
 
@@ -87,49 +90,74 @@ public class AdoptionControllerTests
 
         var redirect = Assert.IsType<RedirectToActionResult>(result);
         Assert.Equal("Index", redirect.ActionName);
+
+        var saved = await db.AdoptionApplications.FirstOrDefaultAsync();
+        Assert.NotNull(saved);
+        Assert.Equal(user.Id, saved.UserId);
+        Assert.Equal(2, saved.PetId);
     }
 
     private static ServiceProvider BuildServiceProvider()
     {
         var services = new ServiceCollection();
 
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+        services.AddDbContext<ApplicationDbContext>(o =>
+            o.UseInMemoryDatabase(Guid.NewGuid().ToString()));
 
         services.AddSingleton<IOptions<IdentityOptions>>(Options.Create(new IdentityOptions()));
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IPasswordHasher<ApplicationUser>, PasswordHasher<ApplicationUser>>();
         services.AddSingleton<ILookupNormalizer, UpperInvariantLookupNormalizer>();
         services.AddSingleton<IdentityErrorDescriber>();
-        services.AddScoped<IUserStore<ApplicationUser>, UserStore<ApplicationUser, IdentityRole<int>, ApplicationDbContext, int>>();
-        services.AddScoped<IRoleStore<IdentityRole<int>>, RoleStore<IdentityRole<int>, ApplicationDbContext, int>>();
+
+        services.AddScoped<IUserStore<ApplicationUser>,
+            UserStore<ApplicationUser, IdentityRole<int>, ApplicationDbContext, int>>();
+
+        services.AddScoped<IRoleStore<IdentityRole<int>>,
+            RoleStore<IdentityRole<int>, ApplicationDbContext, int>>();
+
         services.AddSingleton<ILogger<UserManager<ApplicationUser>>>(NullLogger<UserManager<ApplicationUser>>.Instance);
         services.AddSingleton<ILogger<RoleManager<IdentityRole<int>>>>(NullLogger<RoleManager<IdentityRole<int>>>.Instance);
+
         services.AddScoped<UserManager<ApplicationUser>>();
         services.AddScoped<RoleManager<IdentityRole<int>>>();
-        services.AddScoped<AdoptionService>();
-        services.AddScoped<PetService>();
+
+       services.AddScoped<AdoptionService>();
+       services.AddScoped<PetService>();
+       services.AddScoped<NotificationService>();
+
         services.AddTransient<AdoptionController>();
 
         return services.BuildServiceProvider();
     }
 
-    private static AdoptionController CreateController(ServiceProvider provider, string? role = null, int? userId = null)
+    private static AdoptionController CreateController(
+        ServiceProvider provider,
+        string? role = null,
+        int? userId = null)
     {
+        var controller = provider.GetRequiredService<AdoptionController>();
+
         var httpContext = new DefaultHttpContext
         {
             User = CreatePrincipal(userId, role),
             Session = new TestSession()
         };
 
-        var controller = provider.GetRequiredService<AdoptionController>();
+        if (!string.IsNullOrEmpty(role))
+        {
+            httpContext.Session.SetString("Role", role);
+        }
 
         controller.ControllerContext = new ControllerContext
         {
             HttpContext = httpContext
         };
 
-        controller.TempData = new TempDataDictionary(httpContext, new TestTempDataProvider());
+        controller.TempData = new TempDataDictionary(
+            httpContext,
+            new TestTempDataProvider()
+        );
 
         return controller;
     }
@@ -137,9 +165,7 @@ public class AdoptionControllerTests
     private static ClaimsPrincipal CreatePrincipal(int? userId, string? role)
     {
         if (!userId.HasValue)
-        {
             return new ClaimsPrincipal(new ClaimsIdentity());
-        }
 
         var claims = new List<Claim>
         {
@@ -147,43 +173,37 @@ public class AdoptionControllerTests
         };
 
         if (!string.IsNullOrEmpty(role))
-        {
             claims.Add(new Claim(ClaimTypes.Role, role));
-        }
 
         return new ClaimsPrincipal(new ClaimsIdentity(claims, "Test"));
     }
 
-    private static async Task<ApplicationUser> CreateUserAsync(
-        UserManager<ApplicationUser> userManager,
-        RoleManager<IdentityRole<int>> roleManager,
+    private static async Task<ApplicationUser> CreateTestUser(
+        ServiceProvider provider,
         string email,
-        string password,
         string role)
     {
+        var userManager = provider.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = provider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+
         if (!await roleManager.RoleExistsAsync(role))
-        {
-            IdentityResult roleResult = await roleManager.CreateAsync(new IdentityRole<int>(role));
-            Assert.True(roleResult.Succeeded, string.Join(", ", roleResult.Errors.Select(e => e.Description)));
-        }
+            await roleManager.CreateAsync(new IdentityRole<int>(role));
 
         var user = new ApplicationUser
         {
             UserName = email,
             Email = email,
             RegistrationDate = DateTime.UtcNow,
-            Status = "Активний"
+            Status = "Active"
         };
 
-        IdentityResult createResult = await userManager.CreateAsync(user, password);
-        Assert.True(createResult.Succeeded, string.Join(", ", createResult.Errors.Select(e => e.Description)));
-
-        IdentityResult addToRoleResult = await userManager.AddToRoleAsync(user, role);
-        Assert.True(addToRoleResult.Succeeded, string.Join(", ", addToRoleResult.Errors.Select(e => e.Description)));
+        await userManager.CreateAsync(user, "pass123");
+        await userManager.AddToRoleAsync(user, role);
 
         return user;
     }
 
+  
     public class TestSession : ISession
     {
         private readonly Dictionary<string, byte[]> _store = new();
@@ -197,12 +217,17 @@ public class AdoptionControllerTests
         public Task LoadAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
         public void Remove(string key) => _store.Remove(key);
         public void Set(string key, byte[] value) => _store[key] = value;
-        public bool TryGetValue(string key, [NotNullWhen(true)] out byte[]? value) => _store.TryGetValue(key, out value);
+        public bool TryGetValue(string key, [NotNullWhen(true)] out byte[]? value)
+            => _store.TryGetValue(key, out value);
     }
 
     private class TestTempDataProvider : ITempDataProvider
     {
-        public IDictionary<string, object> LoadTempData(HttpContext context) => new Dictionary<string, object>();
+        public IDictionary<string, object> LoadTempData(HttpContext context)
+            => new Dictionary<string, object>();
+
         public void SaveTempData(HttpContext context, IDictionary<string, object> values) { }
     }
+
+
 }

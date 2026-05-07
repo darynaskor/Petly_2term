@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Petly.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using Petly.DataAccess.Data;
 namespace Petly.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260502165005_AddNotifications")]
+    partial class AddNotifications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,36 +209,6 @@ namespace Petly.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("adoptionapplication");
-                });
-
-            modelBuilder.Entity("Petly.Models.AnalyticsAccessLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("AccessTime")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("accessTime");
-
-                    b.Property<int>("AdminId")
-                        .HasColumnType("int")
-                        .HasColumnName("adminId");
-
-                    b.Property<int>("PeriodDays")
-                        .HasColumnType("int")
-                        .HasColumnName("periodDays");
-
-                    b.Property<int?>("ShelterId")
-                        .HasColumnType("int")
-                        .HasColumnName("shelterId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("analytics_access_log");
                 });
 
             modelBuilder.Entity("Petly.Models.ApplicationUser", b =>
@@ -486,14 +459,6 @@ namespace Petly.DataAccess.Migrations
                         .HasColumnType("longtext")
                         .HasColumnName("description");
 
-                    b.Property<DateTime?>("FulfilledAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("fulfilledAt");
-
-                    b.Property<bool>("IsFulfilled")
-                        .HasColumnType("tinyint(1)")
-                        .HasColumnName("isFulfilled");
-
                     b.Property<string>("PaymentDetails")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -509,64 +474,6 @@ namespace Petly.DataAccess.Migrations
                     b.HasIndex("ShelterId");
 
                     b.ToTable("shelterneed");
-                });
-
-            modelBuilder.Entity("Petly.Models.SuccessStory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("PetId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("StoryText")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PetId");
-
-                    b.ToTable("SuccessStories");
-                });
-
-            modelBuilder.Entity("Petly.Models.ViewedPet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PetId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ViewedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PetId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ViewedPets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -672,36 +579,7 @@ namespace Petly.DataAccess.Migrations
                     b.Navigation("Shelter");
                 });
 
-                modelBuilder.Entity("Petly.Models.SuccessStory", b =>
-                {
-                    b.HasOne("Petly.Models.Pet", "Pet")
-                        .WithMany()
-                        .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pet");
-                });
-
-                modelBuilder.Entity("Petly.Models.ViewedPet", b =>
-                {
-                    b.HasOne("Petly.Models.Pet", "Pet")
-                        .WithMany()
-                        .HasForeignKey("PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Petly.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pet");
-                    b.Navigation("User");
-                });
-
-                modelBuilder.Entity("Petly.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Petly.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Notifications");
                 });

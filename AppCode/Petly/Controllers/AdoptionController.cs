@@ -13,13 +13,19 @@ public class AdoptionController : Controller
     private readonly AdoptionService _adoptionService;
     private readonly PetService _petService;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly NotificationService _notificationService;
 
-    public AdoptionController(AdoptionService adoptionService, PetService petService, UserManager<ApplicationUser> userManager)
-    {
-        _adoptionService = adoptionService;
-        _petService = petService;
-        _userManager = userManager;
-    }
+   public AdoptionController(
+    AdoptionService adoptionService,
+    PetService petService,
+    UserManager<ApplicationUser> userManager,
+    NotificationService notificationService)
+{
+    _adoptionService = adoptionService;
+    _petService = petService;
+    _userManager = userManager;
+    _notificationService = notificationService;
+}
 
     public async Task<IActionResult> Index()
     {
@@ -81,139 +87,160 @@ public class AdoptionController : Controller
         return View("Adopt", model);
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    [Authorize(Roles = "user")]
-    public async Task<IActionResult> Adopt(AdoptionRequestViewModel model)
+[HttpPost]
+[ValidateAntiForgeryToken]
+[Authorize(Roles = "user")]
+public async Task<IActionResult> Adopt(AdoptionRequestViewModel model)
+{
+    var accountId = GetUserId();
+    if (!accountId.HasValue)
     {
-        var accountId = GetUserId();
-        if (!accountId.HasValue)
-        {
-            return RedirectToAction("Login", "Account");
-        }
+        return RedirectToAction("Login", "Account");
+    }
 
-        if (!ModelState.IsValid)
-        {
-            var pet = await _petService.GetPetAsync(model.PetId);
-            if (pet == null)
-            {
-                return NotFound();
-            }
-
-            model.PetName = pet.PetName;
-            model.PetType = pet.Type;
-            model.PetAge = pet.Age;
-            model.PetAgeText = pet.AgeText;
-            model.PetPhotoUrl = pet.PhotoUrl;
-
-            return View("Adopt", model);
-        }
-
-        try
-        {
-            await _adoptionService.CreateApplicationAsync(
-                model.PetId,
-                accountId.Value,
-                model.ApplicantName,
-                model.ApplicantSurname,
-                model.ApplicantAge!.Value,
-                model.ContactInfo);
-        }
-        catch (KeyNotFoundException)
+    if (!ModelState.IsValid)
+    {
+        var pet = await _petService.GetPetAsync(model.PetId);
+        if (pet == null)
         {
             return NotFound();
         }
-        catch (InvalidOperationException ex)
-        {
-            TempData["Error"] = ex.Message;
-            return RedirectToAction(nameof(Index));
-        }
 
-        TempData["Success"] = "Вашу заявку успішно подано!";
-        return RedirectToAction(nameof(Index));
+        model.PetName = pet.PetName;
+        model.PetType = pet.Type;
+        model.PetAge = pet.Age;
+        model.PetAgeText = pet.AgeText;
+        model.PetPhotoUrl = pet.PhotoUrl;
+
+        return View("Adopt", model);
     }
 
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    [Authorize(Roles = "shelter_admin")]
-    public async Task<IActionResult> Approve(int adoptId)
+    try
     {
-        var accountId = GetUserId();
-        if (!accountId.HasValue)
-        {
-            return RedirectToAction("Login", "Account");
-        }
+        await _adoptionService.CreateApplicationAsync(
+            model.PetId,
+            accountId.Value,
+            model.ApplicantName,
+            model.ApplicantSurname,
+            model.ApplicantAge!.Value,
+            model.ContactInfo);
 
-        if (!IsShelterAdmin())
-        {
-            return Forbid();
-        }
 
-        try
-        {
-            await _adoptionService.UpdateApplicationStatusAsync(
-                adoptId,
-                AdoptionStatuses.Approved,
-                accountId.Value);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-        catch (UnauthorizedAccessException)
-        {
-            return Forbid();
-        }
-        catch (InvalidOperationException ex)
-        {
-            TempData["Error"] = ex.Message;
-            return RedirectToAction(nameof(Index));
-        }
-
-        TempData["Success"] = "Заявку схвалено!";
-        return RedirectToAction(nameof(Index));
+        await _notificationService.CreateAsync(
+            accountId.Value,
+            "Заявка подана",
+            $"Ви успішно подали заявку на {model.PetName}");
     }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    [Authorize(Roles = "shelter_admin")]
-    public async Task<IActionResult> Reject(int adoptId)
+    catch (KeyNotFoundException)
     {
-        var accountId = GetUserId();
-        if (!accountId.HasValue)
-        {
-            return RedirectToAction("Login", "Account");
-        }
-
-        if (!IsShelterAdmin())
-        {
-            return Forbid();
-        }
-
-        try
-        {
-            await _adoptionService.UpdateApplicationStatusAsync(
-                adoptId,
-                AdoptionStatuses.Rejected,
-                accountId.Value);
-        }
-        catch (KeyNotFoundException)
-        {
-            return NotFound();
-        }
-        catch (UnauthorizedAccessException)
-        {
-            return Forbid();
-        }
-        catch (InvalidOperationException ex)
-        {
-            TempData["Error"] = ex.Message;
-            return RedirectToAction(nameof(Index));
-        }
-
-        TempData["Success"] = "Заявку відхилено.";
+        return NotFound();
+    }
+    catch (InvalidOperationException ex)
+    {
+        TempData["Error"] = ex.Message;
         return RedirectToAction(nameof(Index));
     }
+
+    TempData["Success"] = "Вашу заявку успішно подано!";
+    return RedirectToAction(nameof(Index));
+}
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+[Authorize(Roles = "shelter_admin")]
+public async Task<IActionResult> Approve(int adoptId)
+{
+    var accountId = GetUserId();
+    if (!accountId.HasValue)
+    {
+        return RedirectToAction("Login", "Account");
+    }
+
+    if (!IsShelterAdmin())
+    {
+        return Forbid();
+    }
+
+    try
+    {
+        await _adoptionService.UpdateApplicationStatusAsync(
+            adoptId,
+            AdoptionStatuses.Approved,
+            accountId.Value);
+
+        var userId = await _adoptionService.GetApplicantUserIdAsync(adoptId);
+
+        await _notificationService.CreateAsync(
+            userId,
+            "Заявку схвалено",
+            "Ваша заявка на адопцію була схвалена 🎉");
+    }
+    catch (KeyNotFoundException)
+    {
+        return NotFound();
+    }
+    catch (UnauthorizedAccessException)
+    {
+        return Forbid();
+    }
+    catch (InvalidOperationException ex)
+    {
+        TempData["Error"] = ex.Message;
+        return RedirectToAction(nameof(Index));
+    }
+
+    TempData["Success"] = "Заявку схвалено!";
+    return RedirectToAction(nameof(Index));
+}
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+[Authorize(Roles = "shelter_admin")]
+public async Task<IActionResult> Reject(int adoptId)
+{
+    var accountId = GetUserId();
+    if (!accountId.HasValue)
+    {
+        return RedirectToAction("Login", "Account");
+    }
+
+    if (!IsShelterAdmin())
+    {
+        return Forbid();
+    }
+
+    try
+    {
+        await _adoptionService.UpdateApplicationStatusAsync(
+            adoptId,
+            AdoptionStatuses.Rejected,
+            accountId.Value);
+
+
+        var userId = await _adoptionService.GetApplicantUserIdAsync(adoptId);
+
+        await _notificationService.CreateAsync(
+            userId,
+            "Заявку відхилено",
+            "На жаль, вашу заявку на адопцію відхилено.");
+    }
+    catch (KeyNotFoundException)
+    {
+        return NotFound();
+    }
+    catch (UnauthorizedAccessException)
+    {
+        return Forbid();
+    }
+    catch (InvalidOperationException ex)
+    {
+        TempData["Error"] = ex.Message;
+        return RedirectToAction(nameof(Index));
+    }
+
+    TempData["Success"] = "Заявку відхилено.";
+    return RedirectToAction(nameof(Index));
+}
 
     [HttpPost]
     [ValidateAntiForgeryToken]

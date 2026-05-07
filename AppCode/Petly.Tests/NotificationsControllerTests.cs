@@ -18,47 +18,86 @@ using Xunit;
 
 namespace Petly.Tests;
 
-public class FavoritesControllerTests
+public class NotificationsControllerTests
 {
     [Fact]
-    public async Task AddFavorite()
+    public async Task Index_ReturnsUserNotifications()
     {
         await using var db = CreateDbContext();
         TestIdentityScope scope = CreateIdentityScope(db);
+
         var user = await CreateUserAsync(scope.UserManager, scope.RoleManager, "user@test.com", "pass123", "user");
-        db.Pets.Add(new Pet { PetId = 1, PetName = "Barsik", ShelterId = 10 });
+
+        db.Notifications.Add(new Notification
+        {
+            Id = 1,
+            UserId = user.Id,
+            Message = "Hello",
+            Type = "Test"
+        });
+
         await db.SaveChangesAsync();
 
-        var controller = CreateController(scope, "user", user.Id);
+        var controller = CreateController(scope, user.Id);
 
-        var result = await controller.Add(1);
+        var result = await controller.Index();
 
-        var redirect = Assert.IsType<RedirectToActionResult>(result);
-        Assert.Equal("Index", redirect.ActionName);
-        var favorite = await db.Favorites.SingleAsync();
-        Assert.Equal(user.Id, favorite.UserId);
-        Assert.Equal(1, favorite.PetId);
+        var view = Assert.IsType<ViewResult>(result);
+        var model = Assert.IsType<List<Notification>>(view.Model);
+
+        Assert.Single(model);
+        Assert.Equal("Hello", model[0].Message);
     }
 
     [Fact]
-    public async Task RemoveFavorite()
+    public async Task MarkAsRead_Redirects()
     {
         await using var db = CreateDbContext();
         TestIdentityScope scope = CreateIdentityScope(db);
+
         var user = await CreateUserAsync(scope.UserManager, scope.RoleManager, "user@test.com", "pass123", "user");
 
-        db.Pets.Add(new Pet { PetId = 1, PetName = "Barsik", ShelterId = 10 });
-        db.Favorites.Add(new Favorite { Id = 1, UserId = user.Id, PetId = 1 });
-        await db.SaveChangesAsync();
+        var controller = CreateController(scope, user.Id);
 
-        var controller = CreateController(scope, "user", user.Id);
-
-        var result = await controller.Remove(1);
+        var result = await controller.MarkAsRead(1);
 
         var redirect = Assert.IsType<RedirectToActionResult>(result);
         Assert.Equal("Index", redirect.ActionName);
-        Assert.False(await db.Favorites.AnyAsync(f => f.Id == 1));
     }
+
+    [Fact]
+    public async Task Delete_Redirects()
+    {
+        await using var db = CreateDbContext();
+        TestIdentityScope scope = CreateIdentityScope(db);
+
+        var user = await CreateUserAsync(scope.UserManager, scope.RoleManager, "user@test.com", "pass123", "user");
+
+        var controller = CreateController(scope, user.Id);
+
+        var result = await controller.Delete(1);
+
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("Index", redirect.ActionName);
+    }
+
+    [Fact]
+    public async Task MarkAllAsRead_Redirects()
+    {
+        await using var db = CreateDbContext();
+        TestIdentityScope scope = CreateIdentityScope(db);
+
+        var user = await CreateUserAsync(scope.UserManager, scope.RoleManager, "user@test.com", "pass123", "user");
+
+        var controller = CreateController(scope, user.Id);
+
+        var result = await controller.MarkAllAsRead();
+
+        var redirect = Assert.IsType<RedirectToActionResult>(result);
+        Assert.Equal("Index", redirect.ActionName);
+    }
+
+
 
     private static ApplicationDbContext CreateDbContext()
     {
@@ -69,64 +108,67 @@ public class FavoritesControllerTests
         return new ApplicationDbContext(options);
     }
 
+
     private static TestIdentityScope CreateIdentityScope(ApplicationDbContext db)
     {
         var services = new ServiceCollection();
+
         services.AddSingleton(db);
         services.AddSingleton<IOptions<IdentityOptions>>(Options.Create(new IdentityOptions()));
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IPasswordHasher<ApplicationUser>, PasswordHasher<ApplicationUser>>();
         services.AddSingleton<ILookupNormalizer, UpperInvariantLookupNormalizer>();
         services.AddSingleton<IdentityErrorDescriber>();
-        services.AddSingleton<IUserStore<ApplicationUser>, UserStore<ApplicationUser, IdentityRole<int>, ApplicationDbContext, int>>();
-        services.AddSingleton<IRoleStore<IdentityRole<int>>, RoleStore<IdentityRole<int>, ApplicationDbContext, int>>();
+
+        services.AddSingleton<IUserStore<ApplicationUser>,
+            UserStore<ApplicationUser, IdentityRole<int>, ApplicationDbContext, int>>();
+
+        services.AddSingleton<IRoleStore<IdentityRole<int>>,
+            RoleStore<IdentityRole<int>, ApplicationDbContext, int>>();
+
         services.AddSingleton<ILogger<UserManager<ApplicationUser>>>(NullLogger<UserManager<ApplicationUser>>.Instance);
         services.AddSingleton<ILogger<RoleManager<IdentityRole<int>>>>(NullLogger<RoleManager<IdentityRole<int>>>.Instance);
+
         services.AddSingleton<UserManager<ApplicationUser>>();
         services.AddSingleton<RoleManager<IdentityRole<int>>>();
-        services.AddScoped<FavoritesController>();
-        services.AddScoped<NotificationService>();
 
-        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        services.AddScoped<NotificationService>();
+        services.AddScoped<NotificationsController>();
+
+        var provider = services.BuildServiceProvider();
 
         return new TestIdentityScope(
-            serviceProvider,
-            serviceProvider.GetRequiredService<UserManager<ApplicationUser>>(),
-            serviceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>());
+            provider,
+            provider.GetRequiredService<UserManager<ApplicationUser>>(),
+            provider.GetRequiredService<RoleManager<IdentityRole<int>>>());
     }
 
-    private static FavoritesController CreateController(TestIdentityScope scope, string? role = null, int? userId = null)
+
+    private static NotificationsController CreateController(TestIdentityScope scope, int userId)
     {
-        var controller = scope.ServiceProvider.GetRequiredService<FavoritesController>();
+        var controller = scope.ServiceProvider.GetRequiredService<NotificationsController>();
+
         var httpContext = new DefaultHttpContext
         {
+            User = new ClaimsPrincipal(new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString())
+            }, "Test")),
             Session = new TestSession()
         };
 
-        if (userId.HasValue)
+        controller.ControllerContext = new ControllerContext
         {
-            httpContext.User = CreatePrincipal(userId.Value, role);
-        }
+            HttpContext = httpContext
+        };
 
-        controller.ControllerContext = new ControllerContext { HttpContext = httpContext };
-        controller.TempData = new TempDataDictionary(httpContext, new TestTempDataProvider());
+        controller.TempData = new TempDataDictionary(
+            httpContext,
+            new TestTempDataProvider());
+
         return controller;
     }
 
-    private static ClaimsPrincipal CreatePrincipal(int userId, string? role = null)
-    {
-        var claims = new List<Claim>
-        {
-            new(ClaimTypes.NameIdentifier, userId.ToString())
-        };
-
-        if (!string.IsNullOrWhiteSpace(role))
-        {
-            claims.Add(new Claim(ClaimTypes.Role, role));
-        }
-
-        return new ClaimsPrincipal(new ClaimsIdentity(claims, "Test"));
-    }
 
     private static async Task<ApplicationUser> CreateUserAsync(
         UserManager<ApplicationUser> userManager,
@@ -136,10 +178,7 @@ public class FavoritesControllerTests
         string role)
     {
         if (!await roleManager.RoleExistsAsync(role))
-        {
-            IdentityResult roleResult = await roleManager.CreateAsync(new IdentityRole<int>(role));
-            Assert.True(roleResult.Succeeded, string.Join(", ", roleResult.Errors.Select(e => e.Description)));
-        }
+            await roleManager.CreateAsync(new IdentityRole<int>(role));
 
         var user = new ApplicationUser
         {
@@ -149,11 +188,8 @@ public class FavoritesControllerTests
             Status = "Активний"
         };
 
-        IdentityResult createResult = await userManager.CreateAsync(user, password);
-        Assert.True(createResult.Succeeded, string.Join(", ", createResult.Errors.Select(e => e.Description)));
-
-        IdentityResult addToRoleResult = await userManager.AddToRoleAsync(user, role);
-        Assert.True(addToRoleResult.Succeeded, string.Join(", ", addToRoleResult.Errors.Select(e => e.Description)));
+        await userManager.CreateAsync(user, password);
+        await userManager.AddToRoleAsync(user, role);
 
         return user;
     }
@@ -168,30 +204,23 @@ public class FavoritesControllerTests
         private readonly Dictionary<string, byte[]> _store = new();
 
         public IEnumerable<string> Keys => _store.Keys;
-
-        public string Id { get; } = Guid.NewGuid().ToString();
-
+        public string Id => Guid.NewGuid().ToString();
         public bool IsAvailable => true;
 
         public void Clear() => _store.Clear();
-
         public Task CommitAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
-
         public Task LoadAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
-
         public void Remove(string key) => _store.Remove(key);
-
         public void Set(string key, byte[] value) => _store[key] = value;
-
-        public bool TryGetValue(string key, [NotNullWhen(true)] out byte[]? value) => _store.TryGetValue(key, out value);
+        public bool TryGetValue(string key, [NotNullWhen(true)] out byte[]? value)
+            => _store.TryGetValue(key, out value);
     }
 
     private sealed class TestTempDataProvider : ITempDataProvider
     {
-        public IDictionary<string, object> LoadTempData(HttpContext context) => new Dictionary<string, object>();
+        public IDictionary<string, object> LoadTempData(HttpContext context)
+            => new Dictionary<string, object>();
 
-        public void SaveTempData(HttpContext context, IDictionary<string, object> values)
-        {
-        }
+        public void SaveTempData(HttpContext context, IDictionary<string, object> values) { }
     }
 }

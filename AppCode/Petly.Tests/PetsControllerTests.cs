@@ -39,6 +39,8 @@ public class PetsControllerTests
         var view = Assert.IsType<ViewResult>(result);
         var model = Assert.IsType<List<Pet>>(view.Model);
         Assert.Equal(2, model.Count);
+
+
         //Assert.Equal("user", controller.ViewBag.Role);
     }
 
@@ -50,7 +52,7 @@ public class PetsControllerTests
         var admin = await CreateUserAsync(scope.UserManager, scope.RoleManager, "shelter@test.com", "pass123", "shelter_admin");
         
         db.Pets.Add(new Pet { PetId = 1, PetName = "My Pet", ShelterId = admin.Id });
-        db.Pets.Add(new Pet { PetId = 2, PetName = "Other Pet", ShelterId = 999 });
+        db.Pets.Add(new Pet { PetId = 2, PetName = "Other Pet", ShelterId = admin.Id + 999 });
         await db.SaveChangesAsync();
 
         var controller = CreateController(scope, "shelter_admin", admin.Id);
@@ -129,24 +131,38 @@ public class PetsControllerTests
     {
         await using var db = CreateDbContext();
         TestIdentityScope scope = CreateIdentityScope(db);
-        var admin = await CreateUserAsync(scope.UserManager, scope.RoleManager, "shelter@test.com", "pass123", "shelter_admin");
-        db.Shelters.Add(new Shelter { AccountId = admin.Id, ShelterName = "My Shelter" });
+
+        var admin = await CreateUserAsync(
+            scope.UserManager,
+            scope.RoleManager,
+            "shelter@test.com",
+            "pass123",
+            "shelter_admin"
+        );
+
+        db.Shelters.Add(new Shelter 
+        { 
+            AccountId = admin.Id, 
+            ShelterName = "My Shelter" 
+        });
+
         await db.SaveChangesAsync();
-        
+
         var controller = CreateController(scope, "shelter_admin", admin.Id);
+
         var newPet = new Pet
         {
-            PetName = " New Dog ",
+            PetName = "New Dog",
             Type = "Собака",
-            Breed = " Лабрадор ",
+            Breed = "Лабрадор",
             Gender = "Чоловіча",
             Age = 3,
             Size = "Середній",
             Vaccinated = true,
             Sterilized = false,
             Status = "Доступний",
-            PhotoUrl = " /images/pets/new-dog.jpg ",
-            Description = " Дружній пес "
+            PhotoUrl = "/images/pets/new-dog.jpg",
+            Description = "Дружній пес"
         };
 
         var result = await controller.Create(newPet);
@@ -154,7 +170,7 @@ public class PetsControllerTests
         var redirect = Assert.IsType<RedirectToActionResult>(result);
         Assert.Equal("Index", redirect.ActionName);
         Assert.Equal("Тварину додано", controller.TempData["Success"]);
-        
+
         var savedPet = await db.Pets.FirstOrDefaultAsync(p => p.PetName == "New Dog");
         Assert.NotNull(savedPet);
         Assert.Equal(admin.Id, savedPet.ShelterId);
@@ -169,7 +185,14 @@ public class PetsControllerTests
     {
         await using var db = CreateDbContext();
         TestIdentityScope scope = CreateIdentityScope(db);
-        var admin = await CreateUserAsync(scope.UserManager, scope.RoleManager, "noshelter@test.com", "pass123", "shelter_admin");
+
+        var admin = await CreateUserAsync(
+            scope.UserManager,
+            scope.RoleManager,
+            "noshelter@test.com",
+            "pass123",
+            "shelter_admin"
+        );
 
         var controller = CreateController(scope, "shelter_admin", admin.Id);
 
@@ -178,7 +201,6 @@ public class PetsControllerTests
         Assert.IsType<ForbidResult>(result);
         Assert.False(await db.Pets.AnyAsync());
     }
-
     [Fact]
     public async Task EditPet()
     {
@@ -213,13 +235,13 @@ public class PetsControllerTests
         var controller = CreateController(scope, "shelter_admin", admin.Id);
         var updateModel = new Pet { PetId = 1, PetName = "Updated Name" };
 
-        var result = await controller.Edit(updateModel);
+       var result = await controller.Edit(updateModel);
 
-        var redirect = Assert.IsType<RedirectToActionResult>(result);
-        Assert.Equal("Index", redirect.ActionName);
-        
-        var updated = await db.Pets.FindAsync(1);
-        Assert.Equal("Updated Name", updated!.PetName);
+       var redirect = Assert.IsType<RedirectToActionResult>(result);
+       Assert.Equal("Index", redirect.ActionName);
+
+       var updated = await db.Pets.FirstAsync(p => p.PetId == 1);
+       Assert.Equal("Updated Name", updated.PetName);
     }
 
     [Fact]
@@ -305,8 +327,9 @@ public class PetsControllerTests
         services.AddSingleton<ILogger<RoleManager<IdentityRole<int>>>>(NullLogger<RoleManager<IdentityRole<int>>>.Instance);
         services.AddSingleton<UserManager<ApplicationUser>>();
         services.AddSingleton<RoleManager<IdentityRole<int>>>();
-        services.AddSingleton<PetService>(); 
+        services.AddSingleton<PetService>();
         services.AddTransient<PetsController>();
+        services.AddSingleton<NotificationService>();
 
         var serviceProvider = services.BuildServiceProvider();
         return new TestIdentityScope(

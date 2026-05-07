@@ -2031,23 +2031,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\HP\\.nuget\\packages\\": {},
+    "C:\\Users\\Діана\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Petly_8\\AppCode\\Petly.Tests\\Petly.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\Діана\\Petly_2term\\AppCode\\Petly.Tests\\Petly.Tests.csproj",
       "projectName": "Petly.Tests",
-      "projectPath": "C:\\Petly_8\\AppCode\\Petly.Tests\\Petly.Tests.csproj",
-      "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "C:\\Petly_8\\AppCode\\Petly.Tests\\obj\\",
+      "projectPath": "C:\\Users\\Діана\\Petly_2term\\AppCode\\Petly.Tests\\Petly.Tests.csproj",
+      "packagesPath": "C:\\Users\\Діана\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Діана\\Petly_2term\\AppCode\\Petly.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Діана\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -2063,17 +2063,17 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Petly_8\\AppCode\\Petly.Business\\Petly.Business.csproj": {
-              "projectPath": "C:\\Petly_8\\AppCode\\Petly.Business\\Petly.Business.csproj"
+            "C:\\Users\\Діана\\Petly_2term\\AppCode\\Petly.Business\\Petly.Business.csproj": {
+              "projectPath": "C:\\Users\\Діана\\Petly_2term\\AppCode\\Petly.Business\\Petly.Business.csproj"
             },
-            "C:\\Petly_8\\AppCode\\Petly.DataAccess\\Petly.DataAccess.csproj": {
-              "projectPath": "C:\\Petly_8\\AppCode\\Petly.DataAccess\\Petly.DataAccess.csproj"
+            "C:\\Users\\Діана\\Petly_2term\\AppCode\\Petly.DataAccess\\Petly.DataAccess.csproj": {
+              "projectPath": "C:\\Users\\Діана\\Petly_2term\\AppCode\\Petly.DataAccess\\Petly.DataAccess.csproj"
             },
-            "C:\\Petly_8\\AppCode\\Petly.Models\\Petly.Models.csproj": {
-              "projectPath": "C:\\Petly_8\\AppCode\\Petly.Models\\Petly.Models.csproj"
+            "C:\\Users\\Діана\\Petly_2term\\AppCode\\Petly.Models\\Petly.Models.csproj": {
+              "projectPath": "C:\\Users\\Діана\\Petly_2term\\AppCode\\Petly.Models\\Petly.Models.csproj"
             },
-            "C:\\Petly_8\\AppCode\\Petly\\Petly.csproj": {
-              "projectPath": "C:\\Petly_8\\AppCode\\Petly\\Petly.csproj"
+            "C:\\Users\\Діана\\Petly_2term\\AppCode\\Petly\\Petly.csproj": {
+              "projectPath": "C:\\Users\\Діана\\Petly_2term\\AppCode\\Petly\\Petly.csproj"
             }
           }
         }
