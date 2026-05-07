@@ -36,7 +36,7 @@
     {
             int unreadCount = 0;
 
-    if (User.Identity?.IsAuthenticated ?? false)
+    if (User.Identity?.IsAuthenticated ?? false && User.IsInRole("user"))
     {
         var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -91,6 +91,8 @@
                                     </a>
                                 </li>
 
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("user"))
+                            {
                                 <li class="nav-item position-relative">
                                     <a class="nav-link menu-link"
                                     asp-controller="Notifications"
@@ -105,6 +107,7 @@
                                         }
                                     </a>
                                 </li>
+                            }
                             }
 
                             @if (User.IsInRole("shelter_admin") || User.IsInRole("system_admin"))

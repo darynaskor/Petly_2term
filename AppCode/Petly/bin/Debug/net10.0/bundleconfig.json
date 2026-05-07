@@ -5,6 +5,7 @@
       "wwwroot/css/base.css",
       "wwwroot/css/layout.css",
       "wwwroot/css/pages/account-adoption.css",
+      "wwwroot/css/pages/notifications.css",
       "wwwroot/css/components.css",
       "wwwroot/css/pages/pets.css",
       "wwwroot/css/pages/about.css",
