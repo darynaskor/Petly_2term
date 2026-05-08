@@ -25,11 +25,9 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
-        working-directory: AppCode/Petly
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-        working-directory: AppCode/Petly
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -53,9 +51,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_087C11AEC7DC499A8C0081ED7571FF32 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8835781D5C6A4CEBB7D7D7C82D6FF56A }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_56366FE3FD20400AAF5FD797DC2AB821 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0CFC7D0EA8DC491787193DD821450760 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8CE9BFD101264E339A2623F8D2054EE3 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BA3D5EA56FFD44309EB1EC3F04FFB0D9 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
