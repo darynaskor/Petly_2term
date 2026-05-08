@@ -24,7 +24,7 @@ jobs:
           dotnet-version: '10.x'
 
       - name: Build with dotnet
-        run: dotnet build Petly_2term.slnx --configuration Release
+        run: dotnet build AppCode/Petly_2term.slnx --configuration Release
 
       - name: dotnet publish
         run: dotnet publish AppCode/Petly/Petly.csproj -c Release -o "${{env.DOTNET_ROOT}}/myapp"
