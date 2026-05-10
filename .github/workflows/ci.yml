@@ -2,16 +2,16 @@ name: CI
 
 on:
   push:
-  pull_request:
+    branches:
+      - petly_6
+  workflow_dispatch:
 
 jobs:
   build-and-test:
-    name: Build and test
+    name: Build and Test
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: AppCode
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repository
@@ -22,16 +22,49 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.x'
-
       - name: Restore dependencies
-        run: dotnet restore Petly_2term.slnx
+        run: dotnet restore AppCode/Petly_2term.slnx
 
       - name: Build
-        run: dotnet build Petly_2term.slnx --configuration Release --no-restore
+        run: dotnet build AppCode/Petly_2term.slnx --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test Petly.Tests/Petly.Tests.csproj --configuration Release --no-build --verbosity normal
+        run: dotnet test AppCode/Petly.Tests/Petly.Tests.csproj --configuration Release --no-build --verbosity normal
+
+      - name: dotnet publish
+        run: dotnet publish AppCode/Petly/Petly.csproj -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
+
+  deploy:
+    name: Deploy to Azure
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: .net-app
+        
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0CFC7D0EA8DC491787193DD821450760 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8CE9BFD101264E339A2623F8D2054EE3 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BA3D5EA56FFD44309EB1EC3F04FFB0D9 }}
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'petly-6-daryna'
+          slot-name: 'Production'
+          package: .

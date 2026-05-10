@@ -17,7 +17,6 @@ public class DashboardService
 
     public async Task<AdminDashboardViewModel> GetAnalyticsAsync(int periodDays, int? shelterId = null, int adminId = 0)
     {
-        // Логувати доступ до аналітики
         var accessLog = new AnalyticsAccessLog
         {
             AdminId = adminId,
