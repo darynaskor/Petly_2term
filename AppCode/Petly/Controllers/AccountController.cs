@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 using Petly.Business.Services;
 using System.Security.Claims;
 using Petly.Models;
@@ -13,17 +14,20 @@ public class AccountController : Controller
 {
     private readonly AccountService _accountService;
     private readonly IEmailService _emailService;
+    private readonly PasswordResetOptions _passwordResetOptions;
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly UserManager<ApplicationUser> _userManager;
 
     public AccountController(
         AccountService accountService,
         IEmailService emailService,
+        IOptions<PasswordResetOptions> passwordResetOptions,
         SignInManager<ApplicationUser> signInManager,
         UserManager<ApplicationUser> userManager)
     {
         _accountService = accountService;
         _emailService = emailService;
+        _passwordResetOptions = passwordResetOptions.Value;
         _signInManager = signInManager;
         _userManager = userManager;
     }
@@ -112,11 +116,9 @@ public class AccountController : Controller
             return RedirectToAction(nameof(Login));
         }
 
-        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
         try
         {
-            await _emailService.SendPasswordResetCodeAsync(user.Email, token, 60);
+            await SendPasswordResetCodeAsync(user);
             TempData["Success"] = "Код для відновлення надіслано на вашу пошту.";
             return RedirectToAction(nameof(ResetPassword), new { email = user.Email });
         }
@@ -135,7 +137,32 @@ public class AccountController : Controller
     [HttpPost]
     [AllowAnonymous]
     [ValidateAntiForgeryToken]
-    public IActionResult ResendResetCode(string email) => RedirectToAction(nameof(ForgotPassword));
+    public async Task<IActionResult> ResendResetCode(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            return RedirectToAction(nameof(ForgotPassword));
+        }
+
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            TempData["Success"] = "Якщо email існує в системі, ми надіслали код.";
+            return RedirectToAction(nameof(Login));
+        }
+
+        try
+        {
+            await SendPasswordResetCodeAsync(user);
+            TempData["Success"] = "Новий код для відновлення надіслано на вашу пошту.";
+        }
+        catch (Exception)
+        {
+            TempData["Error"] = "Не вдалося надіслати код на email.";
+        }
+
+        return RedirectToAction(nameof(ResetPassword), new { email = user.Email });
+    }
 
     [HttpGet]
     [AllowAnonymous]
@@ -162,7 +189,8 @@ public class AccountController : Controller
         var user = await _userManager.FindByEmailAsync(model.Email);
         if (user == null) return RedirectToAction(nameof(Login));
 
-        var result = await _userManager.ResetPasswordAsync(user, model.Code, model.NewPassword);
+        var code = model.Code.Trim();
+        var result = await _userManager.ResetPasswordAsync(user, code, model.NewPassword);
         if (result.Succeeded)
         {
             TempData["Success"] = "Пароль успішно змінено. Тепер ви можете увійти.";
@@ -240,6 +268,16 @@ public class AccountController : Controller
         HttpContext.Session.SetString("UserName", user.Name ?? user.Email!);
         HttpContext.Session.SetString("Role", role);
         HttpContext.Session.SetString("UserEmail", user.Email!);
+    }
+
+    private async Task SendPasswordResetCodeAsync(ApplicationUser user)
+    {
+        var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+        await _emailService.SendPasswordResetCodeAsync(
+            user.Email!,
+            code,
+            _passwordResetOptions.CodeLifetimeMinutes,
+            HttpContext.RequestAborted);
     }
 
   public async Task<IActionResult> Profile()

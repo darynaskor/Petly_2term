@@ -262,6 +262,7 @@ public class AccountControllerAdminTests
         Assert.Equal("member@petly.com", redirect.RouteValues!["email"]);
         Assert.Equal("member@petly.com", emailService.LastRecipientEmail);
         Assert.False(string.IsNullOrWhiteSpace(emailService.LastCode));
+        Assert.Matches(@"^\d{6}$", emailService.LastCode);
         Assert.Equal("Код для відновлення надіслано на вашу пошту.", controller.TempData["Success"]);
     }
 
@@ -407,18 +408,23 @@ public class AccountControllerAdminTests
     private static TestIdentityScope CreateIdentityScope(ApplicationDbContext db)
     {
         var identityOptionsValue = new IdentityOptions();
+        identityOptionsValue.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
         identityOptionsValue.Tokens.ProviderMap[TokenOptions.DefaultProvider] =
             new TokenProviderDescriptor(typeof(TestTokenProvider));
+        identityOptionsValue.Tokens.ProviderMap[TokenOptions.DefaultEmailProvider] =
+            new TokenProviderDescriptor(typeof(EmailTokenProvider<ApplicationUser>));
 
         var services = new ServiceCollection();
         services.AddSingleton(db);
         services.AddSingleton<IOptions<IdentityOptions>>(Options.Create(identityOptionsValue));
+        services.AddSingleton<IOptions<PasswordResetOptions>>(Options.Create(new PasswordResetOptions()));
         services.AddSingleton<IOptions<AuthenticationOptions>>(Options.Create(new AuthenticationOptions()));
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IPasswordHasher<ApplicationUser>, PasswordHasher<ApplicationUser>>();
         services.AddSingleton<ILookupNormalizer, UpperInvariantLookupNormalizer>();
         services.AddSingleton<IdentityErrorDescriber>();
         services.AddSingleton<TestTokenProvider>();
+        services.AddSingleton<EmailTokenProvider<ApplicationUser>>();
         services.AddSingleton<IUserStore<ApplicationUser>, UserStore<ApplicationUser, IdentityRole<int>, ApplicationDbContext, int>>();
         services.AddSingleton<IRoleStore<IdentityRole<int>>, RoleStore<IdentityRole<int>, ApplicationDbContext, int>>();
         services.AddSingleton<ILogger<UserManager<ApplicationUser>>>(NullLogger<UserManager<ApplicationUser>>.Instance);

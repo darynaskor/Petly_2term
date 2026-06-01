@@ -89,6 +89,7 @@ public class ResetPasswordViewModel
     public string Email { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Введіть код із листа")]
+    [RegularExpression(@"^\d{6}$", ErrorMessage = "Код має містити 6 цифр")]
     public string Code { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Введіть новий пароль")]
